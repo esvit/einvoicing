@@ -27,6 +27,10 @@ jobs:
 
       - name: Configure wiki
         uses: actions4gh/configure-wiki@v1
+        with:
+          path: 'docs/'
 
       - name: Deploy wiki
         uses: actions4gh/deploy-wiki@v1
+        with:
+          path: 'docs/'
