@@ -35,6 +35,8 @@
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "tsutils": "~3.21",
+    "typedoc": "^0.27.3",
+    "typedoc-plugin-markdown": "^4.3.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.17.0"
   },
@@ -47,6 +49,7 @@
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
     "lint": "eslint",
     "test": "jest",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --out ./docs",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch"
   },
