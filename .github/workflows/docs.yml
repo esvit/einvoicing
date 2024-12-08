@@ -25,9 +25,8 @@ jobs:
           npm run docs
           docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
-      - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: site
-          clean: true
+      - name: Configure wiki
+        uses: actions4gh/configure-wiki@v1
+
+      - name: Deploy wiki
+        uses: actions4gh/deploy-wiki@v1

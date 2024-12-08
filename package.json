@@ -50,7 +50,7 @@
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
     "lint": "eslint",
     "test": "jest",
-    "docs": "typedoc --out ./docs && cp README.md docs/index.md",
+    "docs": "typedoc --out ./wiki",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch"
   },
