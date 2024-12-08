@@ -25,12 +25,7 @@ jobs:
           npm run docs
           docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
-      - name: Configure wiki
-        uses: actions4gh/configure-wiki@v1
+      - name: Sync GitHub Wiki
+        uses: spenserblack/actions-wiki@main
         with:
-          path: 'docs/'
-
-      - name: Deploy wiki
-        uses: actions4gh/deploy-wiki@v1
-        with:
-          path: 'docs/'
+          path: docs
