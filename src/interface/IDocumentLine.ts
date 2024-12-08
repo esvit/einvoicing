@@ -35,7 +35,6 @@ export interface IDocumentLine {
   price?: number;
   netAmount?: number;
   baseQuantity?: number;
-  vatCategory?: any;
   attributes?: Attribute[];
   charges?: AllowanceCharge[];
   tax?: Tax;

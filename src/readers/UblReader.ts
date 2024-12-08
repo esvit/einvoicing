@@ -24,7 +24,7 @@ import Identifier from "../valueObject/Identifier";
 import Attribute from "../valueObject/Attribute";
 import Payee from "../valueObject/Payee";
 import Delivery from "../valueObject/Delivery";
-import { strOrUnd, numOrUnd, getArray } from '../helpers';
+import {strOrUnd, numOrUnd, getArray, XmlNode} from '../helpers';
 import Payment from "../valueObject/Payment";
 import PaymentCard from "../valueObject/PaymentCard";
 import PaymentTransfer from "../valueObject/PaymentTransfer";
@@ -58,7 +58,7 @@ class UblReader extends AbstractReader {
     const ruleset = getRuleset(customizationId);
 
     const taxNodes = getArray(documentNode, ['cac:TaxTotal', 'cac:TaxSubtotal']);
-    const taxes = taxNodes.map((taxNode:any) => Tax.create({
+    const taxes = taxNodes.map((taxNode: XmlNode) => Tax.create({
       id: new TaxId(
         strOrUnd(taxNode['cac:TaxCategory']?.['cbc:ID']) ,
         numOrUnd(taxNode['cac:TaxCategory']?.['cbc:Percent'])
@@ -88,7 +88,7 @@ class UblReader extends AbstractReader {
 
     // BG-3: Preceding invoice references
     const invoiceReferences = getArray(documentNode, ['cac:BillingReference']);
-    const precedingInvoiceReference = invoiceReferences.map((reference:any) => {
+    const precedingInvoiceReference = invoiceReferences.map((reference: XmlNode) => {
       const node = reference['cac:InvoiceDocumentReference'];
       return InvoiceReference.create({
         id: node['cbc:ID'],
@@ -98,7 +98,7 @@ class UblReader extends AbstractReader {
 
     // BG-24: Attachment nodes
     const attachmentNodes = getArray(documentNode, ['cac:AdditionalDocumentReference']);
-    const attachments = attachmentNodes.map((attachment:any) => {
+    const attachments = attachmentNodes.map((attachment: XmlNode) => {
       let content:BinaryObject|undefined = undefined;
       const embeddedDocument = attachment['cac:Attachment']?.['cbc:EmbeddedDocumentBinaryObject'];
       if (embeddedDocument) { // BT-125: Attached document
@@ -117,7 +117,7 @@ class UblReader extends AbstractReader {
     });
     const lines = documentType === DocumentTypes.Invoice ? getArray(documentNode, ['cac:InvoiceLine']) : getArray(documentNode, ['cac:CreditNoteLine']);
 
-    const charges = getArray(documentNode, ['cac:AllowanceCharge']).map((node:any) => this.allowanceOrChargeFromXmlNode(node, taxes));
+    const charges = getArray(documentNode, ['cac:AllowanceCharge']).map((node: XmlNode) => this.allowanceOrChargeFromXmlNode(node, taxes));
 
     const document = Document.create({
       // BT-1: Invoice number
@@ -202,13 +202,13 @@ class UblReader extends AbstractReader {
     return document;
   }
 
-  partyFromXmlNode(node: any):Party|undefined {
+  partyFromXmlNode(node: XmlNode):Party|undefined {
     if (!node) {
       return undefined;
     }
     // Additional identifiers
     const additionalIdentifiersNodes = getArray(node, ['cac:PartyIdentification']);
-    const additionalIdentifiers = additionalIdentifiersNodes.map((node:any) => strOrUnd(node['cbc:ID']));
+    const additionalIdentifiers = additionalIdentifiersNodes.map((node: XmlNode) => strOrUnd(node['cbc:ID']));
 
     let vatNumber:string|undefined = undefined;
     let taxRegistrationId:{ companyId: string, taxScheme: string }|undefined = undefined;
@@ -241,13 +241,13 @@ class UblReader extends AbstractReader {
     });
   }
 
-  payeeFromXmlNode(node: any):Payee|undefined {
+  payeeFromXmlNode(node: XmlNode):Payee|undefined {
     if (!node) {
       return undefined;
     }
     // Additional identifiers
     const additionalIdentifiersNodes = getArray(node, ['cac:PartyIdentification']);
-    const additionalIdentifiers = additionalIdentifiersNodes.map((node:any) => strOrUnd(node['cbc:ID']));
+    const additionalIdentifiers = additionalIdentifiersNodes.map((node: XmlNode) => strOrUnd(node['cbc:ID']));
 
     return Payee.create({
       name: strOrUnd(node['cac:PartyName']?.['cbc:Name']),
@@ -256,7 +256,7 @@ class UblReader extends AbstractReader {
     });
   }
 
-  deliveryFromXmlNode(node: any):Delivery|undefined {
+  deliveryFromXmlNode(node: XmlNode):Delivery|undefined {
     if (!node) {
       return undefined;
     }
@@ -268,7 +268,7 @@ class UblReader extends AbstractReader {
     });
   }
 
-  paymentFromXmlNode(node: any):Payment|undefined {
+  paymentFromXmlNode(node: XmlNode):Payment|undefined {
     if (!node) {
       return undefined;
     }
@@ -312,7 +312,7 @@ class UblReader extends AbstractReader {
     });
   }
 
-  addressFromXmlNode(node: any):Address|undefined {
+  addressFromXmlNode(node: XmlNode):Address|undefined {
     if (!node) {
       return undefined;
     }
@@ -332,7 +332,7 @@ class UblReader extends AbstractReader {
     });
   }
 
-  allowanceOrChargeFromXmlNode(node:any, taxes: Tax[]):AllowanceCharge|undefined {
+  allowanceOrChargeFromXmlNode(node: XmlNode, taxes: Tax[]):AllowanceCharge|undefined {
     if (!node) {
       return undefined;
     }
@@ -355,7 +355,7 @@ class UblReader extends AbstractReader {
     })
   }
 
-  periodFromXmlNode(node: any) {
+  periodFromXmlNode(node: XmlNode) {
     const periodStart = node['cac:InvoicePeriod']?.['cbc:StartDate'];
     const periodEnd = node['cac:InvoicePeriod']?.['cbc:EndDate'];
 
@@ -365,21 +365,21 @@ class UblReader extends AbstractReader {
     };
   }
 
-  documentLineFromXmlNode(node: any, documentType: DocumentTypes, taxes: Tax[]):DocumentLine|undefined {
+  documentLineFromXmlNode(node: XmlNode, documentType: DocumentTypes, taxes: Tax[]):DocumentLine|undefined {
     if (!node) {
       return undefined;
     }
 
     // BT-158: Item classification identifiers
     const classNodes = getArray(node, ['cac:Item', 'cac:CommodityClassification', 'cbc:ItemClassificationCode']);
-    const classificationIdentifiers = classNodes.map((item:any) => Identifier.create({
+    const classificationIdentifiers = classNodes.map((item: XmlNode) => Identifier.create({
       id: strOrUnd(item),
       scheme: item['attr_listID']
     }));
 
     // BG-32: Item attributes
     const attributeNodes = getArray(node, ['cac:Item', 'cac:AdditionalItemProperty']);
-    const attributes = attributeNodes.map((item:any) => Attribute.create({
+    const attributes = attributeNodes.map((item: XmlNode) => Attribute.create({
       name: strOrUnd(item['cbc:Name']),
       value: strOrUnd(item['cbc:Value'])
     }));
@@ -389,10 +389,10 @@ class UblReader extends AbstractReader {
       numOrUnd(node['cac:Item']?.['cac:ClassifiedTaxCategory']?.['cbc:Percent'])
     );
     const tax = taxes.find((tax) => tax.id.equals(taxId));
-    if (node['cac:TaxCategory']?.['cbc:ID'] && !tax) {
+    if (node['cac:Item']?.['cbc:ClassifiedTaxCategory']?.['cbc:ID'] && !tax) {
       throw new Error(`Tax category ${taxId} not found`);
     }
-    const charges = getArray(node, ['cac:AllowanceCharge']).map((node:any) => this.allowanceOrChargeFromXmlNode(node, taxes));
+    const charges = getArray(node, ['cac:AllowanceCharge']).map((node: XmlNode) => this.allowanceOrChargeFromXmlNode(node, taxes));
 
     return DocumentLine.create({
       // BT-126: Invoice line identifier
@@ -439,8 +439,6 @@ class UblReader extends AbstractReader {
       netAmount: numOrUnd(node['cbc:LineExtensionAmount']),
 
       baseQuantity: numOrUnd(node['cac:Price']?.['cbc:BaseQuantity']),
-
-      vatCategory: numOrUnd(node['cac:Item']?.['cbc:ClassifiedTaxCategory']),
 
       // BG-32: Item attributes
       attributes: attributes.length ? attributes : undefined,

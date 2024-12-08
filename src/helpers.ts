@@ -6,13 +6,16 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+export type XmlNode = any;
+
 /**
  * Returns the string value of a node or undefined if the node is null or undefined.
  *
  * @param node xml node
  */
 export
-function strOrUnd(node: any):string|undefined {
+function strOrUnd(node: XmlNode):string|undefined {
   if (!node) {
     return undefined;
   }
@@ -31,7 +34,7 @@ function strOrUnd(node: any):string|undefined {
  * @param node xml node
  */
 export
-function numOrUnd(node: any):number|undefined {
+function numOrUnd(node: XmlNode):number|undefined {
   return strOrUnd(node) ? parseFloat(strOrUnd(node)) : undefined;
 }
 
@@ -42,7 +45,7 @@ function numOrUnd(node: any):number|undefined {
  * @param path path of nodes to get the value from
  */
 export
-function getArray(node:any, path = []) {
+function getArray(node: XmlNode, path = []) {
   let initNode = node;
   for (const key of path) {
     if (!initNode) {

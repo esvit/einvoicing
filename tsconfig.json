@@ -6,7 +6,6 @@
       "es2017",
       "es2018.asynciterable"
     ],
-    "moduleResolution": "Node16",
     "rootDir": "./src",
     "outDir": "build",
     "allowSyntheticDefaultImports": true,

@@ -27,9 +27,7 @@ describe('ValueObject', () => {
     try {
       new Test2Id('123', true)
     } catch (err) {
-      // eslint-disable-next-line jest/no-conditional-expect
       expect(err).toBeInstanceOf(HashError);
-      // eslint-disable-next-line jest/no-conditional-expect
       expect(err.message).toEqual('Invalid hash 123');
     }
   });
