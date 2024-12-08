@@ -27,6 +27,48 @@ class BinaryObject extends ValueObject<IBinaryObject> {
     });
   }
 
+  /**
+   * Get the MIME code.
+   */
+  get mimeCode() {
+    return this.props.mimeCode;
+  }
+
+  /**
+   * Set the MIME code.
+   */
+  set mimeCode(value: string | undefined) {
+    this.props.mimeCode = value;
+  }
+
+  /**
+   * Get the filename.
+   */
+  get filename() {
+    return this.props.filename;
+  }
+
+  /**
+   * Set the filename.
+   */
+  set filename(value: string | undefined) {
+    this.props.filename = value;
+  }
+
+  /**
+   * Get the content.
+   */
+  get content() {
+    return this.props.content;
+  }
+
+  /**
+   * Set the content.
+   */
+  set content(value: string | undefined) {
+    this.props.content = value;
+  }
+
   toPrimitive() {
     return this.props;
   }
