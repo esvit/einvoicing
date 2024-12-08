@@ -18,6 +18,34 @@ class Identifier extends ValueObject<IIdentifier> {
     return new Identifier(props);
   }
 
+  /**
+   * Get the identifier ID.
+   */
+  get id() {
+    return this.props.id;
+  }
+
+  /**
+   * Set the identifier ID.
+   */
+  set id(value: string) {
+    this.props.id = value;
+  }
+
+  /**
+   * Get the identifier scheme.
+   */
+  get scheme() {
+    return this.props.scheme;
+  }
+
+  /**
+   * Set the identifier scheme.
+   */
+  set scheme(value: string) {
+    this.props.scheme = value;
+  }
+
   toPrimitive() {
     return this.props;
   }

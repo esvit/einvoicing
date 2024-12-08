@@ -19,6 +19,34 @@ class InvoiceReference extends ValueObject<IInvoiceReference> {
     return new InvoiceReference(ref);
   }
 
+  /**
+   * Get the invoice reference ID.
+   */
+  get id() {
+    return this.props.id;
+  }
+
+  /**
+   * Set the invoice reference ID.
+   */
+  set id(value: string) {
+    this.props.id = value;
+  }
+
+  /**
+   * Get the issue date.
+   */
+  get issueDate() {
+    return this.props.issueDate;
+  }
+
+  /**
+   * Set the issue date.
+   */
+  set issueDate(value: DateOnly | undefined) {
+    this.props.issueDate = value;
+  }
+
   toPrimitive() {
     return this.props;
   }

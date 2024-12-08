@@ -19,9 +19,51 @@ export interface IPaymentCard {
 }
 
 export default
-class PaymentCard extends ValueObject<IPaymentCard> {
+class PaymentCard extends ValueObject<IPaymentCard> implements IPaymentCard {
   public static create(props: IPaymentCard): PaymentCard {
     return new PaymentCard(props);
+  }
+
+  /**
+   * Get the card PAN.
+   */
+  get pan() {
+    return this.props.pan;
+  }
+
+  /**
+   * Set the card PAN.
+   */
+  set pan(value: string | undefined) {
+    this.props.pan = value;
+  }
+
+  /**
+   * Get the card network.
+   */
+  get network() {
+    return this.props.network;
+  }
+
+  /**
+   * Set the card network.
+   */
+  set network(value: string | undefined) {
+    this.props.network = value;
+  }
+
+  /**
+   * Get the card holder name.
+   */
+  get holder() {
+    return this.props.holder;
+  }
+
+  /**
+   * Set the card holder name.
+   */
+  set holder(value: string | undefined) {
+    this.props.holder = value;
   }
 
   toPrimitive() {

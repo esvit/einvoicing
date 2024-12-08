@@ -18,6 +18,34 @@ class Attribute extends ValueObject<IAttribute> {
     return new Attribute(ref);
   }
 
+  /**
+   * Get the attribute name.
+   */
+  get name() {
+    return this.props.name;
+  }
+
+  /**
+   * Set the attribute name.
+   */
+  set name(value: string) {
+    this.props.name = value;
+  }
+
+  /**
+   * Get the attribute value.
+   */
+  get value() {
+    return this.props.value;
+  }
+
+  /**
+   * Set the attribute value.
+   */
+  set value(value: string) {
+    this.props.value = value;
+  }
+
   toPrimitive() {
     return this.props;
   }

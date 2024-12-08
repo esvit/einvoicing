@@ -16,6 +16,20 @@ class DocumentType extends ValueObject<{ type: number }> {
     });
   }
 
+  /**
+   * Get the document type.
+   */
+  get type() {
+    return this.props.type;
+  }
+
+  /**
+   * Set the document type.
+   */
+  set type(value: number) {
+    this.props.type = value;
+  }
+
   toPrimitive() {
     return this.props.type;
   }

@@ -24,6 +24,48 @@ class PaymentTransfer extends ValueObject<IPaymentTransfer> {
     return new PaymentTransfer(props);
   }
 
+  /**
+   * Get the receiving account ID.
+   */
+  get account() {
+    return this.props.account;
+  }
+
+  /**
+   * Set the receiving account ID.
+   */
+  set account(value: string | undefined) {
+    this.props.account = value;
+  }
+
+  /**
+   * Get the receiving account name.
+   */
+  get name() {
+    return this.props.name;
+  }
+
+  /**
+   * Set the receiving account name.
+   */
+  set name(value: string | undefined) {
+    this.props.name = value;
+  }
+
+  /**
+   * Get the service provider ID.
+   */
+  get provider() {
+    return this.props.provider;
+  }
+
+  /**
+   * Set the service provider ID.
+   */
+  set provider(value: string | undefined) {
+    this.props.provider = value;
+  }
+
   toPrimitive() {
     return this.props;
   }
