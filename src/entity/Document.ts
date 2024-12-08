@@ -6,7 +6,7 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 import {Entity} from "../base/Entity";
-import {IDocument, DocumentId} from "../interface/IDocument";
+import {IDocument, DocumentId, DocumentTypes} from "../interface/IDocument";
 import DateOnly from "../valueObject/DateOnly";
 import DocumentType from "../valueObject/DocumentType";
 import CurrencyCode from "../valueObject/CurrencyCode";
@@ -19,11 +19,36 @@ import DocumentLine from "./DocumentLine";
 import Payment from "../valueObject/Payment";
 import AllowanceCharge from "../valueObject/AllowanceCharge";
 import Tax from "./Tax";
+import AbstractRuleset from "../ruleset/AbstractRuleset";
 
 export default
 class Document extends Entity<IDocument, string, DocumentId> {
-  public static create(props: IDocument): Document {
-    return new Document(props, props.id);
+  protected _ruleset: AbstractRuleset;
+  protected _documentType: DocumentTypes;
+
+  public static create(type: DocumentTypes, ruleset: AbstractRuleset, props: IDocument): Document {
+    const item = new Document(props, props.id);
+    item._documentType = type;
+    item._ruleset = ruleset;
+    return item;
+  }
+
+  validate() {
+    return this._ruleset.validate(this);
+  }
+
+  /**
+   * Get the document type.
+   */
+  get documentType() {
+    return this._documentType;
+  }
+
+  /**
+   * Get the ruleset.
+   */
+  get ruleset() {
+    return this._ruleset;
   }
 
   /**

@@ -8,9 +8,11 @@
 
 import PeppolRuleset from "./ruleset/PeppolRuleset";
 import AbstractRuleset from "./ruleset/AbstractRuleset";
+import DKRuleset from "./ruleset/DKRuleset";
 
 const rulesets = [
-  new PeppolRuleset()
+  new PeppolRuleset(),
+  new DKRuleset(),
 ];
 
 export function getRuleset(customizationId: string): AbstractRuleset {

@@ -74,7 +74,7 @@ class UblReader extends AbstractReader {
     // BT-23: Business process type
     const businessProcess = documentNode['cbc:ProfileID'];
     if (businessProcess) {
-      console.info(businessProcess);
+      // console.info(businessProcess);
     }
 
     // BT-9: Due date
@@ -119,7 +119,7 @@ class UblReader extends AbstractReader {
 
     const charges = getArray(documentNode, ['cac:AllowanceCharge']).map((node: XmlNode) => this.allowanceOrChargeFromXmlNode(node, taxes));
 
-    const document = Document.create({
+    const document = Document.create(documentType, ruleset, {
       // BT-1: Invoice number
       id: documentNode['cbc:ID'] ? new DocumentId(documentNode['cbc:ID'].toString()) : new DocumentId(),
 
@@ -197,8 +197,6 @@ class UblReader extends AbstractReader {
 
       taxes: taxes.length ? taxes : undefined,
     });
-
-    console.info(ruleset);
     return document;
   }
 

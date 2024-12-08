@@ -1,6 +1,6 @@
 import UblWriter from "./UblWriter";
 import Document from "../entity/Document";
-import { DocumentId } from "../interface/IDocument";
+import {DocumentId, DocumentTypes} from "../interface/IDocument";
 import DateOnly from "../valueObject/DateOnly";
 import DocumentType from "../valueObject/DocumentType";
 import CurrencyCode from "../valueObject/CurrencyCode";
@@ -20,6 +20,7 @@ import Attachment from "../valueObject/Attachment";
 import BinaryObject from "../valueObject/BinaryObject";
 import InvoiceReference from "../valueObject/InvoiceReference";
 import Payee from "../valueObject/Payee";
+import DKRuleset from "../ruleset/DKRuleset";
 
 describe('UblWriter', () => {
   let ublWriter: UblWriter;
@@ -29,7 +30,8 @@ describe('UblWriter', () => {
   });
 
   test('write UBL eInvoicing document', () => {
-    const document = Document.create({
+    const ruleset = new DKRuleset();
+    const document = Document.create(DocumentTypes.Invoice, ruleset, {
       id: new DocumentId('12345'),
       issueDate: DateOnly.create("2019-01-25"),
       dueDate: DateOnly.create("2019-02-24"),
