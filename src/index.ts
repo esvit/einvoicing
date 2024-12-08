@@ -13,23 +13,26 @@ import { getRuleset } from './rulesets';
 import Document from './entity/Document';
 import DocumentLine from './entity/DocumentLine';
 import Tax from './entity/Tax';
-import Address from './valueObject/Address';
-import AllowanceCharge from './valueObject/AllowanceCharge';
-import Attachment from './valueObject/Attachment';
-import Attribute from './valueObject/Attribute';
-import BinaryObject from './valueObject/BinaryObject';
+import Address, { IAddress } from './valueObject/Address';
+import AllowanceCharge, { IAllowanceCharge } from './valueObject/AllowanceCharge';
+import Attachment, { IAttachment } from './valueObject/Attachment';
+import Attribute, { IAttribute } from './valueObject/Attribute';
+import BinaryObject, { IBinaryObject } from './valueObject/BinaryObject';
 import CurrencyCode from './valueObject/CurrencyCode';
 import DateOnly from './valueObject/DateOnly';
-import Delivery from './valueObject/Delivery';
+import Delivery, {IDelivery} from './valueObject/Delivery';
 import DocumentType from './valueObject/DocumentType';
-import Identifier from './valueObject/Identifier';
-import InvoiceReference from './valueObject/InvoiceReference';
-import Party from './valueObject/Party';
-import Payee from './valueObject/Payee';
-import Payment from './valueObject/Payment';
-import PaymentCard from './valueObject/PaymentCard';
-import PaymentMandate from './valueObject/PaymentMandate';
-import PaymentTransfer from './valueObject/PaymentTransfer';
+import Identifier, {IIdentifier} from './valueObject/Identifier';
+import InvoiceReference,{IInvoiceReference} from './valueObject/InvoiceReference';
+import Party,{IParty} from './valueObject/Party';
+import Payee,{IPayee} from './valueObject/Payee';
+import Payment,{IPayment} from './valueObject/Payment';
+import PaymentCard,{IPaymentCard} from './valueObject/PaymentCard';
+import PaymentMandate,{IPaymentMandate} from './valueObject/PaymentMandate';
+import PaymentTransfer,{IPaymentTransfer} from './valueObject/PaymentTransfer';
+import { IDocument, DocumentId } from './interface/IDocument';
+import { IDocumentLine, DocumentLineId } from './interface/IDocumentLine';
+import { ITax, TaxId } from './interface/ITax';
 
 export {
   AbstractRuleset,
@@ -61,4 +64,23 @@ export {
   PaymentCard,
   PaymentMandate,
   PaymentTransfer,
+
+  // interfaces
+  IDocument, DocumentId,
+  IDocumentLine, DocumentLineId,
+  ITax, TaxId,
+  IAddress,
+  IAllowanceCharge,
+  IAttachment,
+  IAttribute,
+  IBinaryObject,
+  IDelivery,
+  IIdentifier,
+  IInvoiceReference,
+  IParty,
+  IPayee,
+  IPayment,
+  IPaymentCard,
+  IPaymentMandate,
+  IPaymentTransfer,
 };
