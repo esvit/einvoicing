@@ -1,5 +1,5 @@
 /**
- * PeppolRuleset.ts
+ * DKRuleset.ts
  *
  * @copyright Vitalii Savchuk <esvit666@gmail.com>
  * @package einvoicing

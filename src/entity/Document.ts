@@ -34,7 +34,7 @@ class Document extends Entity<IDocument, string, DocumentId> {
   }
 
   validate() {
-    return this._ruleset.validate(this);
+    return this._ruleset ? this._ruleset.validate(this) : { errors: [], warning: [] };
   }
 
   /**

@@ -41,6 +41,7 @@ describe('UblReader', () => {
         "taxAmount": -156435.89,
         "taxableAmount": -625743.54
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('12345'),
         "dueDate": DateOnly.create("2019-02-24"),
@@ -122,6 +123,7 @@ describe('UblReader', () => {
         "taxAmount": 156435.89,
         "taxableAmount": 625743.54
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('12345'),
         "dueDate": DateOnly.create("2019-02-24"),
@@ -203,6 +205,7 @@ describe('UblReader', () => {
         "taxAmount": 274.12,
         "taxableAmount": 1246
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.attachments[0].toPrimitive().content.toPrimitive()).toEqual({
         content: expect.any(String),
         "filename": "mappatura_ubl_sdi.pdf",
@@ -284,6 +287,7 @@ describe('UblReader', () => {
         "taxAmount": 9.74,
         "taxableAmount": 46.37
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('12115118'),
         "issueDate": DateOnly.create('2015-01-09'),
@@ -548,6 +552,7 @@ describe('UblReader', () => {
         "taxExemptionReason": "Exempt New Means of Transport",
         "taxableAmount": -25
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "attachments": [
           Attachment.create({
@@ -762,6 +767,7 @@ describe('UblReader', () => {
         "taxAmount": 225,
         "taxableAmount": 900
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('TOSL108'),
         "issueDate": DateOnly.create('2013-04-10'),
@@ -858,6 +864,7 @@ describe('UblReader', () => {
         "taxExemptionReason": "Reason for tax exempt",
         "taxableAmount": 1000
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('Snippet1'),
         "dueDate": DateOnly.create("2017-12-01"),
@@ -1038,6 +1045,7 @@ describe('UblReader', () => {
         "taxAmount": 331.25,
         "taxableAmount": 1325
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('Snippet1'),
         "dueDate": DateOnly.create("2017-12-01"),
@@ -1165,6 +1173,7 @@ describe('UblReader', () => {
         "taxAmount": 331.25,
         "taxableAmount": 1325
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "id": new DocumentId('Snippet1'),
         "dueDate": DateOnly.create("2017-12-02"),
@@ -1275,6 +1284,7 @@ describe('UblReader', () => {
         "taxAmount": 1279.45,
         "taxableAmount": 6733.95
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "buyer": Party.create({
           "address": Address.create({
@@ -1339,6 +1349,7 @@ describe('UblReader', () => {
         "taxExemptionReason": "Not subject to VAT",
         "taxableAmount": 3200
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "buyer": Party.create({
           "address": Address.create({
@@ -1412,6 +1423,7 @@ describe('UblReader', () => {
         "taxAmount": 300,
         "taxableAmount": 2000
       });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         "buyer": Party.create({
           "additionalIdentifiers": [
