@@ -1,0 +1,51 @@
+{
+  "name": "einvoicing",
+  "version": "0.0.1",
+  "description": "Library for reading and creating European-compliant electronic invoices (EN 16931)",
+  "main": "build/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "author": "Vitalii Savchuk <esvit666@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "build/",
+    "resources/"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.5.1",
+    "@typescript-eslint/eslint-plugin": "~5.44",
+    "@typescript-eslint/parser": "~5.44",
+    "eslint": "~8.28",
+    "eslint-config-prettier": "~8.5",
+    "eslint-plugin-jest": "~27.1",
+    "jest": "^29.7.0",
+    "prettier": "~2.8",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "tsutils": "~3.21",
+    "typescript": "~4.9"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build && npm test && npm version patch",
+    "clean": "rimraf coverage build tmp",
+    "prebuild": "npm run lint",
+    "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -w -p tsconfig.json",
+    "build:release": "npm run clean && tsc -p tsconfig.release.json",
+    "lint": "eslint . --ext .ts --ext .mts",
+    "test": "jest --coverage",
+    "prettier": "prettier --config .prettierrc --write .",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "fast-xml-parser": "^4.5.0",
+    "hashids": "^2.3.0",
+    "shallow-equal-object": "^1.1.1",
+    "tslib": "^2.8.1",
+    "uuid-by-string": "^4.0.0"
+  }
+}
