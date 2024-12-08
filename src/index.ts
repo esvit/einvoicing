@@ -2,7 +2,7 @@
  * Main entry point for the library, export all necessary classes and functions
  *
  * @copyright Vitalii Savchuk <esvit666@gmail.com>
- * @package esvit/einvoicing
+ * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
 import PeppolRuleset from './ruleset/PeppolRuleset';

@@ -2,7 +2,7 @@
  * ITax.ts
  *
  * @copyright Vitalii Savchuk <esvit666@gmail.com>
- * @package esvit/einvoicing
+ * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
 import CurrencyCode from "../valueObject/CurrencyCode";

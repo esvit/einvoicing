@@ -46,7 +46,7 @@
     "build:watch": "tsc -w -p tsconfig.json",
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
     "lint": "eslint",
-    "test": "jest --coverage",
+    "test": "jest",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch"
   },
