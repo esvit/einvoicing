@@ -21,6 +21,34 @@ class PaymentMandate extends ValueObject<IPaymentMandate> {
     return new PaymentMandate(props);
   }
 
+  /**
+   * Get the mandate reference.
+   */
+  get reference() {
+    return this.props.reference;
+  }
+
+  /**
+   * Set the mandate reference.
+   */
+  set reference(value: string | undefined) {
+    this.props.reference = value;
+  }
+
+  /**
+   * Get the debited account.
+   */
+  get account() {
+    return this.props.account;
+  }
+
+  /**
+   * Set the debited account.
+   */
+  set account(value: string | undefined) {
+    this.props.account = value;
+  }
+
   toPrimitive() {
     return this.props;
   }

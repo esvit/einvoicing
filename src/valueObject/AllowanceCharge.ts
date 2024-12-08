@@ -26,6 +26,90 @@ class AllowanceCharge extends ValueObject<IAllowanceCharge> {
     return new AllowanceCharge(ref);
   }
 
+  /**
+   * Get whether it is a charge.
+   */
+  get isCharge() {
+    return this.props.isCharge;
+  }
+
+  /**
+   * Set whether it is a charge.
+   */
+  set isCharge(value: boolean | undefined) {
+    this.props.isCharge = value;
+  }
+
+  /**
+   * Get the reason code.
+   */
+  get reasonCode() {
+    return this.props.reasonCode;
+  }
+
+  /**
+   * Set the reason code.
+   */
+  set reasonCode(value: string | undefined) {
+    this.props.reasonCode = value;
+  }
+
+  /**
+   * Get the reason text.
+   */
+  get reasonText() {
+    return this.props.reasonText;
+  }
+
+  /**
+   * Set the reason text.
+   */
+  set reasonText(value: string | undefined) {
+    this.props.reasonText = value;
+  }
+
+  /**
+   * Get the factor amount.
+   */
+  get factorAmount() {
+    return this.props.factorAmount;
+  }
+
+  /**
+   * Set the factor amount.
+   */
+  set factorAmount(value: number | undefined) {
+    this.props.factorAmount = value;
+  }
+
+  /**
+   * Get the amount.
+   */
+  get amount() {
+    return this.props.amount;
+  }
+
+  /**
+   * Set the amount.
+   */
+  set amount(value: number | undefined) {
+    this.props.amount = value;
+  }
+
+  /**
+   * Get the tax.
+   */
+  get tax() {
+    return this.props.tax;
+  }
+
+  /**
+   * Set the tax.
+   */
+  set tax(value: Tax | undefined) {
+    this.props.tax = value;
+  }
+
   toPrimitive() {
     return this.props;
   }
