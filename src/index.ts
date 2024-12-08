@@ -36,6 +36,8 @@ import { ITax, TaxId } from './interface/ITax';
 import {Entity} from './base/Entity';
 import {EntityId} from './base/EntityId';
 import {ValueObject} from './base/ValueObject';
+import AbstractWriter from "./writers/AbstractWriter";
+import UblWriter from "./writers/UblWriter";
 
 export {
   AbstractRuleset,
@@ -90,5 +92,8 @@ export {
   // core
   EntityId,
   Entity,
-  ValueObject
+  ValueObject,
+
+  AbstractWriter,
+  UblWriter
 };
