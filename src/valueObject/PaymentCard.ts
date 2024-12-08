@@ -16,10 +16,40 @@ export interface IPaymentCard {
 
   // BT-88: Holder name
   holder?: string;
+
+  /**
+   * Get the card PAN.
+   */
+  get pan(): string | undefined;
+
+  /**
+   * Set the card PAN.
+   */
+  set pan(value: string | undefined);
+
+  /**
+   * Get the card network.
+   */
+  get network(): string | undefined;
+
+  /**
+   * Set the card network.
+   */
+  set network(value: string | undefined);
+
+  /**
+   * Get the card holder name.
+   */
+  get holder(): string | undefined;
+
+  /**
+   * Set the card holder name.
+   */
+  set holder(value: string | undefined);
 }
 
 export default
-class PaymentCard extends ValueObject<IPaymentCard> {
+class PaymentCard extends ValueObject<IPaymentCard> implements IPaymentCard {
   public static create(props: IPaymentCard): PaymentCard {
     return new PaymentCard(props);
   }
