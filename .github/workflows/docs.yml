@@ -22,6 +22,7 @@ jobs:
 
       - name: Build documentation
         run: |
+          npm run docs
           docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
       - name: Deploy documentation

@@ -49,7 +49,7 @@
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
     "lint": "eslint",
     "test": "jest",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --out ./docs",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --out ./docs && mv docs/README.md docs/index.md",
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch"
   },

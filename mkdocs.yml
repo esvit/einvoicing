@@ -10,5 +10,5 @@ plugins:
       minify_html: true
 
 nav:
-  - Home: README.md
+  - Home: index.md
   - Reference: globals.md
