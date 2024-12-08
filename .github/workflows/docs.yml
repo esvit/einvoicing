@@ -23,7 +23,7 @@ jobs:
       - name: Build documentation
         run: |
           npm run docs
-          docker run --rm -v ${PWD}:/wiki squidfunk/mkdocs-material build
+          docker run --rm -v ${PWD}:/docs squidfunk/mkdocs-material build
 
       - name: Configure wiki
         uses: actions4gh/configure-wiki@v1
