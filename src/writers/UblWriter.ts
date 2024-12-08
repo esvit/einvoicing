@@ -15,7 +15,7 @@ class UblWriter extends AbstractWriter {
     const builder = new XMLBuilder({
       attributeNamePrefix: 'attr_',
       ignoreAttributes: false,
-      format: true,
+      format: false,
       suppressEmptyNode: true
     });
 
@@ -23,12 +23,12 @@ class UblWriter extends AbstractWriter {
       Invoice: {
         'cbc:CustomizationID': 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
         'cbc:ProfileID': 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
-        'cbc:ID': document.id.toString(),
-        'cbc:IssueDate': document.issueDate?.toString(),
-        'cbc:DueDate': document.dueDate?.toString(),
-        'cbc:InvoiceTypeCode': document.type?.toString(),
+        'cbc:ID': document.id.toPrimitive(),
+        'cbc:IssueDate': document.issueDate?.toPrimitive(),
+        'cbc:DueDate': document.dueDate?.toPrimitive(),
+        'cbc:InvoiceTypeCode': document.type?.toPrimitive(),
         'cbc:Note': document.notes,
-        'cbc:DocumentCurrencyCode': document.currency?.toString(),
+        'cbc:DocumentCurrencyCode': document.currency?.toPrimitive(),
         'cbc:AccountingCost': document.buyerAccountingReference,
         'cbc:BuyerReference': document.buyerReference,
         'cac:OrderReference': {
@@ -37,7 +37,7 @@ class UblWriter extends AbstractWriter {
         'cac:BillingReference': document.precedingInvoiceReference?.map(reference => ({
           'cac:InvoiceDocumentReference': {
             'cbc:ID': reference.id,
-            'cbc:IssueDate': reference.issueDate?.toString()
+            'cbc:IssueDate': reference.issueDate?.toPrimitive()
           }
         })),
         'cac:ContractDocumentReference': {
@@ -52,11 +52,11 @@ class UblWriter extends AbstractWriter {
               'attr_mimeCode': attachment.content.mimeCode,
               'attr_filename': attachment.content.filename
             }
-          } : {
+          } : (attachment.externalUri ? {
             'cbc:ExternalReference': {
               'cbc:URI': attachment.externalUri
             }
-          }
+          } : undefined)
         })),
         'cac:AccountingSupplierParty': {
           'cac:Party': {
@@ -124,7 +124,7 @@ class UblWriter extends AbstractWriter {
           }
         },
         'cac:Delivery': {
-          'cbc:ActualDeliveryDate': document.delivery?.date?.toString(),
+          'cbc:ActualDeliveryDate': document.delivery?.date?.toPrimitive(),
           'cac:DeliveryLocation': {
             'cac:Address': {
               'cbc:StreetName': document.delivery?.address?.streetName,
@@ -147,19 +147,19 @@ class UblWriter extends AbstractWriter {
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
             '#text': document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           },
           'cac:TaxSubtotal': document.taxes?.map(tax => ({
             'cbc:TaxableAmount': {
               '#text': tax.taxableAmount?.toFixed(2),
-              'attr_currencyID': tax.currency?.toString()
+              'attr_currencyID': tax.currency?.toPrimitive()
             },
             'cbc:TaxAmount': {
               '#text': tax.taxAmount?.toFixed(2),
-              'attr_currencyID': tax.currency?.toString()
+              'attr_currencyID': tax.currency?.toPrimitive()
             },
             'cac:TaxCategory': {
-              'cbc:ID': tax.id.toString().split(':')[0],
+              'cbc:ID': tax.id.toPrimitive().split(':')[0],
               'cbc:Percent': tax.percent?.toFixed(2),
               'cbc:TaxExemptionReason': tax.taxExemptionReason,
               'cbc:TaxExemptionReasonCode': tax.taxExemptionReasonCode,
@@ -172,35 +172,35 @@ class UblWriter extends AbstractWriter {
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
             '#text': document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           },
           'cbc:TaxExclusiveAmount': {
             '#text': document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           },
           'cbc:TaxInclusiveAmount': {
             '#text': (document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0) + document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0)).toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           },
           'cbc:PayableAmount': {
             '#text': (document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0) + document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0)).toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           }
         },
         'cac:InvoiceLine': document.lines?.map(line => ({
-          'cbc:ID': line.id.toString(),
+          'cbc:ID': line.id.toPrimitive(),
           'cbc:InvoicedQuantity': {
             '#text': line.quantity?.toFixed(2),
             'attr_unitCode': line.unitCode
           },
           'cbc:LineExtensionAmount': {
             '#text': line.netAmount?.toFixed(2),
-            'attr_currencyID': document.currency?.toString()
+            'attr_currencyID': document.currency?.toPrimitive()
           },
           'cbc:AccountingCost': line.buyerAccountingReference,
           'cac:InvoicePeriod': {
-            'cbc:StartDate': line.periodStart?.toString(),
-            'cbc:EndDate': line.periodEnd?.toString()
+            'cbc:StartDate': line.periodStart?.toPrimitive(),
+            'cbc:EndDate': line.periodEnd?.toPrimitive()
           },
           'cac:Item': {
             'cbc:Description': line.description,
@@ -212,7 +212,7 @@ class UblWriter extends AbstractWriter {
               'cbc:IdentificationCode': line.originCountryCode
             },
             'cac:ClassifiedTaxCategory': {
-              'cbc:ID': line.tax?.id.toString().split(':')[0],
+              'cbc:ID': line.tax?.id.toPrimitive().split(':')[0],
               'cbc:Percent': line.tax?.percent?.toFixed(2),
               'cac:TaxScheme': {
                 'cbc:ID': 'VAT'
@@ -222,7 +222,7 @@ class UblWriter extends AbstractWriter {
           'cac:Price': {
             'cbc:PriceAmount': {
               '#text': line.price?.toFixed(2),
-              'attr_currencyID': document.currency?.toString()
+              'attr_currencyID': document.currency?.toPrimitive()
             }
           }
         }))

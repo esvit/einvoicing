@@ -66,6 +66,7 @@ describe('UblWriter', () => {
         companyId: '12345678',
         endpointId: '12345678',
         tradingName: "Company A",
+        legalName: "Company A",
         address: Address.create({
           addressLines: [
             "Street"
@@ -83,6 +84,7 @@ describe('UblWriter', () => {
         contactName: "n/a",
         endpointId: '87654321',
         tradingName: "Company B",
+        legalName: 'Company B',
         address: Address.create({
           addressLines: [
             "Bjerkåsholmen 125"
@@ -100,7 +102,13 @@ describe('UblWriter', () => {
         additionalIdentifiers: ["PAYEEID1", "PAYEEID2"]
       }),
       delivery: Delivery.create({
-        date: DateOnly.create('2019-01-25')
+        date: DateOnly.create('2019-01-25'),
+        address: Address.create({
+          streetName: 'Street',
+          cityName: 'Copenhagen',
+          postalZone: '1057',
+          countryCode: 'DK'
+        })
       }),
       periodStart: DateOnly.create('2018-09-01'),
       periodEnd: DateOnly.create('2018-09-30'),
@@ -179,13 +187,13 @@ describe('UblWriter', () => {
     expect(result).toContain('<cac:ContractDocumentReference><cbc:ID>CONTRACT123</cbc:ID></cac:ContractDocumentReference>');
     expect(result).toContain('<cac:AdditionalDocumentReference><cbc:ID>INV-123</cbc:ID></cac:AdditionalDocumentReference>');
     expect(result).toContain('<cac:AdditionalDocumentReference><cbc:ID>ATT-4321</cbc:ID><cbc:DocumentDescription>A link to an external attachment</cbc:DocumentDescription><cac:Attachment><cbc:ExternalReference><cbc:URI>https://www.example.com/document.pdf</cbc:URI></cbc:ExternalReference></cac:Attachment></cac:AdditionalDocumentReference>');
-    expect(result).toContain('<cac:AdditionalDocumentReference><cbc:ID>ATT-1234</cbc:ID><cac:Attachment><cbc:EmbeddedDocumentBinaryObject attr_mimeCode="application/pdf" attr_filename="ATT-1234.pdf">VGhlIGF0dGFjaG1lbnQgcmF3IGNvbnRlbnRz</cbc:EmbeddedDocumentBinaryObject></cac:Attachment></cac:AdditionalDocumentReference>');
+    expect(result).toContain('<cac:AdditionalDocumentReference><cbc:ID>ATT-1234</cbc:ID><cac:Attachment><cbc:EmbeddedDocumentBinaryObject mimeCode="application/pdf" filename="ATT-1234.pdf">VGhlIGF0dGFjaG1lbnQgcmF3IGNvbnRlbnRz</cbc:EmbeddedDocumentBinaryObject></cac:Attachment></cac:AdditionalDocumentReference>');
     expect(result).toContain('<cac:AccountingSupplierParty><cac:Party><cbc:EndpointID>12345678</cbc:EndpointID><cac:PartyIdentification><cbc:ID>12345678</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company A</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK12345678</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company A</cbc:RegistrationName><cbc:CompanyID>12345678</cbc:CompanyID></cac:PartyLegalEntity></cac:Party></cac:AccountingSupplierParty>');
     expect(result).toContain('<cac:AccountingCustomerParty><cac:Party><cbc:EndpointID>87654321</cbc:EndpointID><cac:PartyIdentification><cbc:ID>87654321</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company B</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Bjerkåsholmen 125</cbc:StreetName><cbc:CityName>Slemmestad</cbc:CityName><cbc:PostalZone>NO-3470</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK87654321</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company B</cbc:RegistrationName><cbc:CompanyID>87654321</cbc:CompanyID></cac:PartyLegalEntity><cac:Contact><cbc:Name>n/a</cbc:Name></cac:Contact></cac:Party></cac:AccountingCustomerParty>');
     expect(result).toContain('<cac:Delivery><cbc:ActualDeliveryDate>2019-01-25</cbc:ActualDeliveryDate><cac:DeliveryLocation><cac:Address><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:Address></cac:DeliveryLocation></cac:Delivery>');
     expect(result).toContain('<cac:PaymentMeans><cbc:PaymentMeansCode>58</cbc:PaymentMeansCode><cbc:PaymentID>12345667890</cbc:PaymentID><cac:PayeeFinancialAccount><cbc:ID>1234567891234</cbc:ID></cac:PayeeFinancialAccount></cac:PaymentMeans>');
-    expect(result).toContain('<cac:TaxTotal><cbc:TaxAmount attr_currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxSubtotal><cbc:TaxableAmount attr_currencyID="DKK">625743.54</cbc:TaxableAmount><cbc:TaxAmount attr_currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25.00</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal>');
-    expect(result).toContain('<cac:LegalMonetaryTotal><cbc:LineExtensionAmount attr_currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount attr_currencyID="DKK">625743.54</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount attr_currencyID="DKK">782179.43</cbc:TaxInclusiveAmount><cbc:PayableAmount attr_currencyID="DKK">782179.43</cbc:PayableAmount></cac:LegalMonetaryTotal>');
-    expect(result).toContain('<cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity attr_unitCode="KWH">1.00</cbc:InvoicedQuantity><cbc:LineExtensionAmount attr_currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:AccountingCost>n/a</cbc:AccountingCost><cac:InvoicePeriod><cbc:StartDate>2018-09-01</cbc:StartDate><cbc:EndDate>2018-09-30</cbc:EndDate></cac:InvoicePeriod><cac:Item><cbc:Description>text</cbc:Description><cbc:Name>text</cbc:Name><cac:SellersItemIdentification><cbc:ID>12345</cbc:ID></cac:SellersItemIdentification><cac:OriginCountry><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:OriginCountry><cac:ClassifiedTaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25.00</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:ClassifiedTaxCategory></cac:Item><cac:Price><cbc:PriceAmount attr_currencyID="DKK">625743.54</cbc:PriceAmount></cac:Price></cac:InvoiceLine>');
+    expect(result).toContain('<cac:TaxTotal><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="DKK">625743.54</cbc:TaxableAmount><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25.00</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal>');
+    expect(result).toContain('<cac:LegalMonetaryTotal><cbc:LineExtensionAmount currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount currencyID="DKK">625743.54</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount currencyID="DKK">782179.43</cbc:TaxInclusiveAmount><cbc:PayableAmount currencyID="DKK">782179.43</cbc:PayableAmount></cac:LegalMonetaryTotal>');
+    expect(result).toContain('<cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity unitCode="KWH">1.00</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:AccountingCost>n/a</cbc:AccountingCost><cac:InvoicePeriod><cbc:StartDate>2018-09-01</cbc:StartDate><cbc:EndDate>2018-09-30</cbc:EndDate></cac:InvoicePeriod><cac:Item><cbc:Description>text</cbc:Description><cbc:Name>text</cbc:Name><cac:SellersItemIdentification><cbc:ID>12345</cbc:ID></cac:SellersItemIdentification><cac:OriginCountry><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:OriginCountry><cac:ClassifiedTaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25.00</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:ClassifiedTaxCategory></cac:Item><cac:Price><cbc:PriceAmount currencyID="DKK">625743.54</cbc:PriceAmount></cac:Price></cac:InvoiceLine>');
   });
 });

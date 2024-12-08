@@ -21,46 +21,6 @@ export interface IDelivery {
 
   // Delivery postal address
   address?: Address;
-
-  /**
-   * Get the delivery name.
-   */
-  get name(): string | undefined;
-
-  /**
-   * Set the delivery name.
-   */
-  set name(value: string | undefined);
-
-  /**
-   * Get the actual delivery date.
-   */
-  get date(): DateOnly | undefined;
-
-  /**
-   * Set the actual delivery date.
-   */
-  set date(value: DateOnly | undefined);
-
-  /**
-   * Get the delivery location identifier.
-   */
-  get locationId(): string | undefined;
-
-  /**
-   * Set the delivery location identifier.
-   */
-  set locationId(value: string | undefined);
-
-  /**
-   * Get the delivery postal address.
-   */
-  get address(): Address | undefined;
-
-  /**
-   * Set the delivery postal address.
-   */
-  set address(value: Address | undefined);
 }
 
 export default

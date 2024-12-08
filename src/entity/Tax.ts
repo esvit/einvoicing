@@ -7,6 +7,7 @@
  */
 import {ITax, TaxId} from "../interface/ITax";
 import {Entity} from "../base/Entity";
+import CurrencyCode from "../valueObject/CurrencyCode";
 
 export default
 class Tax extends Entity<ITax, string, TaxId> {
