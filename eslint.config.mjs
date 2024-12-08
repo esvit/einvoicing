@@ -7,6 +7,6 @@ export default [
     tseslint.configs.recommended
   ),
   {
-    ignores: ['**/*.js'],
+    ignores: ['**/*.js', 'build/**'],
   }
 ]
