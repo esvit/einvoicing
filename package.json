@@ -1,6 +1,6 @@
 {
   "name": "einvoicing",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JavaScript library for creating and parsing electronic invoices compliant with the eInvoicing Directive, EN 16931, and popular extensions",
   "main": "build/index.js",
   "repository": "https://github.com/esvit/einvoicing",
