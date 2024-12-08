@@ -7,6 +7,7 @@
  */
 import {Entity} from "../base/Entity";
 import {DocumentLineId, IDocumentLine} from "../interface/IDocumentLine";
+import Tax from "./Tax";
 
 export default
 class DocumentLine extends Entity<IDocumentLine, string, DocumentLineId> {
@@ -57,31 +58,17 @@ class DocumentLine extends Entity<IDocumentLine, string, DocumentLineId> {
   }
 
   /**
-   * Get the unit price.
+   * Get the net amount
    */
-  get unitPrice() {
-    return this.props.unitPrice;
+  get netAmount() {
+    return this.props.netAmount;
   }
 
   /**
-   * Set the unit price.
+   * Set the net amount
    */
-  set unitPrice(value: number | undefined) {
-    this.props.unitPrice = value;
-  }
-
-  /**
-   * Get the line extension amount.
-   */
-  get lineExtensionAmount() {
-    return this.props.lineExtensionAmount;
-  }
-
-  /**
-   * Set the line extension amount.
-   */
-  set lineExtensionAmount(value: number | undefined) {
-    this.props.lineExtensionAmount = value;
+  set netAmount(value: number | undefined) {
+    this.props.netAmount = value;
   }
 
   /**

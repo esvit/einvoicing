@@ -109,6 +109,11 @@ describe('UblWriter', () => {
       lines: [
         DocumentLine.create({
           id: new DocumentLineId('1'),
+          "classificationIdentifiers": [Identifier.create({
+            "id": "65434568",
+            "scheme": "STI"
+          })],
+          attributes: [Attribute.create({ name: 'Color', value: 'Black' })],
           quantity: 1,
           unitCode: 'KWH',
           buyerAccountingReference: "n/a",

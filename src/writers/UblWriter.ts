@@ -48,7 +48,7 @@ class UblWriter extends AbstractWriter {
           'cbc:DocumentDescription': attachment.description,
           'cac:Attachment': attachment.content ? {
             'cbc:EmbeddedDocumentBinaryObject': {
-              '#text': attachment.content.toBase64(),
+              '#text': btoa(attachment.content.content),
               'attr_mimeCode': attachment.content.mimeCode,
               'attr_filename': attachment.content.filename
             }

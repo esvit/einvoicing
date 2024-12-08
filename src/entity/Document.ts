@@ -7,9 +7,21 @@
  */
 import {Entity} from "../base/Entity";
 import {IDocument, DocumentId} from "../interface/IDocument";
+import DateOnly from "../valueObject/DateOnly";
+import DocumentType from "../valueObject/DocumentType";
+import CurrencyCode from "../valueObject/CurrencyCode";
+import InvoiceReference from "../valueObject/InvoiceReference";
+import Attachment from "../valueObject/Attachment";
+import Party from "../valueObject/Party";
+import Payee from "../valueObject/Payee";
+import Delivery from "../valueObject/Delivery";
+import DocumentLine from "./DocumentLine";
+import Payment from "../valueObject/Payment";
+import AllowanceCharge from "../valueObject/AllowanceCharge";
+import Tax from "./Tax";
 
 export default
-class Document extends Entity<IDocument, string, DocumentId> implements IDocument {
+class Document extends Entity<IDocument, string, DocumentId> {
   public static create(props: IDocument): Document {
     return new Document(props, props.id);
   }
