@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [18, 24]
+        version: [18, 22]
 
     steps:
       - name: Checkout code
