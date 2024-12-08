@@ -33,6 +33,9 @@ import PaymentTransfer,{IPaymentTransfer} from './valueObject/PaymentTransfer';
 import { IDocument, DocumentId } from './interface/IDocument';
 import { IDocumentLine, DocumentLineId } from './interface/IDocumentLine';
 import { ITax, TaxId } from './interface/ITax';
+import {Entity} from './base/Entity';
+import {EntityId} from './base/EntityId';
+import {ValueObject} from './base/ValueObject';
 
 export {
   AbstractRuleset,
@@ -83,4 +86,9 @@ export {
   IPaymentCard,
   IPaymentMandate,
   IPaymentTransfer,
+
+  // core
+  EntityId,
+  Entity,
+  ValueObject
 };
