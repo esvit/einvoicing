@@ -557,6 +557,7 @@ describe('UblReader', () => {
         "attachments": [
           Attachment.create({
             "description": "Timesheet",
+            "externalUri": "http://www.suppliersite.eu/sheet001.html",
             "id": "Doc1"
           }),
           Attachment.create({
@@ -846,6 +847,106 @@ describe('UblReader', () => {
         ],
       });
     });
+    test('ubl-invoice-2.0-example.xml', async () => {
+      const result = await ublReader.readFromFile('tests/files/ubl-invoice-2.0-example.xml');
+      const tax = Tax.create({
+        "id": new TaxId('A', 0),
+        "currency": CurrencyCode.create("GBP"),
+        "taxAmount": 17.5,
+        "taxableAmount": 100
+      });
+      expect(result.validate()).toEqual({ errors: [], warning: [] });
+      expect(result.toPrimitive()).toEqual({
+        "id": new DocumentId('A00095678'),
+        "issueDate": DateOnly.create('2005-06-21'),
+        "dueDate": DateOnly.create('2005-07-21'),
+        taxPointDate: DateOnly.create('2005-06-21'),
+        "type": DocumentType.create('SalesInvoice'),
+        "payment": Payment.create({
+          "meansCode": "20",
+          "terms": "Payable within 1 calendar month from the invoice date",
+          transfer: PaymentTransfer.create({ "account": "12345678", "name": "Farthing Purchasing Consortium" })
+        }),
+        "charges": [
+          AllowanceCharge.create({
+            "amount": 10,
+            "factorAmount": 0.1,
+            "isCharge": false,
+            "reasonCode": "17"
+          })
+        ],
+        buyer: Party.create({
+          "contactEmail": "fred@iytcorporation.gov.uk",
+          "contactName": "Mr Fred Churchill",
+          "contactPhone": "0127 2653214",
+          "taxRegistrationId": {
+            "companyId": "12356478",
+            "taxScheme": "UK VAT"
+          },
+          "tradingName": "IYT Corporation",
+          address: Address.create({
+            "addressLines": [
+              "Avon Way",
+              "56A"
+            ],
+            "cityName": "Bridgtow",
+            "countryCode": "GB",
+            "postalZone": "ZZ99 1ZZ",
+            "streetName": "Avon Way",
+            "subdivision": "Avon"
+          }),
+        }),
+        "notes": "sample",
+        seller: Party.create({
+          "contactEmail": "bouquet@fpconsortial.co.uk",
+          "contactName": "Mrs Bouquet",
+          "contactPhone": "0158 1233714",
+          "tradingName": "Consortial",
+          "vatNumber": "175 269 2355",
+          address: Address.create({
+            "addressLines": [
+              "Busy Street",
+              "56A"
+            ],
+            "cityName": "Farthing",
+            "countryCode": "GB",
+            "postalZone": "AA99 1BB",
+            "streetName": "Busy Street",
+            "subdivision": "Heremouthshire"
+          })
+        }),
+        delivery: Delivery.create({
+          "date": DateOnly.create('2005-06-20'),
+          address: Address.create({
+            "addressLines": [
+              "Avon Way",
+              "56A"
+            ],
+            "cityName": "Bridgtow",
+            "countryCode": "GB",
+            "postalZone": "ZZ99 1ZZ",
+            "streetName": "Avon Way",
+            "subdivision": "Avon"
+          })
+        }),
+        "taxes": [tax],
+        lines: [
+          DocumentLine.create({
+            id: new DocumentLineId('A'),
+            "baseQuantity": 1,
+            "buyerIdentifier": "6578489",
+            "description": "Acme beeswax",
+            "name": "beeswax",
+            "netAmount": 100,
+            "orderLineReference": "1",
+            "price": 1,
+            "quantity": 100,
+            "sellerIdentifier": "17589683",
+            "unitCode": "KGM"
+          })
+        ],
+      });
+    });
 
     // examples from https://github.com/josemmo/einvoicing
     test('peppol-allowance.xml', async () => {
@@ -1056,9 +1157,12 @@ describe('UblReader', () => {
         ],
         "currency": CurrencyCode.create("EUR"),
         "attachments": [
-          Attachment.create({ "id": "INV-123" }),
+          Attachment.create({
+            "id": "INV-123",
+          }),
           Attachment.create({
             "description": "A link to an external attachment",
+            "externalUri": "https://www.example.com/document.pdf",
             "id": "ATT-4321"
           }),
           Attachment.create({

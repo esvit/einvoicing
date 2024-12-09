@@ -9,25 +9,9 @@ import {ValueObject} from "../base/ValueObject";
 
 // https://docs.peppol.eu/poacc/billing/3.0/2024-Q2/codelist/UNCL1001-inv/
 export default
-class DocumentType extends ValueObject<{ type: number }> {
-  public static create(type: number|string): DocumentType {
-    return new DocumentType({
-      type: Number(type)
-    });
-  }
-
-  /**
-   * Get the document type.
-   */
-  get type() {
-    return this.props.type;
-  }
-
-  /**
-   * Set the document type.
-   */
-  set type(value: number) {
-    this.props.type = value;
+class DocumentType extends ValueObject<{ type: string }> {
+  public static create(type: string): DocumentType {
+    return new DocumentType({ type: type.toString() });
   }
 
   toPrimitive() {

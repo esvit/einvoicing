@@ -112,7 +112,7 @@ class UblReader extends AbstractReader {
         content,
         id: attachment['cbc:ID'], // BT-122: Supporting document reference
         description: attachment['cbc:DocumentDescription'], // BT-123: Supporting document description
-        externalUri: attachment['cac:Attachment']?.['cbc:ExternalReference']?.['cbc:URI'] // BT-124: External document location
+        externalUri: attachment['cac:Attachment']?.['cac:ExternalReference']?.['cbc:URI'] // BT-124: External document location
       });
     });
     const lines = documentType === DocumentTypes.Invoice ? getArray(documentNode, ['cac:InvoiceLine']) : getArray(documentNode, ['cac:CreditNoteLine']);

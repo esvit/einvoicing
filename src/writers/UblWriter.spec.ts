@@ -29,7 +29,7 @@ describe('UblWriter', () => {
     ublWriter = new UblWriter();
   });
 
-  test('write UBL eInvoicing document', () => {
+  test('write UBL eInvoicing document', async () => {
     const ruleset = new DKRuleset();
     const document = Document.create(DocumentTypes.Invoice, ruleset, {
       id: new DocumentId('12345'),
@@ -176,6 +176,7 @@ describe('UblWriter', () => {
     });
 
     const result = ublWriter.write(document);
+    await ublWriter.writeToFile(document, 'test.xml');
     expect(result).toContain('<cbc:ID>12345</cbc:ID>');
     expect(result).toContain('<cbc:IssueDate>2019-01-25</cbc:IssueDate>');
     expect(result).toContain('<cbc:DueDate>2019-02-24</cbc:DueDate>');

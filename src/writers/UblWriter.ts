@@ -53,7 +53,7 @@ class UblWriter extends AbstractWriter {
               'attr_filename': attachment.content.filename
             }
           } : (attachment.externalUri ? {
-            'cbc:ExternalReference': {
+            'cac:ExternalReference': {
               'cbc:URI': attachment.externalUri
             }
           } : undefined)
