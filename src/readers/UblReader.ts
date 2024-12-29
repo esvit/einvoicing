@@ -486,8 +486,9 @@ export default class UblReader extends AbstractReader {
     if (node['cac:TaxCategory']?.['cbc:ID'] && !tax) {
       throw new Error(`Tax category ${taxId} not found`);
     }
+
     return AllowanceCharge.create({
-      isCharge: node['cbc:ChargeIndicator'] === 'true',
+      isCharge: Boolean(node['cbc:ChargeIndicator']),
       reasonCode: strOrUnd(node['cbc:AllowanceChargeReasonCode']),
       reasonText: strOrUnd(node['cbc:AllowanceChargeReason']),
       factorAmount: numOrUnd(node['cbc:MultiplierFactorNumeric']),

@@ -737,7 +737,7 @@ describe('UblReader', () => {
           }),
           AllowanceCharge.create({
             amount: 100,
-            isCharge: false,
+            isCharge: true,
             reasonText: 'Freight',
             tax,
           }),
@@ -757,7 +757,7 @@ describe('UblReader', () => {
               }),
               AllowanceCharge.create({
                 amount: 12,
-                isCharge: false,
+                isCharge: true,
                 reasonText: 'Testing',
               }),
             ],
@@ -906,7 +906,7 @@ describe('UblReader', () => {
         charges: [
           AllowanceCharge.create({
             amount: 100,
-            isCharge: false,
+            isCharge: true,
             reasonText: 'Freight charge',
             tax,
           }),
@@ -1200,7 +1200,7 @@ describe('UblReader', () => {
           AllowanceCharge.create({
             amount: 1189.8,
             factorAmount: 20,
-            isCharge: false,
+            isCharge: true,
             reasonCode: 'CG',
             reasonText: 'Cleaning',
             tax: vat,
@@ -1233,7 +1233,7 @@ describe('UblReader', () => {
               AllowanceCharge.create({
                 amount: 41,
                 factorAmount: 1,
-                isCharge: false,
+                isCharge: true,
                 reasonCode: 'CG',
                 reasonText: 'Cleaning',
               }),
@@ -1299,7 +1299,7 @@ describe('UblReader', () => {
               AllowanceCharge.create({
                 amount: 10,
                 factorAmount: 1,
-                isCharge: false,
+                isCharge: true,
                 reasonCode: 'CG',
                 reasonText: 'Charge',
               }),
@@ -1436,7 +1436,7 @@ describe('UblReader', () => {
         charges: [
           AllowanceCharge.create({
             amount: 25,
-            isCharge: false,
+            isCharge: true,
             reasonText: 'Insurance',
             tax: vat,
           }),
@@ -1577,7 +1577,7 @@ describe('UblReader', () => {
         charges: [
           AllowanceCharge.create({
             amount: 25,
-            isCharge: false,
+            isCharge: true,
             reasonText: 'Insurance',
             tax: vat,
           }),
@@ -1823,7 +1823,7 @@ describe('UblReader', () => {
           }),
           AllowanceCharge.create({
             amount: 200,
-            isCharge: false,
+            isCharge: true,
             reasonText: 'Cleaning',
             tax: tax1,
           }),

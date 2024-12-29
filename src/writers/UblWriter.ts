@@ -186,6 +186,23 @@ export default class UblWriter extends AbstractWriter {
         'cac:PaymentTerms': {
           'cbc:Note': document.payment?.terms,
         },
+        'cac:AllowanceCharge': document.charges?.map((charge) => ({
+          'cbc:ChargeIndicator': charge.isCharge,
+          'cbc:AllowanceChargeReason': charge.reasonText,
+          'cbc:Amount': {
+            '#text': formatNumber(charge.amount),
+            attr_currencyID: document.currency?.toPrimitive(),
+          },
+          'cac:TaxCategory': {
+            'cbc:ID': charge.tax.id.toPrimitive().split(':')[0],
+            'cbc:Percent': formatNumber(charge.tax.percent),
+            'cbc:TaxExemptionReason': charge.tax.taxExemptionReason,
+            'cbc:TaxExemptionReasonCode': charge.tax.taxExemptionReasonCode,
+            'cac:TaxScheme': {
+              'cbc:ID': 'VAT',
+            },
+          },
+        })),
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
             '#text': formatNumber(
