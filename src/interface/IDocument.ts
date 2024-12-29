@@ -39,6 +39,7 @@ export interface IDocument {
   buyerReference?: string;
   buyerAccountingReference?: string;
   purchaseOrderReference?: Identifier;
+  originatorDocumentReference?: Identifier;
   salesOrderReference?: string;
   tenderOrLotReference?: string;
   contractReference?: Identifier;

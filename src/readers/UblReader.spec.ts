@@ -96,7 +96,7 @@ describe('UblReader', () => {
           }),
           vatNumber: 'DK12345678',
         }),
-        contractReference: InvoiceReference.create({
+        contractReference: Identifier.create({
           id: '12345',
         }),
         taxes: [vat],
@@ -193,7 +193,7 @@ describe('UblReader', () => {
           }),
           vatNumber: 'DK12345678',
         }),
-        contractReference: InvoiceReference.create({
+        contractReference: Identifier.create({
           id: '12345',
         }),
         taxes: [vat],
@@ -670,7 +670,7 @@ describe('UblReader', () => {
             subdivision: 'RegionB',
           }),
         }),
-        contractReference: InvoiceReference.create({
+        contractReference: Identifier.create({
           id: 'Contract321',
         }),
         currency: CurrencyCode.create('NOK'),
@@ -1292,7 +1292,7 @@ describe('UblReader', () => {
           }),
           InvoiceReference.create({ id: 'INV-123' }),
         ],
-        contractReference: InvoiceReference.create({
+        contractReference: Identifier.create({
           id: '123Contractref',
         }),
         currency: CurrencyCode.create('EUR'),
@@ -1359,6 +1359,9 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+        }),
+        originatorDocumentReference: Identifier.create({
+          id: 'PPID-123',
         }),
         payment: Payment.create({
           id: 'Snippet1',

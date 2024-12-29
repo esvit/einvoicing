@@ -222,6 +222,11 @@ export default class UblReader extends AbstractReader {
         documentNode['cac:OrderReference']?.['cbc:ID'],
       ),
 
+      // BT-17: Originator document reference
+      originatorDocumentReference: nodeToId(
+        documentNode['cac:OriginatorDocumentReference']?.['cbc:ID'],
+      ),
+
       // BT-14: Sales order reference
       salesOrderReference: strOrUnd(
         documentNode['cbc:OrderReference']?.['cbc:SalesOrderID'],

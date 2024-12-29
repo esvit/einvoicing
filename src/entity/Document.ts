@@ -184,6 +184,20 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
   }
 
   /**
+   * Get the originator document reference.
+   */
+  get originatorDocumentReference() {
+    return this.props.originatorDocumentReference;
+  }
+
+  /**
+   * Set the originator document reference.
+   */
+  set originatorDocumentReference(value: Identifier | undefined) {
+    this.props.originatorDocumentReference = value;
+  }
+
+  /**
    * Get the sales order reference.
    */
   get salesOrderReference() {
