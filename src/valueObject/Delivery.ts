@@ -8,6 +8,7 @@
 import { ValueObject } from '../base/ValueObject';
 import DateOnly from './DateOnly';
 import Address from './Address';
+import Identifier from './Identifier';
 
 export interface IDelivery {
   // BT-70: Deliver name
@@ -17,7 +18,7 @@ export interface IDelivery {
   date?: DateOnly;
 
   // BT-71: Delivery location identifier
-  locationId?: string;
+  locationId?: Identifier;
 
   // Delivery postal address
   address?: Address;
@@ -69,7 +70,7 @@ export default class Delivery
   /**
    * Set the delivery location identifier.
    */
-  set locationId(value: string | undefined) {
+  set locationId(value: Identifier | undefined) {
     this.props.locationId = value;
   }
 

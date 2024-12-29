@@ -374,7 +374,7 @@ export default class UblReader extends AbstractReader {
       date: node['cbc:ActualDeliveryDate']
         ? DateOnly.create(node['cbc:ActualDeliveryDate'])
         : undefined,
-      locationId: strOrUnd(node['cbc:DeliveryLocation']?.['cbc:ID']),
+      locationId: nodeToId(node['cac:DeliveryLocation']?.['cbc:ID']),
       address: this.addressFromXmlNode(node['cac:DeliveryAddress']),
     });
   }

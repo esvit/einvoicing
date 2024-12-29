@@ -643,7 +643,13 @@ describe('UblReader', () => {
             '2 % discount if paid within 2 days Penalty percentage 10% from due date',
           transfer: PaymentTransfer.create({ account: 'NO9386011117947' }),
         }),
-        delivery: Delivery.create({ date: DateOnly.create('2013-06-15') }),
+        delivery: Delivery.create({
+          date: DateOnly.create('2013-06-15'),
+          locationId: Identifier.create({
+            id: '6754238987643',
+            scheme: '0088',
+          }),
+        }),
         notes: 'Ordered in our booth at the convention',
         paidAmount: 1000,
         payee: Payee.create({
@@ -1131,6 +1137,10 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          locationId: Identifier.create({
+            id: '7300010000001',
+            scheme: '0088',
+          }),
         }),
         payment: Payment.create({
           id: 'Snippet1',
@@ -1359,6 +1369,10 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          locationId: Identifier.create({
+            id: '9483759475923478',
+            scheme: '0088',
+          }),
         }),
         originatorDocumentReference: Identifier.create({
           id: 'PPID-123',
@@ -1490,6 +1504,10 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          locationId: Identifier.create({
+            id: '9483759475923478',
+            scheme: '0088',
+          }),
         }),
         payment: Payment.create({
           id: 'Snippet1',
@@ -1753,7 +1771,13 @@ describe('UblReader', () => {
           }),
         ],
         currency: CurrencyCode.create('EUR'),
-        delivery: Delivery.create({ date: DateOnly.create('2017-11-01') }),
+        delivery: Delivery.create({
+          date: DateOnly.create('2017-11-01'),
+          locationId: Identifier.create({
+            id: '7300010000001',
+            scheme: '0088',
+          }),
+        }),
         dueDate: DateOnly.create('2017-12-01'),
         id: new DocumentId('Snippet1'),
         issueDate: DateOnly.create('2017-11-13'),

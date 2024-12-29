@@ -150,6 +150,7 @@ export default class UblWriter extends AbstractWriter {
         'cac:Delivery': {
           'cbc:ActualDeliveryDate': document.delivery?.date?.toPrimitive(),
           'cac:DeliveryLocation': {
+            'cbc:ID': document.delivery?.locationId?.toPrimitive(),
             'cac:Address': {
               'cbc:StreetName': document.delivery?.address?.streetName,
               'cbc:AdditionalStreetName':
