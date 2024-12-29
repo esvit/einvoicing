@@ -163,6 +163,11 @@ export default class UblWriter extends AbstractWriter {
               },
             },
           },
+          'cac:DeliveryParty': {
+            'cac:PartyName': {
+              'cbc:Name': document.delivery?.name,
+            },
+          },
         },
         'cac:PaymentMeans': {
           'cbc:PaymentMeansCode': document.payment?.meansCode,

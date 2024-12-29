@@ -371,7 +371,9 @@ export default class UblReader extends AbstractReader {
     }
 
     return Delivery.create({
-      name: strOrUnd(node['cac:PartyName']?.['cbc:Name']),
+      name: strOrUnd(
+        node['cac:DeliveryParty']?.['cac:PartyName']?.['cbc:Name'],
+      ),
       date: node['cbc:ActualDeliveryDate']
         ? DateOnly.create(node['cbc:ActualDeliveryDate'])
         : undefined,

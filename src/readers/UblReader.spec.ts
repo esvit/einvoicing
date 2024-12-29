@@ -1159,6 +1159,7 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          name: 'Delivery party Name',
           address: Address.create({
             addressLines: ['Delivery street 2', 'Building 56'],
             cityName: 'Stockholm',
@@ -1399,6 +1400,7 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          name: 'Delivery party Name',
           address: Address.create({
             addressLines: ['Delivery street 2', 'Building 56'],
             cityName: 'Stockholm',
@@ -1541,6 +1543,7 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          name: 'Delivery party Name',
           locationId: Identifier.create({
             id: '9483759475923478',
             scheme: '0088',
@@ -1817,6 +1820,7 @@ describe('UblReader', () => {
         currency: CurrencyCode.create('EUR'),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          name: 'Delivery party Name',
           locationId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',
