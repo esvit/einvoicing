@@ -8,7 +8,7 @@
 import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
-import { formatNumber } from '../helpers';
+import { formatNumber, omitEmpty } from '../helpers';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -270,10 +270,10 @@ export default class UblWriter extends AbstractWriter {
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:AccountingCost': line.buyerAccountingReference,
-          'cac:InvoicePeriod': {
+          'cac:InvoicePeriod': omitEmpty({
             'cbc:StartDate': line.periodStart?.toPrimitive(),
             'cbc:EndDate': line.periodEnd?.toPrimitive(),
-          },
+          }),
           'cac:OrderLineReference': {
             'cbc:LineID': line.orderLineReference?.toPrimitive(),
           },

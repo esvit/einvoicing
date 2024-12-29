@@ -84,3 +84,11 @@ const formatter = new Intl.NumberFormat('en-US', {
 export function formatNumber(n: number): string {
   return formatter.format(n);
 }
+
+export function omitEmpty(obj: object): object | undefined {
+  if (Object.values(obj).some((v) => v !== undefined)) {
+    return obj;
+  }
+
+  return undefined;
+}
