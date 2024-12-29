@@ -22,7 +22,7 @@ export interface IDocumentLine {
   quantity?: number;
   unitCode?: string;
   buyerAccountingReference?: string;
-  orderLineReference?: string;
+  orderLineReference?: Identifier;
   periodStart?: DateOnly;
   periodEnd?: DateOnly;
   name?: string;

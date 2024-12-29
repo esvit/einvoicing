@@ -88,7 +88,7 @@ export default class DocumentLine extends Entity<
   /**
    * Set the order line reference.
    */
-  set orderLineReference(value: string | undefined) {
+  set orderLineReference(value: Identifier | undefined) {
     this.props.orderLineReference = value;
   }
 

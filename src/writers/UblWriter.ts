@@ -257,6 +257,9 @@ export default class UblWriter extends AbstractWriter {
             'cbc:StartDate': line.periodStart?.toPrimitive(),
             'cbc:EndDate': line.periodEnd?.toPrimitive(),
           },
+          'cac:OrderLineReference': {
+            'cbc:LineID': line.orderLineReference?.toPrimitive(),
+          },
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,

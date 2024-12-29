@@ -558,7 +558,7 @@ export default class UblReader extends AbstractReader {
       ...this.periodFromXmlNode(node),
 
       // BT-132: Order line reference
-      orderLineReference: strOrUnd(
+      orderLineReference: nodeToId(
         node['cac:OrderLineReference']?.['cbc:LineID'],
       ),
 
