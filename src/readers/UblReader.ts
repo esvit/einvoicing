@@ -394,6 +394,7 @@ export default class UblReader extends AbstractReader {
     if (!meansNode && !note) {
       return undefined;
     }
+
     return Payment.create({
       // BT-20: Payment terms
       terms: strOrUnd(note),

@@ -170,7 +170,10 @@ export default class UblWriter extends AbstractWriter {
           },
         },
         'cac:PaymentMeans': {
-          'cbc:PaymentMeansCode': document.payment?.meansCode,
+          'cbc:PaymentMeansCode': {
+            attr_name: document.payment?.meansName,
+            '#text': document.payment?.meansCode,
+          },
           'cbc:PaymentID': document.payment?.id,
           'cac:PayeeFinancialAccount': {
             'cbc:ID': document.payment?.transfer?.account,
