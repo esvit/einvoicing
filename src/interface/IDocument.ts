@@ -18,6 +18,7 @@ import Payee from '../valueObject/Payee';
 import Payment from '../valueObject/Payment';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import Tax from '../entity/Tax';
+import Identifier from '../valueObject/Identifier';
 
 export class DocumentId extends EntityId<string> {
   readonly DocumentId = 'document_id';
@@ -37,7 +38,7 @@ export interface IDocument {
   currency?: CurrencyCode;
   buyerReference?: string;
   buyerAccountingReference?: string;
-  purchaseOrderReference?: string;
+  purchaseOrderReference?: Identifier;
   salesOrderReference?: string;
   tenderOrLotReference?: string;
   contractReference?: string;

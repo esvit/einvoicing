@@ -20,6 +20,7 @@ import Payment from '../valueObject/Payment';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import Tax from './Tax';
 import AbstractRuleset from '../ruleset/AbstractRuleset';
+import Identifier from '../valueObject/Identifier';
 
 export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _ruleset: AbstractRuleset;
@@ -178,7 +179,7 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
   /**
    * Set the purchase order reference.
    */
-  set purchaseOrderReference(value: string | undefined) {
+  set purchaseOrderReference(value: Identifier | undefined) {
     this.props.purchaseOrderReference = value;
   }
 

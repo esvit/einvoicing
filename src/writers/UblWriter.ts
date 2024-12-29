@@ -40,7 +40,7 @@ export default class UblWriter extends AbstractWriter {
         'cbc:AccountingCost': document.buyerAccountingReference,
         'cbc:BuyerReference': document.buyerReference,
         'cac:OrderReference': {
-          'cbc:ID': document.purchaseOrderReference,
+          'cbc:ID': document.purchaseOrderReference.toPrimitive(),
         },
         'cac:BillingReference': document.precedingInvoiceReference?.map(
           (reference) => ({

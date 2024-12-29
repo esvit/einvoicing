@@ -77,6 +77,7 @@ describe('UblReader', () => {
           }),
           vatNumber: 'DK87654321',
         }),
+        purchaseOrderReference: Identifier.create({ id: 'n/a' }),
         seller: Party.create({
           additionalIdentifiers: [
             Identifier.create({ id: '12345678', scheme: '0184' }),
@@ -168,6 +169,7 @@ describe('UblReader', () => {
           }),
           vatNumber: 'DK87654321',
         }),
+        purchaseOrderReference: Identifier.create({ id: 'n/a' }),
         seller: Party.create({
           additionalIdentifiers: [
             Identifier.create({ id: '12345678', scheme: '0184' }),
@@ -654,6 +656,7 @@ describe('UblReader', () => {
           }),
         }),
         currency: CurrencyCode.create('NOK'),
+        purchaseOrderReference: Identifier.create({ id: '123' }),
         seller: Party.create({
           additionalIdentifiers: [
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
@@ -975,6 +978,7 @@ describe('UblReader', () => {
           }),
         }),
         notes: 'sample',
+        purchaseOrderReference: Identifier.create({ id: 'AEG012345' }),
         seller: Party.create({
           contactEmail: 'bouquet@fpconsortial.co.uk',
           contactName: 'Mrs Bouquet',
@@ -1305,6 +1309,7 @@ describe('UblReader', () => {
             streetName: 'Hovedgatan 32',
           }),
         }),
+        purchaseOrderReference: Identifier.create({ id: '854777' }),
         seller: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '99887766' })],
           companyId: Identifier.create({ id: 'GB983294' }),

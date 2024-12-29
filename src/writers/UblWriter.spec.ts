@@ -39,7 +39,7 @@ describe('UblWriter', () => {
       currency: CurrencyCode.create('DKK'),
       buyerReference: 'n/a',
       buyerAccountingReference: 'n/a',
-      purchaseOrderReference: 'PO12345',
+      purchaseOrderReference: Identifier.create({ id: 'PO12345' }),
       salesOrderReference: 'SO12345',
       tenderOrLotReference: 'TENDER123',
       contractReference: 'CONTRACT123',

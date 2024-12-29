@@ -217,8 +217,8 @@ export default class UblReader extends AbstractReader {
       ),
 
       // BT-13: Purchase order reference
-      purchaseOrderReference: strOrUnd(
-        documentNode['cbc:OrderReference']?.['cbc:ID'],
+      purchaseOrderReference: nodeToId(
+        documentNode['cac:OrderReference']?.['cbc:ID'],
       ),
 
       // BT-14: Sales order reference
