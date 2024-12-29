@@ -24,7 +24,7 @@ import Identifier from '../valueObject/Identifier';
 import Attribute from '../valueObject/Attribute';
 import Payee from '../valueObject/Payee';
 import Delivery from '../valueObject/Delivery';
-import { strOrUnd, numOrUnd, getArray, XmlNode } from '../helpers';
+import { strOrUnd, numOrUnd, getArray, XmlNode, nodeToId } from '../helpers';
 import Payment from '../valueObject/Payment';
 import PaymentCard from '../valueObject/PaymentCard';
 import PaymentTransfer from '../valueObject/PaymentTransfer';
@@ -38,11 +38,34 @@ import { TaxId } from '../interface/ITax';
  */
 export default class UblReader extends AbstractReader {
   async read(content: string): Promise<Document> {
+    const attributeValueProcessor = (name: string, value: string) => {
+      switch (name) {
+        case 'schemeID': {
+          return null;
+        }
+        default:
+          return value;
+      }
+    };
+
+    const tagValueProcessor = (tagName: string, tagValue: string) => {
+      switch (tagName) {
+        case 'cbc:EndpointID':
+        case 'cbc:ID': {
+          return null;
+        }
+        default:
+          return tagValue;
+      }
+    };
+
     const options: X2jOptions = {
       attributeNamePrefix: 'attr_',
       ignoreAttributes: false,
       parseAttributeValue: true,
       trimValues: true,
+      attributeValueProcessor,
+      tagValueProcessor,
     };
     const parser = new XMLParser(options);
     const json = parser.parse(content);
@@ -295,7 +318,7 @@ export default class UblReader extends AbstractReader {
     }
 
     return Party.create({
-      endpointId: strOrUnd(node['cbc:EndpointID']),
+      endpointId: nodeToId(node['cbc:EndpointID']),
       address: this.addressFromXmlNode(node['cac:PostalAddress']),
       tradingName: strOrUnd(node['cac:PartyName']?.['cbc:Name']),
       legalName: strOrUnd(node['cac:PartyName']?.['cbc:RegistrationName']),

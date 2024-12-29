@@ -76,7 +76,7 @@ export default class UblWriter extends AbstractWriter {
         ),
         'cac:AccountingSupplierParty': {
           'cac:Party': {
-            'cbc:EndpointID': document.seller?.endpointId,
+            'cbc:EndpointID': document.seller?.endpointId.toPrimitive(),
             'cac:PartyIdentification':
               document.seller?.additionalIdentifiers?.map((id) => ({
                 'cbc:ID': id,
@@ -108,7 +108,7 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:AccountingCustomerParty': {
           'cac:Party': {
-            'cbc:EndpointID': document.buyer?.endpointId,
+            'cbc:EndpointID': document.buyer?.endpointId.toPrimitive(),
             'cac:PartyIdentification':
               document.buyer?.additionalIdentifiers?.map((id) => ({
                 'cbc:ID': id,

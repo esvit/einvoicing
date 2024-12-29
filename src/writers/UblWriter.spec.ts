@@ -69,7 +69,7 @@ describe('UblWriter', () => {
       seller: Party.create({
         additionalIdentifiers: ['12345678'],
         companyId: '12345678',
-        endpointId: '12345678',
+        endpointId: Identifier.create({ id: '12345678', scheme: '0088' }),
         tradingName: 'Company A',
         legalName: 'Company A',
         address: Address.create({
@@ -85,7 +85,7 @@ describe('UblWriter', () => {
         additionalIdentifiers: ['87654321'],
         companyId: '87654321',
         contactName: 'n/a',
-        endpointId: '87654321',
+        endpointId: Identifier.create({ id: '87654321', scheme: '0002' }),
         tradingName: 'Company B',
         legalName: 'Company B',
         address: Address.create({
@@ -209,10 +209,10 @@ describe('UblWriter', () => {
       '<cac:AdditionalDocumentReference><cbc:ID>ATT-1234</cbc:ID><cac:Attachment><cbc:EmbeddedDocumentBinaryObject mimeCode="application/pdf" filename="ATT-1234.pdf">VGhlIGF0dGFjaG1lbnQgcmF3IGNvbnRlbnRz</cbc:EmbeddedDocumentBinaryObject></cac:Attachment></cac:AdditionalDocumentReference>',
     );
     expect(result).toContain(
-      '<cac:AccountingSupplierParty><cac:Party><cbc:EndpointID>12345678</cbc:EndpointID><cac:PartyIdentification><cbc:ID>12345678</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company A</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK12345678</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company A</cbc:RegistrationName><cbc:CompanyID>12345678</cbc:CompanyID></cac:PartyLegalEntity></cac:Party></cac:AccountingSupplierParty>',
+      '<cac:AccountingSupplierParty><cac:Party><cbc:EndpointID schemeID="0088">12345678</cbc:EndpointID><cac:PartyIdentification><cbc:ID>12345678</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company A</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK12345678</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company A</cbc:RegistrationName><cbc:CompanyID>12345678</cbc:CompanyID></cac:PartyLegalEntity></cac:Party></cac:AccountingSupplierParty>',
     );
     expect(result).toContain(
-      '<cac:AccountingCustomerParty><cac:Party><cbc:EndpointID>87654321</cbc:EndpointID><cac:PartyIdentification><cbc:ID>87654321</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company B</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Bjerkåsholmen 125</cbc:StreetName><cbc:CityName>Slemmestad</cbc:CityName><cbc:PostalZone>NO-3470</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK87654321</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company B</cbc:RegistrationName><cbc:CompanyID>87654321</cbc:CompanyID></cac:PartyLegalEntity><cac:Contact><cbc:Name>n/a</cbc:Name></cac:Contact></cac:Party></cac:AccountingCustomerParty>',
+      '<cac:AccountingCustomerParty><cac:Party><cbc:EndpointID schemeID="0002">87654321</cbc:EndpointID><cac:PartyIdentification><cbc:ID>87654321</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company B</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Bjerkåsholmen 125</cbc:StreetName><cbc:CityName>Slemmestad</cbc:CityName><cbc:PostalZone>NO-3470</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK87654321</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company B</cbc:RegistrationName><cbc:CompanyID>87654321</cbc:CompanyID></cac:PartyLegalEntity><cac:Contact><cbc:Name>n/a</cbc:Name></cac:Contact></cac:Party></cac:AccountingCustomerParty>',
     );
     expect(result).toContain(
       '<cac:Delivery><cbc:ActualDeliveryDate>2019-01-25</cbc:ActualDeliveryDate><cac:DeliveryLocation><cac:Address><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:Address></cac:DeliveryLocation></cac:Delivery>',

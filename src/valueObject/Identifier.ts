@@ -46,6 +46,9 @@ export default class Identifier extends ValueObject<IIdentifier> {
   }
 
   toPrimitive() {
-    return this.props;
+    return {
+      attr_schemeID: this.scheme,
+      '#text': this.id,
+    };
   }
 }

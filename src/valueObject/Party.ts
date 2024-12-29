@@ -7,9 +7,10 @@
  */
 import { ValueObject } from '../base/ValueObject';
 import Address from './Address';
+import Identifier from './Identifier';
 
 export interface IParty {
-  endpointId?: string;
+  endpointId?: Identifier;
   address?: Address;
   legalName?: string;
   companyId?: string;
@@ -38,7 +39,7 @@ export default class Party extends ValueObject<IParty> {
   /**
    * Set the endpoint ID.
    */
-  set endpointId(value: string | undefined) {
+  set endpointId(value: Identifier | undefined) {
     this.props.endpointId = value;
   }
 

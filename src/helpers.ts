@@ -6,8 +6,21 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 
+import Identifier from './valueObject/Identifier';
+
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export type XmlNode = any;
+
+export function nodeToId(node: XmlNode): Identifier {
+  if (!node) {
+    return undefined;
+  }
+
+  return Identifier.create({
+    scheme: node['attr_schemeID'],
+    id: node['#text'],
+  });
+}
 
 /**
  * Returns the string value of a node or undefined if the node is null or undefined.
