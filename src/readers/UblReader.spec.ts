@@ -102,6 +102,13 @@ describe('UblReader', () => {
         taxes: [vat],
         delivery: Delivery.create({
           date: DateOnly.create('2019-01-25'),
+          address: Address.create({
+            cityName: 'Copenhagen',
+            countryCode: 'DK',
+            postalZone: '1057',
+            streetName: 'Street',
+            addressLines: ['Street'],
+          }),
         }),
         lines: [
           DocumentLine.create({
@@ -199,6 +206,13 @@ describe('UblReader', () => {
         taxes: [vat],
         delivery: Delivery.create({
           date: DateOnly.create('2019-01-25'),
+          address: Address.create({
+            cityName: 'Copenhagen',
+            countryCode: 'DK',
+            postalZone: '1057',
+            streetName: 'Street',
+            addressLines: ['Street'],
+          }),
         }),
         lines: [
           DocumentLine.create({
@@ -648,6 +662,14 @@ describe('UblReader', () => {
           locationId: Identifier.create({
             id: '6754238987643',
             scheme: '0088',
+          }),
+          address: Address.create({
+            cityName: 'DeliveryCity',
+            countryCode: 'NO',
+            postalZone: '523427',
+            streetName: 'Deliverystreet 2',
+            addressLines: ['Deliverystreet 2', 'Side door'],
+            subdivision: 'RegionD',
           }),
         }),
         notes: 'Ordered in our booth at the convention',
@@ -1137,6 +1159,14 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          address: Address.create({
+            addressLines: ['Delivery street 2', 'Building 56'],
+            cityName: 'Stockholm',
+            countryCode: 'SE',
+            postalZone: '21234',
+            streetName: 'Delivery street 2',
+            subdivision: 'Södermalm',
+          }),
           locationId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',
@@ -1369,6 +1399,13 @@ describe('UblReader', () => {
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2017-11-01'),
+          address: Address.create({
+            addressLines: ['Delivery street 2', 'Building 56'],
+            cityName: 'Stockholm',
+            countryCode: 'SE',
+            postalZone: '21234',
+            streetName: 'Delivery street 2',
+          }),
           locationId: Identifier.create({
             id: '9483759475923478',
             scheme: '0088',
@@ -1507,6 +1544,13 @@ describe('UblReader', () => {
           locationId: Identifier.create({
             id: '9483759475923478',
             scheme: '0088',
+          }),
+          address: Address.create({
+            addressLines: ['Delivery street 2', 'Building 56'],
+            cityName: 'Stockholm',
+            countryCode: 'SE',
+            postalZone: '21234',
+            streetName: 'Delivery street 2',
           }),
         }),
         payment: Payment.create({
@@ -1776,6 +1820,14 @@ describe('UblReader', () => {
           locationId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',
+          }),
+          address: Address.create({
+            addressLines: ['Delivery street 2', 'Building 56'],
+            cityName: 'Stockholm',
+            countryCode: 'SE',
+            postalZone: '21234',
+            streetName: 'Delivery street 2',
+            subdivision: 'Södermalm',
           }),
         }),
         dueDate: DateOnly.create('2017-12-01'),
