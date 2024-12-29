@@ -177,6 +177,10 @@ export default class UblWriter extends AbstractWriter {
           'cbc:PaymentID': document.payment?.id,
           'cac:PayeeFinancialAccount': {
             'cbc:ID': document.payment?.transfer?.account,
+            'cbc:Name': document.payment?.transfer?.name,
+            'cac:FinancialInstitutionBranch': {
+              'cbc:ID': document.payment?.transfer?.provider?.toPrimitive(),
+            },
           },
         },
         'cac:TaxTotal': {

@@ -269,6 +269,7 @@ describe('UblReader', () => {
           terms: 'D.LGS. 231/2002 S.M.I',
           transfer: PaymentTransfer.create({
             account: 'IT64W0100003245243300306301',
+            provider: Identifier.create({ id: 'UNCRIT2B' }),
           }),
         }),
         buyer: Party.create({
@@ -655,7 +656,10 @@ describe('UblReader', () => {
           meansCode: '30',
           terms:
             '2 % discount if paid within 2 days Penalty percentage 10% from due date',
-          transfer: PaymentTransfer.create({ account: 'NO9386011117947' }),
+          transfer: PaymentTransfer.create({
+            account: 'NO9386011117947',
+            provider: Identifier.create({ id: 'DNBANOKK' }),
+          }),
         }),
         delivery: Delivery.create({
           date: DateOnly.create('2013-06-15'),
@@ -999,6 +1003,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({
             account: '12345678',
             name: 'Farthing Purchasing Consortium',
+            provider: Identifier.create({ id: '10-26-58' }),
           }),
         }),
         charges: [
@@ -1181,6 +1186,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({
             account: 'IBAN32423940',
             name: 'AccountName',
+            provider: Identifier.create({ id: 'BIC324098' }),
           }),
         }),
         charges: [
@@ -1424,6 +1430,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({
             account: 'IBAN32423940',
             name: 'AccountName',
+            provider: Identifier.create({ id: 'BIC324098' }),
           }),
         }),
         charges: [
@@ -1564,6 +1571,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({
             account: 'IBAN32423940',
             name: 'AccountName',
+            provider: Identifier.create({ id: 'BIC324098' }),
           }),
         }),
         charges: [
@@ -1736,7 +1744,10 @@ describe('UblReader', () => {
         payment: Payment.create({
           meansCode: '30',
           terms: 'Payment within 30 days',
-          transfer: PaymentTransfer.create({ account: 'SE1212341234123412' }),
+          transfer: PaymentTransfer.create({
+            account: 'SE1212341234123412',
+            provider: Identifier.create({ id: 'SEXDABCD' }),
+          }),
         }),
         seller: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '7300010000001' })],
@@ -1916,6 +1927,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({
             account: 'IBAN32423940',
             name: 'AccountName',
+            provider: Identifier.create({ id: 'BIC324098' }),
           }),
         }),
         seller: Party.create({

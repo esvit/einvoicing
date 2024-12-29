@@ -428,9 +428,9 @@ export default class UblReader extends AbstractReader {
             name: strOrUnd(
               meansNode['cac:PayeeFinancialAccount']?.['cbc:Name'],
             ),
-            provider: strOrUnd(
+            provider: nodeToId(
               meansNode['cac:PayeeFinancialAccount']?.[
-                'cbc:FinancialInstitutionBranch'
+                'cac:FinancialInstitutionBranch'
               ]?.['cbc:ID'],
             ),
           })

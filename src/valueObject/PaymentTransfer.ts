@@ -6,6 +6,7 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 import { ValueObject } from '../base/ValueObject';
+import Identifier from './Identifier';
 
 export interface IPaymentTransfer {
   // BT-84: Receiving account ID
@@ -15,7 +16,7 @@ export interface IPaymentTransfer {
   name?: string;
 
   // BT-86: Service provider ID
-  provider?: string;
+  provider?: Identifier;
 }
 
 export default class PaymentTransfer extends ValueObject<IPaymentTransfer> {
@@ -61,7 +62,7 @@ export default class PaymentTransfer extends ValueObject<IPaymentTransfer> {
   /**
    * Set the service provider ID.
    */
-  set provider(value: string | undefined) {
+  set provider(value: Identifier | undefined) {
     this.props.provider = value;
   }
 

@@ -222,7 +222,7 @@ describe('UblWriter', () => {
       '<cac:Delivery><cbc:ActualDeliveryDate>2019-01-25</cbc:ActualDeliveryDate><cac:DeliveryLocation><cac:Address><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:Address></cac:DeliveryLocation><cac:DeliveryParty><cac:PartyName/></cac:DeliveryParty></cac:Delivery>',
     );
     expect(result).toContain(
-      '<cac:PaymentMeans><cbc:PaymentMeansCode>58</cbc:PaymentMeansCode><cbc:PaymentID>12345667890</cbc:PaymentID><cac:PayeeFinancialAccount><cbc:ID>1234567891234</cbc:ID></cac:PayeeFinancialAccount></cac:PaymentMeans>',
+      '<cac:PaymentMeans><cbc:PaymentMeansCode>58</cbc:PaymentMeansCode><cbc:PaymentID>12345667890</cbc:PaymentID><cac:PayeeFinancialAccount><cbc:ID>1234567891234</cbc:ID><cac:FinancialInstitutionBranch/></cac:PayeeFinancialAccount></cac:PaymentMeans>',
     );
     expect(result).toContain(
       '<cac:TaxTotal><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="DKK">625743.54</cbc:TaxableAmount><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal>',
