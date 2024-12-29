@@ -42,6 +42,10 @@ export default class UblWriter extends AbstractWriter {
         'cbc:DocumentCurrencyCode': document.currency?.toPrimitive(),
         'cbc:AccountingCost': document.buyerAccountingReference,
         'cbc:BuyerReference': document.buyerReference,
+        'cac:InvoicePeriod': {
+          'cbc:StartDate': document.periodStart?.toPrimitive(),
+          'cbc:EndDate': document.periodEnd?.toPrimitive(),
+        },
         'cac:OrderReference': {
           'cbc:ID': document.purchaseOrderReference.toPrimitive(),
         },
@@ -53,9 +57,9 @@ export default class UblWriter extends AbstractWriter {
             },
           }),
         ),
-        'cac:OriginatorDocumentReference': {
+        'cac:OriginatorDocumentReference': omitEmpty({
           'cbc:ID': document.originatorDocumentReference?.toPrimitive(),
-        },
+        }),
         'cac:ContractDocumentReference': {
           'cbc:ID': document.contractReference.toPrimitive(),
         },
@@ -166,11 +170,11 @@ export default class UblWriter extends AbstractWriter {
               },
             },
           },
-          'cac:DeliveryParty': {
-            'cac:PartyName': {
+          'cac:DeliveryParty': omitEmpty({
+            'cac:PartyName': omitEmpty({
               'cbc:Name': document.delivery?.name,
-            },
-          },
+            }),
+          }),
         },
         'cac:PaymentMeans': {
           'cbc:PaymentMeansCode': {
@@ -181,14 +185,14 @@ export default class UblWriter extends AbstractWriter {
           'cac:PayeeFinancialAccount': {
             'cbc:ID': document.payment?.transfer?.account,
             'cbc:Name': document.payment?.transfer?.name,
-            'cac:FinancialInstitutionBranch': {
+            'cac:FinancialInstitutionBranch': omitEmpty({
               'cbc:ID': document.payment?.transfer?.provider?.toPrimitive(),
-            },
+            }),
           },
         },
-        'cac:PaymentTerms': {
+        'cac:PaymentTerms': omitEmpty({
           'cbc:Note': document.payment?.terms,
-        },
+        }),
         'cac:AllowanceCharge': document.charges?.map((charge) => ({
           'cbc:ChargeIndicator': charge.isCharge,
           'cbc:AllowanceChargeReason': charge.reasonText,
@@ -279,9 +283,12 @@ export default class UblWriter extends AbstractWriter {
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
-            'cac:StandardItemIdentification': {
+            'cac:SellersItemIdentification': omitEmpty({
+              'cbc:ID': line.sellerIdentifier?.toPrimitive(),
+            }),
+            'cac:StandardItemIdentification': omitEmpty({
               'cbc:ID': line.standardIdentifier?.toPrimitive(),
-            },
+            }),
             'cac:OriginCountry': {
               'cbc:IdentificationCode': line.originCountryCode,
             },

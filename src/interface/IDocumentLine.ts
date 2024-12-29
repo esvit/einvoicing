@@ -29,7 +29,7 @@ export interface IDocumentLine {
   name?: string;
   description?: string;
   buyerIdentifier?: string;
-  sellerIdentifier?: string;
+  sellerIdentifier?: Identifier;
   standardIdentifier?: Identifier;
   originCountryCode?: string;
   classificationIdentifiers?: Identifier[] | ListIdentifier[];

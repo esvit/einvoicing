@@ -187,7 +187,7 @@ export default class DocumentLine extends Entity<
   /**
    * Set the seller identifier.
    */
-  set sellerIdentifier(value: string | undefined) {
+  set sellerIdentifier(value: Identifier | undefined) {
     this.props.sellerIdentifier = value;
   }
 

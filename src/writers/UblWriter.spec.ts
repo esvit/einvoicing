@@ -136,7 +136,7 @@ describe('UblWriter', () => {
           periodEnd: DateOnly.create('2018-09-30'),
           name: 'text',
           description: 'text',
-          sellerIdentifier: '12345',
+          sellerIdentifier: Identifier.create({ id: '12345' }),
           originCountryCode: 'DK',
           price: 625743.54,
           netAmount: 625743.54,
@@ -219,10 +219,10 @@ describe('UblWriter', () => {
       '<cac:AccountingCustomerParty><cac:Party><cbc:EndpointID schemeID="0002">87654321</cbc:EndpointID><cac:PartyIdentification><cbc:ID schemeID="0012">87654321</cbc:ID></cac:PartyIdentification><cac:PartyName><cbc:Name>Company B</cbc:Name></cac:PartyName><cac:PostalAddress><cbc:StreetName>Bjerkåsholmen 125</cbc:StreetName><cbc:CityName>Slemmestad</cbc:CityName><cbc:PostalZone>NO-3470</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:PostalAddress><cac:PartyTaxScheme><cbc:CompanyID>DK87654321</cbc:CompanyID><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:PartyTaxScheme><cac:PartyLegalEntity><cbc:RegistrationName>Company B</cbc:RegistrationName><cbc:CompanyID>87654321</cbc:CompanyID></cac:PartyLegalEntity><cac:Contact><cbc:Name>n/a</cbc:Name></cac:Contact></cac:Party></cac:AccountingCustomerParty>',
     );
     expect(result).toContain(
-      '<cac:Delivery><cbc:ActualDeliveryDate>2019-01-25</cbc:ActualDeliveryDate><cac:DeliveryLocation><cac:Address><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:Address></cac:DeliveryLocation><cac:DeliveryParty><cac:PartyName/></cac:DeliveryParty></cac:Delivery>',
+      '<cac:Delivery><cbc:ActualDeliveryDate>2019-01-25</cbc:ActualDeliveryDate><cac:DeliveryLocation><cac:Address><cbc:StreetName>Street</cbc:StreetName><cbc:CityName>Copenhagen</cbc:CityName><cbc:PostalZone>1057</cbc:PostalZone><cac:Country><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:Country></cac:Address></cac:DeliveryLocation></cac:Delivery>',
     );
     expect(result).toContain(
-      '<cac:PaymentMeans><cbc:PaymentMeansCode>58</cbc:PaymentMeansCode><cbc:PaymentID>12345667890</cbc:PaymentID><cac:PayeeFinancialAccount><cbc:ID>1234567891234</cbc:ID><cac:FinancialInstitutionBranch/></cac:PayeeFinancialAccount></cac:PaymentMeans>',
+      '<cac:PaymentMeans><cbc:PaymentMeansCode>58</cbc:PaymentMeansCode><cbc:PaymentID>12345667890</cbc:PaymentID><cac:PayeeFinancialAccount><cbc:ID>1234567891234</cbc:ID></cac:PayeeFinancialAccount></cac:PaymentMeans>',
     );
     expect(result).toContain(
       '<cac:TaxTotal><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxSubtotal><cbc:TaxableAmount currencyID="DKK">625743.54</cbc:TaxableAmount><cbc:TaxAmount currencyID="DKK">156435.89</cbc:TaxAmount><cac:TaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:TaxCategory></cac:TaxSubtotal></cac:TaxTotal>',
@@ -231,7 +231,7 @@ describe('UblWriter', () => {
       '<cac:LegalMonetaryTotal><cbc:LineExtensionAmount currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount currencyID="DKK">625943.54</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount currencyID="DKK">782379.43</cbc:TaxInclusiveAmount><cbc:ChargeTotalAmount currencyID="DKK">200</cbc:ChargeTotalAmount><cbc:PayableAmount currencyID="DKK">782379.43</cbc:PayableAmount></cac:LegalMonetaryTotal>',
     );
     expect(result).toContain(
-      '<cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity unitCode="KWH">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:AccountingCost>n/a</cbc:AccountingCost><cac:InvoicePeriod><cbc:StartDate>2018-09-01</cbc:StartDate><cbc:EndDate>2018-09-30</cbc:EndDate></cac:InvoicePeriod><cac:OrderLineReference/><cac:Item><cbc:Description>text</cbc:Description><cbc:Name>text</cbc:Name><cac:StandardItemIdentification/><cac:OriginCountry><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:OriginCountry><cac:CommodityClassification><cbc:ItemClassificationCode schemeID="STI">65434568</cbc:ItemClassificationCode></cac:CommodityClassification><cac:ClassifiedTaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:ClassifiedTaxCategory></cac:Item><cac:Price><cbc:PriceAmount currencyID="DKK">625743.54</cbc:PriceAmount></cac:Price></cac:InvoiceLine>',
+      '<cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity unitCode="KWH">1</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="DKK">625743.54</cbc:LineExtensionAmount><cbc:AccountingCost>n/a</cbc:AccountingCost><cac:InvoicePeriod><cbc:StartDate>2018-09-01</cbc:StartDate><cbc:EndDate>2018-09-30</cbc:EndDate></cac:InvoicePeriod><cac:Item><cbc:Description>text</cbc:Description><cbc:Name>text</cbc:Name><cac:SellersItemIdentification><cbc:ID>12345</cbc:ID></cac:SellersItemIdentification><cac:OriginCountry><cbc:IdentificationCode>DK</cbc:IdentificationCode></cac:OriginCountry><cac:CommodityClassification><cbc:ItemClassificationCode schemeID="STI">65434568</cbc:ItemClassificationCode></cac:CommodityClassification><cac:ClassifiedTaxCategory><cbc:ID>S</cbc:ID><cbc:Percent>25</cbc:Percent><cac:TaxScheme><cbc:ID>VAT</cbc:ID></cac:TaxScheme></cac:ClassifiedTaxCategory></cac:Item><cac:Price><cbc:PriceAmount currencyID="DKK">625743.54</cbc:PriceAmount></cac:Price></cac:InvoiceLine>',
     );
   });
 });
