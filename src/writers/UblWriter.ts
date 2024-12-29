@@ -301,11 +301,16 @@ export default class UblWriter extends AbstractWriter {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
             'cac:StandardItemIdentification': {
-              'cbc:ID': line.standardIdentifier.toPrimitive(),
+              'cbc:ID': line.standardIdentifier?.toPrimitive(),
             },
             'cac:OriginCountry': {
               'cbc:IdentificationCode': line.originCountryCode,
             },
+            'cac:CommodityClassification': line.classificationIdentifiers?.map(
+              (identifier) => ({
+                'cbc:ItemClassificationCode': identifier.toPrimitive(),
+              }),
+            ),
             'cac:ClassifiedTaxCategory': {
               'cbc:ID': line.tax?.id.toPrimitive().split(':')[0],
               'cbc:Percent': formatNumber(line.tax?.percent),

@@ -19,6 +19,7 @@ import Attachment from '../valueObject/Attachment';
 import BinaryObject from '../valueObject/BinaryObject';
 import InvoiceReference from '../valueObject/InvoiceReference';
 import Payee from '../valueObject/Payee';
+import ListIdentifier from '../valueObject/ListIdentifier';
 
 describe('UblReader', () => {
   let ublReader: UblReader;
@@ -762,7 +763,7 @@ describe('UblReader', () => {
               }),
             ],
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '65434568',
                 scheme: 'STI',
               }),
@@ -779,7 +780,10 @@ describe('UblReader', () => {
             price: 1273,
             quantity: 2,
             sellerIdentifier: 'JB007',
-            standardIdentifier: '1234567890128',
+            standardIdentifier: Identifier.create({
+              id: '1234567890128',
+              scheme: '0088',
+            }),
             tax: tax,
             unitCode: 'EA',
           }),
@@ -788,7 +792,7 @@ describe('UblReader', () => {
             baseQuantity: 1,
             buyerAccountingReference: 'BookingCode002',
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '65434567',
                 scheme: 'STI',
               }),
@@ -800,7 +804,10 @@ describe('UblReader', () => {
             price: 3.96,
             quantity: -1,
             sellerIdentifier: 'JB008',
-            standardIdentifier: '1234567890135',
+            standardIdentifier: Identifier.create({
+              id: '1234567890135',
+              scheme: '0160',
+            }),
             tax: tax2,
             unitCode: 'EA',
           }),
@@ -809,7 +816,7 @@ describe('UblReader', () => {
             buyerAccountingReference: 'BookingCode003',
             baseQuantity: 1,
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '65434567',
                 scheme: 'STI',
               }),
@@ -820,7 +827,10 @@ describe('UblReader', () => {
             price: 2.48,
             quantity: 2,
             sellerIdentifier: 'JB009',
-            standardIdentifier: '1234567890135',
+            standardIdentifier: Identifier.create({
+              id: '1234567890135',
+              scheme: '0160',
+            }),
             tax: tax2,
             unitCode: 'EA',
           }),
@@ -829,7 +839,7 @@ describe('UblReader', () => {
             buyerAccountingReference: 'BookingCode004',
             baseQuantity: 1,
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '65434565',
                 scheme: 'STI',
               }),
@@ -840,7 +850,10 @@ describe('UblReader', () => {
             price: 25,
             quantity: -1,
             sellerIdentifier: 'JB010',
-            standardIdentifier: '1234567890159',
+            standardIdentifier: Identifier.create({
+              id: '1234567890159',
+              scheme: '0160',
+            }),
             tax: tax3,
             unitCode: 'EA',
           }),
@@ -849,7 +862,7 @@ describe('UblReader', () => {
             attributes: [Attribute.create({ name: 'Type', value: 'Cat5' })],
             baseQuantity: 1,
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '65434564',
                 scheme: 'STI',
               }),
@@ -860,7 +873,10 @@ describe('UblReader', () => {
             price: 0.75,
             quantity: 250,
             sellerIdentifier: 'JB011',
-            standardIdentifier: '1234567890166',
+            standardIdentifier: Identifier.create({
+              id: '1234567890166',
+              scheme: '0160',
+            }),
             tax: tax,
             unitCode: 'MTR',
           }),
@@ -1163,8 +1179,8 @@ describe('UblReader', () => {
           }),
         }),
         delivery: Delivery.create({
-          date: DateOnly.create('2017-11-01'),
           name: 'Delivery party Name',
+          date: DateOnly.create('2017-11-01'),
           address: Address.create({
             addressLines: ['Delivery street 2', 'Building 56'],
             cityName: 'Stockholm',
@@ -1218,7 +1234,7 @@ describe('UblReader', () => {
             sellerIdentifier: '97iugug876',
             originCountryCode: 'NO',
             classificationIdentifiers: [
-              Identifier.create({ id: '9348023', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '09348023', scheme: 'SRV' }),
             ],
             price: 410,
             netAmount: 4040,
@@ -1259,7 +1275,7 @@ describe('UblReader', () => {
               }),
             ],
             classificationIdentifiers: [
-              Identifier.create({ id: '86776', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '86776', scheme: 'SRV' }),
             ],
             price: 200,
             netAmount: 1000,
@@ -1284,7 +1300,7 @@ describe('UblReader', () => {
             sellerIdentifier: '97iugug876',
             orderLineReference: Identifier.create({ id: '124' }),
             classificationIdentifiers: [
-              Identifier.create({ id: '86776', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '86776', scheme: 'SRV' }),
             ],
             price: 100,
             netAmount: 909,
@@ -1405,18 +1421,18 @@ describe('UblReader', () => {
           }),
         }),
         delivery: Delivery.create({
-          date: DateOnly.create('2017-11-01'),
           name: 'Delivery party Name',
+          date: DateOnly.create('2017-11-01'),
+          locationId: Identifier.create({
+            id: '9483759475923478',
+            scheme: '0088',
+          }),
           address: Address.create({
             addressLines: ['Delivery street 2', 'Building 56'],
             cityName: 'Stockholm',
             countryCode: 'SE',
             postalZone: '21234',
             streetName: 'Delivery street 2',
-          }),
-          locationId: Identifier.create({
-            id: '9483759475923478',
-            scheme: '0088',
           }),
         }),
         originatorDocumentReference: Identifier.create({
@@ -1450,10 +1466,13 @@ describe('UblReader', () => {
             name: 'item name',
             orderLineReference: Identifier.create({ id: '123' }),
             description: 'Description of item',
-            standardIdentifier: '21382183120983',
+            standardIdentifier: Identifier.create({
+              id: '21382183120983',
+              scheme: '0088',
+            }),
             originCountryCode: 'NO',
             classificationIdentifiers: [
-              Identifier.create({ id: '9348023', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '09348023', scheme: 'SRV' }),
             ],
             price: 400,
             netAmount: 2800,
@@ -1467,9 +1486,12 @@ describe('UblReader', () => {
             description: 'Description 2',
             orderLineReference: Identifier.create({ id: '123' }),
             originCountryCode: 'NO',
-            standardIdentifier: '21382183120983',
+            standardIdentifier: Identifier.create({
+              id: '21382183120983',
+              scheme: '0088',
+            }),
             classificationIdentifiers: [
-              Identifier.create({ id: '9348023', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '09348023', scheme: 'SRV' }),
             ],
             price: 500,
             netAmount: -1500,
@@ -1549,8 +1571,8 @@ describe('UblReader', () => {
           }),
         }),
         delivery: Delivery.create({
-          date: DateOnly.create('2017-11-01'),
           name: 'Delivery party Name',
+          date: DateOnly.create('2017-11-01'),
           locationId: Identifier.create({
             id: '9483759475923478',
             scheme: '0088',
@@ -1590,10 +1612,13 @@ describe('UblReader', () => {
             name: 'item name',
             orderLineReference: Identifier.create({ id: '123' }),
             description: 'Description of item',
-            standardIdentifier: '21382183120983',
+            standardIdentifier: Identifier.create({
+              id: '21382183120983',
+              scheme: '0088',
+            }),
             originCountryCode: 'NO',
             classificationIdentifiers: [
-              Identifier.create({ id: '9348023', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '09348023', scheme: 'SRV' }),
             ],
             price: 400,
             netAmount: 2800,
@@ -1606,9 +1631,12 @@ describe('UblReader', () => {
             description: 'Description 2',
             orderLineReference: Identifier.create({ id: '123' }),
             originCountryCode: 'NO',
-            standardIdentifier: '21382183120983',
+            standardIdentifier: Identifier.create({
+              id: '21382183120983',
+              scheme: '0088',
+            }),
             classificationIdentifiers: [
-              Identifier.create({ id: '9348023', scheme: 'SRV' }),
+              ListIdentifier.create({ id: '09348023', scheme: 'SRV' }),
             ],
             price: 500,
             netAmount: -1500,
@@ -1853,8 +1881,8 @@ describe('UblReader', () => {
             id: new DocumentLineId('1'),
             buyerAccountingReference: 'Konteringsstreng',
             classificationIdentifiers: [
-              Identifier.create({
-                id: '9348023',
+              ListIdentifier.create({
+                id: '09348023',
                 scheme: 'SRV',
               }),
             ],
@@ -1870,7 +1898,10 @@ describe('UblReader', () => {
             price: 400,
             quantity: 10,
             sellerIdentifier: '97iugug876',
-            standardIdentifier: '7300010000001',
+            standardIdentifier: Identifier.create({
+              id: '7300010000001',
+              scheme: '0088',
+            }),
             tax: tax1,
             unitCode: 'C62',
           }),
@@ -1878,7 +1909,7 @@ describe('UblReader', () => {
             id: new DocumentLineId('2'),
             buyerAccountingReference: 'Konteringsstreng',
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '86776',
                 scheme: 'SRV',
               }),
@@ -1889,7 +1920,10 @@ describe('UblReader', () => {
             price: 200,
             quantity: 10,
             sellerIdentifier: '97iugug876',
-            standardIdentifier: '7300010000001',
+            standardIdentifier: Identifier.create({
+              id: '7300010000001',
+              scheme: '0088',
+            }),
             tax: tax2,
             unitCode: 'C62',
           }),
@@ -1903,7 +1937,7 @@ describe('UblReader', () => {
             ],
             buyerAccountingReference: 'Konteringsstreng',
             classificationIdentifiers: [
-              Identifier.create({
+              ListIdentifier.create({
                 id: '86776',
                 scheme: 'SRV',
               }),
@@ -1914,7 +1948,10 @@ describe('UblReader', () => {
             price: 90,
             quantity: 10,
             sellerIdentifier: '97iugug876',
-            standardIdentifier: '873649827489',
+            standardIdentifier: Identifier.create({
+              id: '873649827489',
+              scheme: '0160',
+            }),
             tax: tax1,
             unitCode: 'C62',
           }),

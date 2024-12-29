@@ -12,6 +12,7 @@ import Identifier from '../valueObject/Identifier';
 import Attribute from '../valueObject/Attribute';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import DateOnly from '../valueObject/DateOnly';
+import ListIdentifier from '../valueObject/ListIdentifier';
 
 export default class DocumentLine extends Entity<
   IDocumentLine,
@@ -228,7 +229,9 @@ export default class DocumentLine extends Entity<
   /**
    * Set the classification identifiers.
    */
-  set classificationIdentifiers(value: Identifier[] | undefined) {
+  set classificationIdentifiers(
+    value: Identifier[] | ListIdentifier[] | undefined,
+  ) {
     this.props.classificationIdentifiers = value;
   }
 

@@ -11,6 +11,7 @@ import Identifier from '../valueObject/Identifier';
 import Attribute from '../valueObject/Attribute';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import Tax from '../entity/Tax';
+import ListIdentifier from '../valueObject/ListIdentifier';
 
 export class DocumentLineId extends EntityId<string> {
   readonly DocumentLineId = 'document_line_id';
@@ -31,7 +32,7 @@ export interface IDocumentLine {
   sellerIdentifier?: string;
   standardIdentifier?: Identifier;
   originCountryCode?: string;
-  classificationIdentifiers?: Identifier[];
+  classificationIdentifiers?: Identifier[] | ListIdentifier[];
   price?: number;
   netAmount?: number;
   baseQuantity?: number;

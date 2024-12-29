@@ -20,7 +20,7 @@ import Party from '../valueObject/Party';
 import Address from '../valueObject/Address';
 import DocumentLine from '../entity/DocumentLine';
 import { DocumentLineId } from '../interface/IDocumentLine';
-import Identifier from '../valueObject/Identifier';
+import ListIdentifier from '../valueObject/ListIdentifier';
 import Attribute from '../valueObject/Attribute';
 import Payee from '../valueObject/Payee';
 import Delivery from '../valueObject/Delivery';
@@ -50,6 +50,7 @@ export default class UblReader extends AbstractReader {
 
     const tagValueProcessor = (tagName: string, tagValue: string) => {
       switch (tagName) {
+        case 'cbc:ItemClassificationCode':
         case 'cbc:CompanyID':
         case 'cbc:EndpointID':
         case 'cbc:ID': {
@@ -488,7 +489,7 @@ export default class UblReader extends AbstractReader {
     }
 
     return AllowanceCharge.create({
-      isCharge: Boolean(node['cbc:ChargeIndicator']),
+      isCharge: node['cbc:ChargeIndicator'],
       reasonCode: strOrUnd(node['cbc:AllowanceChargeReasonCode']),
       reasonText: strOrUnd(node['cbc:AllowanceChargeReason']),
       factorAmount: numOrUnd(node['cbc:MultiplierFactorNumeric']),
@@ -522,12 +523,12 @@ export default class UblReader extends AbstractReader {
       'cac:CommodityClassification',
       'cbc:ItemClassificationCode',
     ]);
-    const classificationIdentifiers = classNodes.map((item: XmlNode) =>
-      Identifier.create({
+    const classificationIdentifiers = classNodes.map((item: XmlNode) => {
+      return ListIdentifier.create({
         id: strOrUnd(item),
         scheme: item['attr_listID'],
-      }),
-    );
+      });
+    });
 
     // BG-32: Item attributes
     const attributeNodes = getArray(node, [
