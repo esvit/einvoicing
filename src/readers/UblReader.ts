@@ -595,7 +595,7 @@ export default class UblReader extends AbstractReader {
       ),
 
       // BT-157: Standard identifier
-      standardIdentifier: strOrUnd(
+      standardIdentifier: nodeToId(
         node['cac:Item']?.['cac:StandardItemIdentification']?.['cbc:ID'],
       ),
 

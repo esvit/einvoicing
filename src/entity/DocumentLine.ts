@@ -200,7 +200,7 @@ export default class DocumentLine extends Entity<
   /**
    * Set the standard identifier.
    */
-  set standardIdentifier(value: string | undefined) {
+  set standardIdentifier(value: Identifier | undefined) {
     this.props.standardIdentifier = value;
   }
 

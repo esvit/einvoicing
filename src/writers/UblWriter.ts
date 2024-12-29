@@ -300,8 +300,8 @@ export default class UblWriter extends AbstractWriter {
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
-            'cac:SellersItemIdentification': {
-              'cbc:ID': line.sellerIdentifier,
+            'cac:StandardItemIdentification': {
+              'cbc:ID': line.standardIdentifier.toPrimitive(),
             },
             'cac:OriginCountry': {
               'cbc:IdentificationCode': line.originCountryCode,
