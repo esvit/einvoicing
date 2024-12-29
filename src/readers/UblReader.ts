@@ -212,8 +212,8 @@ export default class UblReader extends AbstractReader {
       buyerReference: strOrUnd(documentNode['cbc:BuyerReference']),
 
       // BT-12: Contract reference
-      contractReference: strOrUnd(
-        documentNode['cbc:ContractDocumentReference']?.['cbc:ID'],
+      contractReference: nodeToId(
+        documentNode['cac:ContractDocumentReference']?.['cbc:ID'],
       ),
 
       // BT-13: Purchase order reference

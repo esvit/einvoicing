@@ -94,6 +94,9 @@ describe('UblReader', () => {
           }),
           vatNumber: 'DK12345678',
         }),
+        contractReference: InvoiceReference.create({
+          id: '12345',
+        }),
         taxes: [vat],
         delivery: Delivery.create({
           date: DateOnly.create('2019-01-25'),
@@ -185,6 +188,9 @@ describe('UblReader', () => {
             countryCode: 'DK',
           }),
           vatNumber: 'DK12345678',
+        }),
+        contractReference: InvoiceReference.create({
+          id: '12345',
         }),
         taxes: [vat],
         delivery: Delivery.create({
@@ -655,6 +661,9 @@ describe('UblReader', () => {
             subdivision: 'RegionB',
           }),
         }),
+        contractReference: InvoiceReference.create({
+          id: 'Contract321',
+        }),
         currency: CurrencyCode.create('NOK'),
         purchaseOrderReference: Identifier.create({ id: '123' }),
         seller: Party.create({
@@ -874,6 +883,7 @@ describe('UblReader', () => {
         }),
         notes: 'Contract was established through our website',
         currency: CurrencyCode.create('DKK'),
+        contractReference: Identifier.create({ id: 'SUBSCR571' }),
         seller: Party.create({
           additionalIdentifiers: [
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
@@ -1268,6 +1278,9 @@ describe('UblReader', () => {
           }),
           InvoiceReference.create({ id: 'INV-123' }),
         ],
+        contractReference: InvoiceReference.create({
+          id: '123Contractref',
+        }),
         currency: CurrencyCode.create('EUR'),
         attachments: [
           Attachment.create({

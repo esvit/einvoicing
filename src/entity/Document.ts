@@ -221,7 +221,7 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
   /**
    * Set the contract reference.
    */
-  set contractReference(value: string | undefined) {
+  set contractReference(value: Identifier | undefined) {
     this.props.contractReference = value;
   }
 

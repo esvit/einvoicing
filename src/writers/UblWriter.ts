@@ -51,7 +51,7 @@ export default class UblWriter extends AbstractWriter {
           }),
         ),
         'cac:ContractDocumentReference': {
-          'cbc:ID': document.contractReference,
+          'cbc:ID': document.contractReference.toPrimitive(),
         },
         'cac:AdditionalDocumentReference': document.attachments?.map(
           (attachment) => ({

@@ -42,7 +42,7 @@ describe('UblWriter', () => {
       purchaseOrderReference: Identifier.create({ id: 'PO12345' }),
       salesOrderReference: 'SO12345',
       tenderOrLotReference: 'TENDER123',
-      contractReference: 'CONTRACT123',
+      contractReference: Identifier.create({ id: 'CONTRACT123' }),
       precedingInvoiceReference: [
         InvoiceReference.create({
           id: 'INV-122',
