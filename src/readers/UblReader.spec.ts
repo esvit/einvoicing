@@ -68,6 +68,7 @@ describe('UblReader', () => {
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
+          legalName: 'Company B',
           address: Address.create({
             addressLines: ['Bjerkåsholmen 125'],
             streetName: 'Bjerkåsholmen 125',
@@ -85,6 +86,7 @@ describe('UblReader', () => {
           companyId: Identifier.create({ id: '12345678', scheme: '0184' }),
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
+          legalName: 'Company A',
           address: Address.create({
             addressLines: ['Street'],
             streetName: 'Street',
@@ -163,6 +165,7 @@ describe('UblReader', () => {
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
+          legalName: 'Company B',
           address: Address.create({
             addressLines: ['Bjerkåsholmen 125'],
             streetName: 'Bjerkåsholmen 125',
@@ -180,6 +183,7 @@ describe('UblReader', () => {
           companyId: Identifier.create({ id: '12345678', scheme: '0184' }),
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
+          legalName: 'Company A',
           address: Address.create({
             addressLines: ['Street'],
             streetName: 'Street',
@@ -256,6 +260,7 @@ describe('UblReader', () => {
         buyer: Party.create({
           endpointId: Identifier.create({ id: 'UFLCTZ', scheme: '0201' }),
           tradingName: 'AZIENDA USL DI MODENA',
+          legalName: 'AZIENDA AUSL DI MODENA',
           vatNumber: 'IT02241850367',
           address: Address.create({
             addressLines: ['VIA SAN GIOVANNI DEL CANTONE 23'],
@@ -271,6 +276,7 @@ describe('UblReader', () => {
         seller: Party.create({
           endpointId: Identifier.create({ id: 'UF6WX8', scheme: '0201' }),
           tradingName: 'Azienda Unita Sanitaria Locale di Reggio Emilia',
+          legalName: 'Azienda Unita Sanitaria Locale di Reggio Emilia',
           vatNumber: 'IT01598570354',
           address: Address.create({
             addressLines: ['Via Amendola,2'],
@@ -344,6 +350,7 @@ describe('UblReader', () => {
         buyer: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '10202' })],
           contactName: 'Dhr. J BLOKKER',
+          legalName: 'ODIN 59',
           address: Address.create({
             addressLines: ['POSTBUS 367'],
             cityName: 'HEEMSKERK',
@@ -358,6 +365,7 @@ describe('UblReader', () => {
         seller: Party.create({
           companyId: Identifier.create({ id: '57151520' }),
           vatNumber: 'NL8200.98.395.B.01',
+          legalName: 'De Koksmaat',
           address: Address.create({
             addressLines: ['Postbus 7l'],
             cityName: 'Velsen-Noord',
@@ -651,6 +659,7 @@ describe('UblReader', () => {
           contactEmail: 'john@buyercompany.no',
           contactName: 'John Doe',
           contactPhone: '5121230',
+          legalName: 'The Buyercompany',
           vatNumber: 'NO987654321MVA',
           address: Address.create({
             addressLines: ['Anystreet 8', 'Back door'],
@@ -674,6 +683,7 @@ describe('UblReader', () => {
           contactEmail: 'antonio@salescompany.no',
           contactName: 'Antonio Salesmacher',
           contactPhone: '46211230',
+          legalName: 'Salescompany ltd.',
           vatNumber: 'NO123456789MVA',
           address: Address.create({
             addressLines: ['Main street 34', 'Suite 123'],
@@ -873,6 +883,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '5790000435975', scheme: '0088' }),
           ],
+          legalName: 'Buyercompany ltd',
           address: Address.create({
             addressLines: ['Anystreet, Building 1'],
             cityName: 'Anytown',
@@ -891,6 +902,7 @@ describe('UblReader', () => {
           companyId: Identifier.create({ id: 'DK16356706' }),
           contactEmail: 'antonio@SubscriptionsSeller.dk',
           vatNumber: 'DK16356706',
+          legalName: 'SubscriptionSeller',
           address: Address.create({
             addressLines: ['Main street 2, Building 4'],
             cityName: 'Big city',
@@ -1084,6 +1096,7 @@ describe('UblReader', () => {
           contactPhone: '23434234',
           endpointId: Identifier.create({ id: '4598375937', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
+          legalName: 'Buyer Official Name',
           vatNumber: 'SE4598375937',
           address: Address.create({
             addressLines: ['Hovedgatan 32', 'Po box 878'],
@@ -1106,6 +1119,7 @@ describe('UblReader', () => {
             taxScheme: 'TAX',
           },
           tradingName: 'SupplierTradingName Ltd.',
+          legalName: 'SupplierOfficialName Ltd',
           vatNumber: 'GB1232434',
           address: Address.create({
             addressLines: ['Main street 1', 'Postbox 123'],
@@ -1313,6 +1327,7 @@ describe('UblReader', () => {
           contactPhone: '23434234',
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
+          legalName: 'Buyer Official Name',
           vatNumber: 'SE4598375937',
           address: Address.create({
             addressLines: ['Hovedgatan 32', 'Po box 878'],
@@ -1331,6 +1346,7 @@ describe('UblReader', () => {
             scheme: '0088',
           }),
           tradingName: 'SupplierTradingName Ltd.',
+          legalName: 'SupplierOfficialName Ltd',
           vatNumber: 'GB1232434',
           address: Address.create({
             addressLines: ['Main street 1', 'Postbox 123'],
@@ -1440,6 +1456,7 @@ describe('UblReader', () => {
           contactPhone: '23434234',
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
+          legalName: 'Buyer Official Name',
           vatNumber: 'SE4598375937',
           address: Address.create({
             addressLines: ['Hovedgatan 32', 'Po box 878'],
@@ -1457,6 +1474,7 @@ describe('UblReader', () => {
             scheme: '0088',
           }),
           tradingName: 'SupplierTradingName Ltd.',
+          legalName: 'SupplierOfficialName Ltd',
           vatNumber: 'GB1232434',
           address: Address.create({
             addressLines: ['Main street 1', 'Postbox 123'],
@@ -1553,6 +1571,7 @@ describe('UblReader', () => {
             subdivision: 'RO-BC',
           }),
           companyId: Identifier.create({ id: 'RO17364910' }),
+          legalName: 'POP Alexandra SRL',
           taxRegistrationId: { companyId: 'RO17364910' },
         }),
         currency: CurrencyCode.create('EUR'),
@@ -1586,6 +1605,7 @@ describe('UblReader', () => {
             id: 'admin@example.com',
             scheme: 'EM',
           }),
+          legalName: 'Test S.r.o',
           taxRegistrationId: {
             companyId: '12345678',
           },
@@ -1623,6 +1643,7 @@ describe('UblReader', () => {
             streetName: 'Anystreet 8',
             subdivision: 'RegionB',
           }),
+          legalName: 'The Buyercompany',
           endpointId: Identifier.create({ id: '987654325', scheme: '0192' }),
         }),
         buyerReference: 'test reference',
@@ -1657,6 +1678,7 @@ describe('UblReader', () => {
             postalZone: '54321',
             streetName: 'Main street 2, Building 4',
           }),
+          legalName: 'The Sellercompany Incorporated',
           endpointId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',
@@ -1707,6 +1729,7 @@ describe('UblReader', () => {
           companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
+          legalName: 'Buyer Official Name',
           vatNumber: 'SE4598375937',
         }),
         buyerAccountingReference: '4025:123:4343',
@@ -1830,6 +1853,7 @@ describe('UblReader', () => {
             scheme: '0088',
           }),
           tradingName: 'SupplierTradingName Ltd.',
+          legalName: 'SupplierOfficialName Ltd',
           vatNumber: 'GB1232434',
         }),
         taxes: [tax1, tax2],

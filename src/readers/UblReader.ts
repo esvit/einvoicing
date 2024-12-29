@@ -322,7 +322,9 @@ export default class UblReader extends AbstractReader {
       endpointId: nodeToId(node['cbc:EndpointID']),
       address: this.addressFromXmlNode(node['cac:PostalAddress']),
       tradingName: strOrUnd(node['cac:PartyName']?.['cbc:Name']),
-      legalName: strOrUnd(node['cac:PartyName']?.['cbc:RegistrationName']),
+      legalName: strOrUnd(
+        node['cac:PartyLegalEntity']?.['cbc:RegistrationName'],
+      ),
       companyId: nodeToId(node['cac:PartyLegalEntity']?.['cbc:CompanyID']),
       companyLegalForm: strOrUnd(
         node['cac:PartyLegalEntity']?.['cbc:CompanyLegalForm'],
