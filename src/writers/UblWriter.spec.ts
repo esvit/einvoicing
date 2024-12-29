@@ -51,10 +51,10 @@ describe('UblWriter', () => {
         InvoiceReference.create({ id: 'INV-123' }),
       ],
       attachments: [
-        Attachment.create({ id: 'INV-123' }),
+        Attachment.create({ id: Identifier.create({ id: 'INV-123' }) }),
         Attachment.create({
           description: 'A link to an external attachment',
-          id: 'ATT-4321',
+          id: Identifier.create({ id: 'ATT-4321' }),
           externalUri: 'https://www.example.com/document.pdf',
         }),
         Attachment.create({
@@ -63,7 +63,7 @@ describe('UblWriter', () => {
             filename: 'ATT-1234.pdf',
             mimeCode: 'application/pdf',
           }),
-          id: 'ATT-1234',
+          id: Identifier.create({ id: 'ATT-1234' }),
         }),
       ],
       seller: Party.create({

@@ -55,7 +55,8 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:AdditionalDocumentReference': document.attachments?.map(
           (attachment) => ({
-            'cbc:ID': attachment.id,
+            'cbc:ID': attachment.id.toPrimitive(),
+            'cbc:DocumentTypeCode': attachment.documentTypeCode,
             'cbc:DocumentDescription': attachment.description,
             'cac:Attachment': attachment.content
               ? {

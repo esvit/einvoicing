@@ -622,11 +622,11 @@ describe('UblReader', () => {
           Attachment.create({
             description: 'Timesheet',
             externalUri: 'http://www.suppliersite.eu/sheet001.html',
-            id: 'Doc1',
+            id: Identifier.create({ id: 'Doc1' }),
           }),
           Attachment.create({
             description: 'EHF specification',
-            id: 'Doc2',
+            id: Identifier.create({ id: 'Doc2' }),
           }),
         ],
         id: new DocumentId('TOSL108'),
@@ -1298,12 +1298,13 @@ describe('UblReader', () => {
         currency: CurrencyCode.create('EUR'),
         attachments: [
           Attachment.create({
-            id: 'INV-123',
+            documentTypeCode: 130,
+            id: Identifier.create({ id: 'INV-123' }),
           }),
           Attachment.create({
             description: 'A link to an external attachment',
             externalUri: 'https://www.example.com/document.pdf',
-            id: 'ATT-4321',
+            id: Identifier.create({ id: 'ATT-4321' }),
           }),
           Attachment.create({
             content: BinaryObject.create({
@@ -1311,7 +1312,7 @@ describe('UblReader', () => {
               filename: 'ATT-1234.pdf',
               mimeCode: 'application/pdf',
             }),
-            id: 'ATT-1234',
+            id: Identifier.create({ id: 'ATT-1234' }),
           }),
         ],
         buyerReference: '0150abc',

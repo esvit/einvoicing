@@ -163,7 +163,8 @@ export default class UblReader extends AbstractReader {
       }
       return Attachment.create({
         content,
-        id: attachment['cbc:ID'], // BT-122: Supporting document reference
+        id: nodeToId(attachment['cbc:ID']), // BT-122: Supporting document reference
+        documentTypeCode: attachment['cbc:DocumentTypeCode'], // BT-18: Supporting document type code
         description: attachment['cbc:DocumentDescription'], // BT-123: Supporting document description
         externalUri:
           attachment['cac:Attachment']?.['cac:ExternalReference']?.['cbc:URI'], // BT-124: External document location
