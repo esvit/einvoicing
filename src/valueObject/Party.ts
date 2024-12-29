@@ -13,7 +13,7 @@ export interface IParty {
   endpointId?: Identifier;
   address?: Address;
   legalName?: string;
-  companyId?: string;
+  companyId?: Identifier;
   tradingName?: string;
   companyLegalForm?: string;
   contactName?: string;
@@ -81,7 +81,7 @@ export default class Party extends ValueObject<IParty> {
   /**
    * Set the company ID.
    */
-  set companyId(value: string | undefined) {
+  set companyId(value: Identifier | undefined) {
     this.props.companyId = value;
   }
 

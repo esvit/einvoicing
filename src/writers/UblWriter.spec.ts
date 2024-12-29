@@ -70,7 +70,7 @@ describe('UblWriter', () => {
         additionalIdentifiers: [
           Identifier.create({ id: '12345678', scheme: '0184' }),
         ],
-        companyId: '12345678',
+        companyId: Identifier.create({ id: '12345678' }),
         endpointId: Identifier.create({ id: '12345678', scheme: '0088' }),
         tradingName: 'Company A',
         legalName: 'Company A',
@@ -87,7 +87,7 @@ describe('UblWriter', () => {
         additionalIdentifiers: [
           Identifier.create({ id: '87654321', scheme: '0012' }),
         ],
-        companyId: '87654321',
+        companyId: Identifier.create({ id: '87654321' }),
         contactName: 'n/a',
         endpointId: Identifier.create({ id: '87654321', scheme: '0002' }),
         tradingName: 'Company B',

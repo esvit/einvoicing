@@ -64,7 +64,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '87654321', scheme: '0184' }),
           ],
-          companyId: '87654321',
+          companyId: Identifier.create({ id: '87654321', scheme: '0184' }),
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
@@ -81,7 +81,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '12345678', scheme: '0184' }),
           ],
-          companyId: '12345678',
+          companyId: Identifier.create({ id: '12345678', scheme: '0184' }),
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
           address: Address.create({
@@ -155,7 +155,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '87654321', scheme: '0184' }),
           ],
-          companyId: '87654321',
+          companyId: Identifier.create({ id: '87654321', scheme: '0184' }),
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
@@ -172,7 +172,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '12345678', scheme: '0184' }),
           ],
-          companyId: '12345678',
+          companyId: Identifier.create({ id: '12345678', scheme: '0184' }),
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
           address: Address.create({
@@ -348,7 +348,7 @@ describe('UblReader', () => {
           "Alle leveringen zijn franco. Alle prijzen zijn incl. BTW. Betalingstermijn: 14 dagen netto. Prijswijzigingen voorbehouden. Op al onze aanbiedingen, leveringen en overeenkomsten zijn van toepassing in de algemene verkoop en leveringsvoorwaarden. Gedeponeerd bij de K.v.K. te Amsterdam 25-04-'85##Delivery terms",
         currency: CurrencyCode.create('EUR'),
         seller: Party.create({
-          companyId: '57151520',
+          companyId: Identifier.create({ id: '57151520' }),
           vatNumber: 'NL8200.98.395.B.01',
           address: Address.create({
             addressLines: ['Postbus 7l'],
@@ -639,7 +639,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '3456789012098', scheme: '0088' }),
           ],
-          companyId: '987654321',
+          companyId: Identifier.create({ id: '987654321', scheme: '0082' }),
           contactEmail: 'john@buyercompany.no',
           contactName: 'John Doe',
           contactPhone: '5121230',
@@ -658,7 +658,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
           ],
-          companyId: '123456789',
+          companyId: Identifier.create({ id: '123456789', scheme: '0082' }),
           contactEmail: 'antonio@salescompany.no',
           contactName: 'Antonio Salesmacher',
           contactPhone: '46211230',
@@ -875,7 +875,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
           ],
-          companyId: 'DK16356706',
+          companyId: Identifier.create({ id: 'DK16356706' }),
           contactEmail: 'antonio@SubscriptionsSeller.dk',
           vatNumber: 'DK16356706',
           address: Address.create({
@@ -1064,7 +1064,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: '4598375937', scheme: '0002' }),
           ],
-          companyId: '39937423947',
+          companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
           contactPhone: '23434234',
@@ -1082,7 +1082,7 @@ describe('UblReader', () => {
         }),
         seller: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '99887766' })],
-          companyId: 'GB983294',
+          companyId: Identifier.create({ id: 'GB983294' }),
           endpointId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',
@@ -1290,7 +1290,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: 'FR23342', scheme: '0002' }),
           ],
-          companyId: '39937423947',
+          companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
           contactPhone: '23434234',
@@ -1307,7 +1307,7 @@ describe('UblReader', () => {
         }),
         seller: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '99887766' })],
-          companyId: 'GB983294',
+          companyId: Identifier.create({ id: 'GB983294' }),
           endpointId: Identifier.create({
             id: '9482348239847239874',
             scheme: '0088',
@@ -1416,7 +1416,7 @@ describe('UblReader', () => {
           additionalIdentifiers: [
             Identifier.create({ id: 'FR23342', scheme: '0002' }),
           ],
-          companyId: '39937423947',
+          companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
           contactPhone: '23434234',
@@ -1433,7 +1433,7 @@ describe('UblReader', () => {
         }),
         seller: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '99887766' })],
-          companyId: 'GB983294',
+          companyId: Identifier.create({ id: 'GB983294' }),
           endpointId: Identifier.create({
             id: '9482348239847239874',
             scheme: '0088',
@@ -1534,7 +1534,7 @@ describe('UblReader', () => {
             streetName: 'Strada Zebreiou 432',
             subdivision: 'RO-BC',
           }),
-          companyId: 'RO17364910',
+          companyId: Identifier.create({ id: 'RO17364910' }),
           taxRegistrationId: { companyId: 'RO17364910' },
         }),
         currency: CurrencyCode.create('EUR'),
@@ -1563,7 +1563,7 @@ describe('UblReader', () => {
             streetName: 'Yellow Brick Road',
             subdivision: 'RO-CJ',
           }),
-          companyId: 'J12/1234/2016',
+          companyId: Identifier.create({ id: 'J12/1234/2016' }),
           endpointId: Identifier.create({
             id: 'admin@example.com',
             scheme: 'EM',
@@ -1686,7 +1686,7 @@ describe('UblReader', () => {
             postalZone: '456 34',
             streetName: 'Hovedgatan 32',
           }),
-          companyId: '39937423947',
+          companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
           vatNumber: 'SE4598375937',
@@ -1802,7 +1802,7 @@ describe('UblReader', () => {
             postalZone: 'GB 123 EW',
             streetName: 'Main street 1',
           }),
-          companyId: 'GB983294',
+          companyId: Identifier.create({ id: 'GB983294' }),
           companyLegalForm: 'AdditionalLegalInformation',
           contactEmail: 'john.doe@foo.bar',
           contactName: 'John Doe',

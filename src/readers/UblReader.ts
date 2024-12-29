@@ -50,6 +50,7 @@ export default class UblReader extends AbstractReader {
 
     const tagValueProcessor = (tagName: string, tagValue: string) => {
       switch (tagName) {
+        case 'cbc:CompanyID':
         case 'cbc:EndpointID':
         case 'cbc:ID': {
           return null;
@@ -322,7 +323,7 @@ export default class UblReader extends AbstractReader {
       address: this.addressFromXmlNode(node['cac:PostalAddress']),
       tradingName: strOrUnd(node['cac:PartyName']?.['cbc:Name']),
       legalName: strOrUnd(node['cac:PartyName']?.['cbc:RegistrationName']),
-      companyId: strOrUnd(node['cac:PartyLegalEntity']?.['cbc:CompanyID']),
+      companyId: nodeToId(node['cac:PartyLegalEntity']?.['cbc:CompanyID']),
       companyLegalForm: strOrUnd(
         node['cac:PartyLegalEntity']?.['cbc:CompanyLegalForm'],
       ), // BT-33: Seller additional legal information

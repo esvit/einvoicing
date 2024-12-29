@@ -102,7 +102,7 @@ export default class UblWriter extends AbstractWriter {
             },
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.seller?.legalName,
-              'cbc:CompanyID': document.seller?.companyId,
+              'cbc:CompanyID': document.seller?.companyId.toPrimitive(),
             },
           },
         },
@@ -134,7 +134,7 @@ export default class UblWriter extends AbstractWriter {
             },
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.buyer?.legalName,
-              'cbc:CompanyID': document.buyer?.companyId,
+              'cbc:CompanyID': document.buyer?.companyId.toPrimitive(),
             },
             'cac:Contact': {
               'cbc:Name': document.buyer?.contactName,
