@@ -79,7 +79,7 @@ export default class UblWriter extends AbstractWriter {
             'cbc:EndpointID': document.seller?.endpointId.toPrimitive(),
             'cac:PartyIdentification':
               document.seller?.additionalIdentifiers?.map((id) => ({
-                'cbc:ID': id,
+                'cbc:ID': id.toPrimitive(),
               })),
             'cac:PartyName': {
               'cbc:Name': document.seller?.tradingName,
@@ -111,7 +111,7 @@ export default class UblWriter extends AbstractWriter {
             'cbc:EndpointID': document.buyer?.endpointId.toPrimitive(),
             'cac:PartyIdentification':
               document.buyer?.additionalIdentifiers?.map((id) => ({
-                'cbc:ID': id,
+                'cbc:ID': id.toPrimitive(),
               })),
             'cac:PartyName': {
               'cbc:Name': document.buyer?.tradingName,

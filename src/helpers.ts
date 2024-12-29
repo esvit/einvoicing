@@ -16,6 +16,13 @@ export function nodeToId(node: XmlNode): Identifier {
     return undefined;
   }
 
+  if (typeof node === 'number' || typeof node === 'string') {
+    return Identifier.create({
+      scheme: undefined,
+      id: String(node),
+    });
+  }
+
   return Identifier.create({
     scheme: node['attr_schemeID'],
     id: node['#text'],

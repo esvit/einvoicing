@@ -297,7 +297,7 @@ export default class UblReader extends AbstractReader {
       'cac:PartyIdentification',
     ]);
     const additionalIdentifiers = additionalIdentifiersNodes.map(
-      (node: XmlNode) => strOrUnd(node['cbc:ID']),
+      (node: XmlNode) => nodeToId(node['cbc:ID']),
     );
 
     let vatNumber: string | undefined = undefined;

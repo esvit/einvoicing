@@ -61,7 +61,9 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({ account: '1234567891234' }),
         }),
         buyer: Party.create({
-          additionalIdentifiers: ['87654321'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '87654321', scheme: '0184' }),
+          ],
           companyId: '87654321',
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
@@ -76,7 +78,9 @@ describe('UblReader', () => {
           vatNumber: 'DK87654321',
         }),
         seller: Party.create({
-          additionalIdentifiers: ['12345678'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '12345678', scheme: '0184' }),
+          ],
           companyId: '12345678',
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
@@ -148,7 +152,9 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({ account: '1234567891234' }),
         }),
         buyer: Party.create({
-          additionalIdentifiers: ['87654321'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '87654321', scheme: '0184' }),
+          ],
           companyId: '87654321',
           contactName: 'n/a',
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
@@ -163,7 +169,9 @@ describe('UblReader', () => {
           vatNumber: 'DK87654321',
         }),
         seller: Party.create({
-          additionalIdentifiers: ['12345678'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '12345678', scheme: '0184' }),
+          ],
           companyId: '12345678',
           endpointId: Identifier.create({ id: '12345678', scheme: '0184' }),
           tradingName: 'Company A',
@@ -326,7 +334,7 @@ describe('UblReader', () => {
         type: DocumentType.create('380'),
         payment: Payment.create({}),
         buyer: Party.create({
-          additionalIdentifiers: ['10202'],
+          additionalIdentifiers: [Identifier.create({ id: '10202' })],
           contactName: 'Dhr. J BLOKKER',
           address: Address.create({
             addressLines: ['POSTBUS 367'],
@@ -628,7 +636,9 @@ describe('UblReader', () => {
           name: 'Ebeneser Scrooge AS',
         }),
         buyer: Party.create({
-          additionalIdentifiers: ['3456789012098'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '3456789012098', scheme: '0088' }),
+          ],
           companyId: '987654321',
           contactEmail: 'john@buyercompany.no',
           contactName: 'John Doe',
@@ -645,7 +655,9 @@ describe('UblReader', () => {
         }),
         currency: CurrencyCode.create('NOK'),
         seller: Party.create({
-          additionalIdentifiers: ['1238764941386'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '1238764941386', scheme: '0088' }),
+          ],
           companyId: '123456789',
           contactEmail: 'antonio@salescompany.no',
           contactName: 'Antonio Salesmacher',
@@ -846,7 +858,9 @@ describe('UblReader', () => {
           }),
         ],
         buyer: Party.create({
-          additionalIdentifiers: ['5790000435975'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '5790000435975', scheme: '0088' }),
+          ],
           address: Address.create({
             addressLines: ['Anystreet, Building 1'],
             cityName: 'Anytown',
@@ -858,7 +872,9 @@ describe('UblReader', () => {
         notes: 'Contract was established through our website',
         currency: CurrencyCode.create('DKK'),
         seller: Party.create({
-          additionalIdentifiers: ['1238764941386'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '1238764941386', scheme: '0088' }),
+          ],
           companyId: 'DK16356706',
           contactEmail: 'antonio@SubscriptionsSeller.dk',
           vatNumber: 'DK16356706',
@@ -1045,7 +1061,9 @@ describe('UblReader', () => {
         type: DocumentType.create('380'),
         paidAmount: 1000,
         buyer: Party.create({
-          additionalIdentifiers: ['4598375937'],
+          additionalIdentifiers: [
+            Identifier.create({ id: '4598375937', scheme: '0002' }),
+          ],
           companyId: '39937423947',
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
@@ -1063,7 +1081,7 @@ describe('UblReader', () => {
           }),
         }),
         seller: Party.create({
-          additionalIdentifiers: ['99887766'],
+          additionalIdentifiers: [Identifier.create({ id: '99887766' })],
           companyId: 'GB983294',
           endpointId: Identifier.create({
             id: '7300010000001',
@@ -1269,7 +1287,9 @@ describe('UblReader', () => {
         buyerAccountingReference: '4025:123:4343',
         type: DocumentType.create('380'),
         buyer: Party.create({
-          additionalIdentifiers: ['FR23342'],
+          additionalIdentifiers: [
+            Identifier.create({ id: 'FR23342', scheme: '0002' }),
+          ],
           companyId: '39937423947',
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
@@ -1286,7 +1306,7 @@ describe('UblReader', () => {
           }),
         }),
         seller: Party.create({
-          additionalIdentifiers: ['99887766'],
+          additionalIdentifiers: [Identifier.create({ id: '99887766' })],
           companyId: 'GB983294',
           endpointId: Identifier.create({
             id: '9482348239847239874',
@@ -1393,7 +1413,9 @@ describe('UblReader', () => {
         buyerAccountingReference: '4025:123:4343',
         type: DocumentType.create('381'),
         buyer: Party.create({
-          additionalIdentifiers: ['FR23342'],
+          additionalIdentifiers: [
+            Identifier.create({ id: 'FR23342', scheme: '0002' }),
+          ],
           companyId: '39937423947',
           contactEmail: 'lj@buyer.se',
           contactName: 'Lisa Johnson',
@@ -1410,7 +1432,7 @@ describe('UblReader', () => {
           }),
         }),
         seller: Party.create({
-          additionalIdentifiers: ['99887766'],
+          additionalIdentifiers: [Identifier.create({ id: '99887766' })],
           companyId: 'GB983294',
           endpointId: Identifier.create({
             id: '9482348239847239874',
@@ -1532,7 +1554,7 @@ describe('UblReader', () => {
         ],
         payment: Payment.create({ meansCode: '31' }),
         seller: Party.create({
-          additionalIdentifiers: ['12345678'],
+          additionalIdentifiers: [Identifier.create({ id: '12345678' })],
           address: Address.create({
             addressLines: ['Yellow Brick Road'],
             cityName: 'Kuki',
@@ -1609,7 +1631,7 @@ describe('UblReader', () => {
           transfer: PaymentTransfer.create({ account: 'SE1212341234123412' }),
         }),
         seller: Party.create({
-          additionalIdentifiers: ['7300010000001'],
+          additionalIdentifiers: [Identifier.create({ id: '7300010000001' })],
           address: Address.create({
             addressLines: ['Main street 2, Building 4'],
             cityName: 'Big city',
@@ -1654,7 +1676,9 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         buyer: Party.create({
-          additionalIdentifiers: ['FR23342'],
+          additionalIdentifiers: [
+            Identifier.create({ id: 'FR23342', scheme: '0002' }),
+          ],
           address: Address.create({
             addressLines: ['Hovedgatan 32', 'Po box 878'],
             cityName: 'Stockholm',
@@ -1770,7 +1794,7 @@ describe('UblReader', () => {
           }),
         }),
         seller: Party.create({
-          additionalIdentifiers: ['99887766'],
+          additionalIdentifiers: [Identifier.create({ id: '99887766' })],
           address: Address.create({
             addressLines: ['Main street 1', 'Postbox 123'],
             cityName: 'London',

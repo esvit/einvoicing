@@ -19,7 +19,7 @@ export interface IParty {
   contactName?: string;
   contactEmail?: string;
   contactPhone?: string;
-  additionalIdentifiers?: string[];
+  additionalIdentifiers?: Identifier[];
   vatNumber?: string;
   taxRegistrationId?: { companyId?: string; taxScheme?: string };
 }
@@ -165,7 +165,7 @@ export default class Party extends ValueObject<IParty> {
   /**
    * Set the additional identifiers.
    */
-  set additionalIdentifiers(value: string[] | undefined) {
+  set additionalIdentifiers(value: Identifier[] | undefined) {
     this.props.additionalIdentifiers = value;
   }
 

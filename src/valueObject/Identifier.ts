@@ -9,7 +9,7 @@ import { ValueObject } from '../base/ValueObject';
 
 export interface IIdentifier {
   id: string;
-  scheme: string;
+  scheme?: string;
 }
 
 export default class Identifier extends ValueObject<IIdentifier> {
@@ -46,9 +46,14 @@ export default class Identifier extends ValueObject<IIdentifier> {
   }
 
   toPrimitive() {
-    return {
-      attr_schemeID: this.scheme,
+    const value = {
       '#text': this.id,
     };
+
+    if (this.scheme) {
+      value['attr_schemeID'] = this.scheme;
+    }
+
+    return value;
   }
 }
