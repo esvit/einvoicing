@@ -6,6 +6,7 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 
+import Document from './entity/Document';
 import Identifier from './valueObject/Identifier';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -91,4 +92,30 @@ export function omitEmpty(obj: object): object | undefined {
   }
 
   return undefined;
+}
+
+export function computeTotals(document: Document): {
+  linesTotal: number;
+  taxInclusiveAmount: number;
+  taxExclusiveAmount: number;
+  chargesTotal: number;
+  taxesTotal: number;
+} {
+  const add = (acc: number, value: number) => acc + value;
+
+  const lines = document.lines?.map((line) => line.netAmount || 0);
+  const charges = document.charges?.map((charge) => charge.amount || 0);
+  const taxes = document.taxes?.map((tax) => tax.taxAmount || 0);
+
+  const linesTotal = lines.reduce(add, 0);
+  const chargesTotal = charges.reduce(add, 0);
+  const taxesTotal = taxes.reduce(add, 0);
+
+  return {
+    taxInclusiveAmount: linesTotal + chargesTotal + taxesTotal,
+    taxExclusiveAmount: linesTotal + chargesTotal,
+    linesTotal,
+    chargesTotal,
+    taxesTotal,
+  };
 }

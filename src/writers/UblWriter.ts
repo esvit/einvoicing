@@ -8,7 +8,7 @@
 import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
-import { formatNumber, omitEmpty } from '../helpers';
+import { computeTotals, formatNumber, omitEmpty } from '../helpers';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -23,6 +23,9 @@ export default class UblWriter extends AbstractWriter {
       (acc, ns) => ({ ...acc, [`attr_${ns}`]: document.xmlNamespaces[ns] }),
       {},
     );
+
+    const { linesTotal, taxInclusiveAmount, taxExclusiveAmount, chargesTotal } =
+      computeTotals(document);
 
     const json = {
       '?xml': { attr_version: '1.0', attr_encoding: 'UTF-8' },
@@ -235,47 +238,23 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
-            '#text': formatNumber(
-              document.lines?.reduce(
-                (sum, line) => sum + (line.netAmount || 0),
-                0,
-              ),
-            ),
+            '#text': formatNumber(linesTotal),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxExclusiveAmount': {
-            '#text': formatNumber(
-              document.lines?.reduce(
-                (sum, line) => sum + (line.netAmount || 0),
-                0,
-              ),
-            ),
+            '#text': formatNumber(taxExclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxInclusiveAmount': {
-            '#text': formatNumber(
-              document.lines?.reduce(
-                (sum, line) => sum + (line.netAmount || 0),
-                0,
-              ) +
-                document.taxes?.reduce(
-                  (sum, tax) => sum + (tax.taxAmount || 0),
-                  0,
-                ),
-            ),
+            '#text': formatNumber(taxInclusiveAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
+          },
+          'cbc:ChargeTotalAmount': {
+            '#text': formatNumber(chargesTotal),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:PayableAmount': {
-            '#text': formatNumber(
-              document.lines?.reduce(
-                (sum, line) => sum + (line.netAmount || 0),
-                0,
-              ) +
-                document.taxes?.reduce(
-                  (sum, tax) => sum + (tax.taxAmount || 0),
-                  0,
-                ),
-            ),
+            '#text': formatNumber(taxInclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
         },
