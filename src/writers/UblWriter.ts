@@ -269,10 +269,10 @@ export default class UblWriter extends AbstractWriter {
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:AccountingCost': line.buyerAccountingReference,
-          'cac:InvoicePeriod': omitEmpty({
+          'cac:InvoicePeriod': {
             'cbc:StartDate': line.periodStart?.toPrimitive(),
             'cbc:EndDate': line.periodEnd?.toPrimitive(),
-          }),
+          },
           'cac:OrderLineReference': {
             'cbc:LineID': line.orderLineReference?.toPrimitive(),
           },
@@ -308,6 +308,6 @@ export default class UblWriter extends AbstractWriter {
       },
     };
 
-    return builder.build(json);
+    return builder.build(omitEmpty(json));
   }
 }

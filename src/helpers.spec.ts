@@ -1,4 +1,10 @@
-import { formatNumber, getArray, numOrUnd, strOrUnd } from './helpers';
+import {
+  formatNumber,
+  getArray,
+  numOrUnd,
+  omitEmpty,
+  strOrUnd,
+} from './helpers';
 
 describe('helpers', () => {
   test('strOrUnd', () => {
@@ -63,6 +69,21 @@ describe('helpers', () => {
     it('returns a number with decimals when necessary', () => {
       expect(formatNumber(5000.5)).toBe('5000.5');
       expect(formatNumber(5000.556)).toBe('5000.56');
+    });
+  });
+
+  describe('omitEmpty', () => {
+    it('removes deeply nested empty objects', () => {
+      expect(
+        omitEmpty({
+          a: { b: { c: undefined } },
+          d: { e: { f: { h: 2, i: undefined } } },
+          j: [undefined, { k: 2 }, { l: undefined }],
+        }),
+      ).toEqual({
+        d: { e: { f: { h: 2 } } },
+        j: [{ k: 2 }],
+      });
     });
   });
 });

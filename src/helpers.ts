@@ -86,12 +86,34 @@ export function formatNumber(n: number): string {
   return formatter.format(n);
 }
 
+const isEmpty = (obj: object): boolean => obj && Object.keys(obj).length === 0;
+
 export function omitEmpty(obj: object): object | undefined {
-  if (Object.values(obj).some((v) => v !== undefined)) {
-    return obj;
+  const returnObj = {};
+
+  if (!obj) {
+    return undefined;
   }
 
-  return undefined;
+  Object.entries(obj).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      returnObj[key] = value
+        .map((v) => omitEmpty(v))
+        .filter((v) => typeof v !== 'undefined' && !isEmpty(v));
+    } else if (typeof value !== 'undefined') {
+      let innerValue;
+
+      if (value !== null && typeof value === 'object') {
+        innerValue = omitEmpty(value);
+      }
+
+      if (!isEmpty(innerValue)) {
+        returnObj[key] = innerValue || value;
+      }
+    }
+  });
+
+  return returnObj;
 }
 
 export function computeTotals(document: Document): {
