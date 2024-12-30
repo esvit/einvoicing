@@ -101,14 +101,16 @@ export default class UblWriter extends AbstractWriter {
                 document.seller?.address?.addressLines?.[1],
               'cbc:CityName': document.seller?.address?.cityName,
               'cbc:PostalZone': document.seller?.address?.postalZone,
+              'cbc:CountrySubentity': document.seller?.address?.subdivision,
               'cac:Country': {
                 'cbc:IdentificationCode': document.seller?.address?.countryCode,
               },
             },
             'cac:PartyTaxScheme': {
-              'cbc:CompanyID': document.seller?.vatNumber,
+              'cbc:CompanyID':
+                document.seller?.taxRegistrationId?.companyId.toPrimitive(),
               'cac:TaxScheme': {
-                'cbc:ID': 'VAT',
+                'cbc:ID': document.seller?.taxRegistrationId?.taxScheme,
               },
             },
             'cac:PartyLegalEntity': {
@@ -139,14 +141,16 @@ export default class UblWriter extends AbstractWriter {
                 document.buyer?.address?.addressLines?.[1],
               'cbc:CityName': document.buyer?.address?.cityName,
               'cbc:PostalZone': document.buyer?.address?.postalZone,
+              'cbc:CountrySubentity': document.buyer?.address?.subdivision,
               'cac:Country': {
                 'cbc:IdentificationCode': document.buyer?.address?.countryCode,
               },
             },
             'cac:PartyTaxScheme': {
-              'cbc:CompanyID': document.buyer?.vatNumber,
+              'cbc:CompanyID':
+                document.buyer?.taxRegistrationId?.companyId.toPrimitive(),
               'cac:TaxScheme': {
-                'cbc:ID': 'VAT',
+                'cbc:ID': document.buyer?.taxRegistrationId?.taxScheme,
               },
             },
             'cac:PartyLegalEntity': {
@@ -208,10 +212,10 @@ export default class UblWriter extends AbstractWriter {
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cac:TaxCategory': {
-            'cbc:ID': charge.tax.id.toPrimitive().split(':')[0],
-            'cbc:Percent': formatNumber(charge.tax.percent),
-            'cbc:TaxExemptionReason': charge.tax.taxExemptionReason,
-            'cbc:TaxExemptionReasonCode': charge.tax.taxExemptionReasonCode,
+            'cbc:ID': charge.tax?.id?.toPrimitive().split(':')[0],
+            'cbc:Percent': formatNumber(charge.tax?.percent),
+            'cbc:TaxExemptionReason': charge.tax?.taxExemptionReason,
+            'cbc:TaxExemptionReasonCode': charge.tax?.taxExemptionReasonCode,
             'cac:TaxScheme': {
               'cbc:ID': 'VAT',
             },

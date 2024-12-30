@@ -8,7 +8,7 @@
 import { X2jOptions, XMLParser } from 'fast-xml-parser';
 import AbstractReader from './AbstractReader';
 import Document from '../entity/Document';
-import { getRuleset } from '../index';
+import { getRuleset, Identifier } from '../index';
 import { DocumentId, DocumentTypes } from '../interface/IDocument';
 import DateOnly from '../valueObject/DateOnly';
 import DocumentType from '../valueObject/DocumentType';
@@ -311,7 +311,7 @@ export default class UblReader extends AbstractReader {
 
     let vatNumber: string | undefined = undefined;
     let taxRegistrationId:
-      | { companyId: string; taxScheme: string }
+      | { companyId: Identifier; taxScheme: string }
       | undefined = undefined;
     // VAT number and tax registration identifier
     const vatNodes = getArray(node, ['cac:PartyTaxScheme']);
@@ -320,7 +320,7 @@ export default class UblReader extends AbstractReader {
         vatNumber = strOrUnd(vatNode['cbc:CompanyID']);
       } else {
         taxRegistrationId = {
-          companyId: strOrUnd(vatNode['cbc:CompanyID']),
+          companyId: nodeToId(vatNode['cbc:CompanyID']),
           taxScheme: strOrUnd(vatNode['cac:TaxScheme']?.['cbc:ID']),
         };
       }

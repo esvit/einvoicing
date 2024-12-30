@@ -20,7 +20,7 @@ export interface IParty {
   contact?: Contact;
   additionalIdentifiers?: Identifier[];
   vatNumber?: string;
-  taxRegistrationId?: { companyId?: string; taxScheme?: string };
+  taxRegistrationId?: { companyId?: Identifier; taxScheme?: string };
 }
 
 export default class Party extends ValueObject<IParty> {
@@ -165,7 +165,7 @@ export default class Party extends ValueObject<IParty> {
    * Set the tax registration ID.
    */
   set taxRegistrationId(
-    value: { companyId?: string; taxScheme?: string } | undefined,
+    value: { companyId?: Identifier; taxScheme?: string } | undefined,
   ) {
     this.props.taxRegistrationId = value;
   }
