@@ -32,6 +32,7 @@ import PaymentMandate from '../valueObject/PaymentMandate';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import Tax from '../entity/Tax';
 import { TaxId } from '../interface/ITax';
+import Contact from '../valueObject/Contact';
 
 /**
  * @link https://docs.peppol.eu/poacc/billing/3.0/2024-Q2/syntax/ubl-invoice/tree/
@@ -336,9 +337,7 @@ export default class UblReader extends AbstractReader {
       companyLegalForm: strOrUnd(
         node['cac:PartyLegalEntity']?.['cbc:CompanyLegalForm'],
       ), // BT-33: Seller additional legal information
-      contactName: strOrUnd(node['cac:Contact']?.['cbc:Name']),
-      contactEmail: strOrUnd(node['cac:Contact']?.['cbc:ElectronicMail']),
-      contactPhone: strOrUnd(node['cac:Contact']?.['cbc:Telephone']),
+      contact: this.contactFromXmlNode(node['cac:Contact']),
       additionalIdentifiers: additionalIdentifiers.length
         ? additionalIdentifiers
         : undefined,
@@ -468,6 +467,18 @@ export default class UblReader extends AbstractReader {
       streetName: strOrUnd(node['cbc:StreetName']),
       subdivision: strOrUnd(node['cbc:CountrySubentity']),
       addressLines: addressLines.length ? addressLines : undefined,
+    });
+  }
+
+  contactFromXmlNode(node: XmlNode): Party['contact'] | undefined {
+    if (!node) {
+      return undefined;
+    }
+
+    return Contact.create({
+      name: strOrUnd(node['cbc:Name']),
+      phone: strOrUnd(node['cbc:Telephone']),
+      email: strOrUnd(node['cbc:ElectronicMail']),
     });
   }
 

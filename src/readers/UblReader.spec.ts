@@ -20,6 +20,7 @@ import BinaryObject from '../valueObject/BinaryObject';
 import InvoiceReference from '../valueObject/InvoiceReference';
 import Payee from '../valueObject/Payee';
 import ListIdentifier from '../valueObject/ListIdentifier';
+import Contact from '../valueObject/Contact';
 
 describe('UblReader', () => {
   let ublReader: UblReader;
@@ -66,7 +67,7 @@ describe('UblReader', () => {
             Identifier.create({ id: '87654321', scheme: '0184' }),
           ],
           companyId: Identifier.create({ id: '87654321', scheme: '0184' }),
-          contactName: 'n/a',
+          contact: Contact.create({ name: 'n/a' }),
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
           legalName: 'Company B',
@@ -170,7 +171,7 @@ describe('UblReader', () => {
             Identifier.create({ id: '87654321', scheme: '0184' }),
           ],
           companyId: Identifier.create({ id: '87654321', scheme: '0184' }),
-          contactName: 'n/a',
+          contact: Contact.create({ name: 'n/a' }),
           endpointId: Identifier.create({ id: '87654321', scheme: '0184' }),
           tradingName: 'Company B',
           legalName: 'Company B',
@@ -365,7 +366,7 @@ describe('UblReader', () => {
         payment: Payment.create({}),
         buyer: Party.create({
           additionalIdentifiers: [Identifier.create({ id: '10202' })],
-          contactName: 'Dhr. J BLOKKER',
+          contact: Contact.create({ name: 'Dhr. J BLOKKER' }),
           legalName: 'ODIN 59',
           address: Address.create({
             addressLines: ['POSTBUS 367'],
@@ -689,9 +690,11 @@ describe('UblReader', () => {
             Identifier.create({ id: '3456789012098', scheme: '0088' }),
           ],
           companyId: Identifier.create({ id: '987654321', scheme: '0082' }),
-          contactEmail: 'john@buyercompany.no',
-          contactName: 'John Doe',
-          contactPhone: '5121230',
+          contact: Contact.create({
+            name: 'John Doe',
+            email: 'john@buyercompany.no',
+            phone: '5121230',
+          }),
           legalName: 'The Buyercompany',
           vatNumber: 'NO987654321MVA',
           address: Address.create({
@@ -713,9 +716,11 @@ describe('UblReader', () => {
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
           ],
           companyId: Identifier.create({ id: '123456789', scheme: '0082' }),
-          contactEmail: 'antonio@salescompany.no',
-          contactName: 'Antonio Salesmacher',
-          contactPhone: '46211230',
+          contact: Contact.create({
+            name: 'Antonio Salesmacher',
+            email: 'antonio@salescompany.no',
+            phone: '46211230',
+          }),
           legalName: 'Salescompany ltd.',
           vatNumber: 'NO123456789MVA',
           address: Address.create({
@@ -948,7 +953,7 @@ describe('UblReader', () => {
             Identifier.create({ id: '1238764941386', scheme: '0088' }),
           ],
           companyId: Identifier.create({ id: 'DK16356706' }),
-          contactEmail: 'antonio@SubscriptionsSeller.dk',
+          contact: Contact.create({ email: 'antonio@SubscriptionsSeller.dk' }),
           vatNumber: 'DK16356706',
           legalName: 'SubscriptionSeller',
           address: Address.create({
@@ -1031,9 +1036,11 @@ describe('UblReader', () => {
           }),
         ],
         buyer: Party.create({
-          contactEmail: 'fred@iytcorporation.gov.uk',
-          contactName: 'Mr Fred Churchill',
-          contactPhone: '0127 2653214',
+          contact: Contact.create({
+            name: 'Mr Fred Churchill',
+            email: 'fred@iytcorporation.gov.uk',
+            phone: '0127 2653214',
+          }),
           taxRegistrationId: {
             companyId: '12356478',
             taxScheme: 'UK VAT',
@@ -1051,9 +1058,11 @@ describe('UblReader', () => {
         notes: 'sample',
         purchaseOrderReference: Identifier.create({ id: 'AEG012345' }),
         seller: Party.create({
-          contactEmail: 'bouquet@fpconsortial.co.uk',
-          contactName: 'Mrs Bouquet',
-          contactPhone: '0158 1233714',
+          contact: Contact.create({
+            name: 'Mrs Bouquet',
+            email: 'bouquet@fpconsortial.co.uk',
+            phone: '0158 1233714',
+          }),
           tradingName: 'Consortial',
           vatNumber: '175 269 2355',
           address: Address.create({
@@ -1140,9 +1149,11 @@ describe('UblReader', () => {
             Identifier.create({ id: '4598375937', scheme: '0002' }),
           ],
           companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
-          contactEmail: 'lj@buyer.se',
-          contactName: 'Lisa Johnson',
-          contactPhone: '23434234',
+          contact: Contact.create({
+            name: 'Lisa Johnson',
+            email: 'lj@buyer.se',
+            phone: '23434234',
+          }),
           endpointId: Identifier.create({ id: '4598375937', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
           legalName: 'Buyer Official Name',
@@ -1386,9 +1397,11 @@ describe('UblReader', () => {
             Identifier.create({ id: 'FR23342', scheme: '0002' }),
           ],
           companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
-          contactEmail: 'lj@buyer.se',
-          contactName: 'Lisa Johnson',
-          contactPhone: '23434234',
+          contact: Contact.create({
+            name: 'Lisa Johnson',
+            email: 'lj@buyer.se',
+            phone: '23434234',
+          }),
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
           legalName: 'Buyer Official Name',
@@ -1537,9 +1550,11 @@ describe('UblReader', () => {
             Identifier.create({ id: 'FR23342', scheme: '0002' }),
           ],
           companyId: Identifier.create({ id: '39937423947', scheme: '0183' }),
-          contactEmail: 'lj@buyer.se',
-          contactName: 'Lisa Johnson',
-          contactPhone: '23434234',
+          contact: Contact.create({
+            name: 'Lisa Johnson',
+            email: 'lj@buyer.se',
+            phone: '23434234',
+          }),
           endpointId: Identifier.create({ id: 'FR23342', scheme: '0002' }),
           tradingName: 'BuyerTradingName AS',
           legalName: 'Buyer Official Name',
@@ -1978,9 +1993,11 @@ describe('UblReader', () => {
           }),
           companyId: Identifier.create({ id: 'GB983294' }),
           companyLegalForm: 'AdditionalLegalInformation',
-          contactEmail: 'john.doe@foo.bar',
-          contactName: 'John Doe',
-          contactPhone: '9384203984',
+          contact: Contact.create({
+            name: 'John Doe',
+            email: 'john.doe@foo.bar',
+            phone: '9384203984',
+          }),
           endpointId: Identifier.create({
             id: '7300010000001',
             scheme: '0088',

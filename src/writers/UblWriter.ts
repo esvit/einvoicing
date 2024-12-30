@@ -115,6 +115,11 @@ export default class UblWriter extends AbstractWriter {
               'cbc:RegistrationName': document.seller?.legalName,
               'cbc:CompanyID': document.seller?.companyId?.toPrimitive(),
             },
+            'cac:Contact': {
+              'cbc:Name': document.seller?.contact?.name,
+              'cbc:Telephone': document.seller?.contact?.phone,
+              'cbc:ElectronicMail': document.seller?.contact?.email,
+            },
           },
         },
         'cac:AccountingCustomerParty': {
@@ -148,9 +153,9 @@ export default class UblWriter extends AbstractWriter {
               'cbc:CompanyID': document.buyer?.companyId?.toPrimitive(),
             },
             'cac:Contact': {
-              'cbc:Name': document.buyer?.contactName,
-              'cbc:Telephone': document.buyer?.contactPhone,
-              'cbc:ElectronicMail': document.buyer?.contactEmail,
+              'cbc:Name': document.buyer?.contact?.name,
+              'cbc:Telephone': document.buyer?.contact?.phone,
+              'cbc:ElectronicMail': document.buyer?.contact?.email,
             },
           },
         },

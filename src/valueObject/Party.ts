@@ -7,6 +7,7 @@
  */
 import { ValueObject } from '../base/ValueObject';
 import Address from './Address';
+import Contact from './Contact';
 import Identifier from './Identifier';
 
 export interface IParty {
@@ -16,9 +17,7 @@ export interface IParty {
   companyId?: Identifier;
   tradingName?: string;
   companyLegalForm?: string;
-  contactName?: string;
-  contactEmail?: string;
-  contactPhone?: string;
+  contact?: Contact;
   additionalIdentifiers?: Identifier[];
   vatNumber?: string;
   taxRegistrationId?: { companyId?: string; taxScheme?: string };
@@ -114,45 +113,17 @@ export default class Party extends ValueObject<IParty> {
   }
 
   /**
-   * Get the contact name.
+   * Get the contact.
    */
-  get contactName() {
-    return this.props.contactName;
+  get contact() {
+    return this.props.contact;
   }
 
   /**
    * Set the contact name.
    */
-  set contactName(value: string | undefined) {
-    this.props.contactName = value;
-  }
-
-  /**
-   * Get the contact email.
-   */
-  get contactEmail() {
-    return this.props.contactEmail;
-  }
-
-  /**
-   * Set the contact email.
-   */
-  set contactEmail(value: string | undefined) {
-    this.props.contactEmail = value;
-  }
-
-  /**
-   * Get the contact phone.
-   */
-  get contactPhone() {
-    return this.props.contactPhone;
-  }
-
-  /**
-   * Set the contact phone.
-   */
-  set contactPhone(value: string | undefined) {
-    this.props.contactPhone = value;
+  set contact(value: Contact | undefined) {
+    this.props.contact = value;
   }
 
   /**

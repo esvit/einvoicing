@@ -21,6 +21,7 @@ import BinaryObject from '../valueObject/BinaryObject';
 import InvoiceReference from '../valueObject/InvoiceReference';
 import Payee from '../valueObject/Payee';
 import DKRuleset from '../ruleset/DKRuleset';
+import Contact from '../valueObject/Contact';
 
 describe('UblWriter', () => {
   let ublWriter: UblWriter;
@@ -88,7 +89,7 @@ describe('UblWriter', () => {
           Identifier.create({ id: '87654321', scheme: '0012' }),
         ],
         companyId: Identifier.create({ id: '87654321' }),
-        contactName: 'n/a',
+        contact: Contact.create({ name: 'n/a' }),
         endpointId: Identifier.create({ id: '87654321', scheme: '0002' }),
         tradingName: 'Company B',
         legalName: 'Company B',
