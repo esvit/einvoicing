@@ -18,9 +18,15 @@ export default class UblWriter extends AbstractWriter {
       suppressEmptyNode: true,
     });
 
+    const xmlNamespaces = Object.keys(document.xmlNamespaces || {}).reduce(
+      (acc, ns) => ({ ...acc, [`attr_${ns}`]: document.xmlNamespaces[ns] }),
+      {},
+    );
+
     const json = {
-      '?xml': { 'attr_version': '1.0', 'attr_encoding': 'UTF-8' },
+      '?xml': { attr_version: '1.0', attr_encoding: 'UTF-8' },
       Invoice: {
+        ...xmlNamespaces,
         'cbc:CustomizationID':
           'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
         'cbc:ProfileID': 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',

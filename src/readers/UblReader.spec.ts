@@ -110,6 +110,13 @@ describe('UblReader', () => {
             tax: vat,
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('bis3_invoice_positive.xml', async () => {
@@ -190,6 +197,13 @@ describe('UblReader', () => {
             tax: vat,
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('ft_g2g_td01_con_allegato_bonifico_e_split_payment.xml', async () => {
@@ -267,6 +281,23 @@ describe('UblReader', () => {
         ],
         notes: 'Scissione Pagamenti',
         paidAmount: 274.12,
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+          'xmlns:ccts': 'urn:un:unece:uncefact:documentation:2',
+          'xmlns:cr': 'http://www.ubl-italia.org/ns/CrossReference',
+          'xmlns:ext':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2',
+          'xmlns:qdt':
+            'urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2',
+          'xmlns:udt':
+            'urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2',
+          'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema',
+          'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        },
       });
     });
     test('guide-example1.xml', async () => {
@@ -522,6 +553,18 @@ describe('UblReader', () => {
             unitCode: 'EA',
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+          'xmlns:ccts': 'urn:un:unece:uncefact:documentation:2',
+          'xmlns:qdt':
+            'urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2',
+          'xmlns:udt':
+            'urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2',
+        },
       });
     });
     test('guide-example2.xml', async () => {
@@ -756,6 +799,18 @@ describe('UblReader', () => {
             unitCode: 'MTR',
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+          'xmlns:ccts': 'urn:un:unece:uncefact:documentation:2',
+          'xmlns:qdt':
+            'urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2',
+          'xmlns:udt':
+            'urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2',
+        },
       });
     });
     test('guide-example3.xml', async () => {
@@ -838,6 +893,18 @@ describe('UblReader', () => {
             unitCode: 'EA',
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+          'xmlns:ccts': 'urn:un:unece:uncefact:documentation:2',
+          'xmlns:qdt':
+            'urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2',
+          'xmlns:udt':
+            'urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2',
+        },
       });
     });
     test('ubl-invoice-2.0-example.xml', async () => {
@@ -934,6 +1001,13 @@ describe('UblReader', () => {
             unitCode: 'KGM',
           }),
         ],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
 
@@ -1137,6 +1211,13 @@ describe('UblReader', () => {
           }),
         ],
         taxes: [vat, exemptTax],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('peppol-base.xml', async () => {
@@ -1272,6 +1353,13 @@ describe('UblReader', () => {
           }),
         ],
         taxes: [vat],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('peppol-credit-note.xml', async () => {
@@ -1384,6 +1472,13 @@ describe('UblReader', () => {
           }),
         ],
         taxes: [vat],
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('peppol-rounding.xml', async () => {
@@ -1445,6 +1540,13 @@ describe('UblReader', () => {
         }),
         taxes: [vat],
         type: DocumentType.create('380'),
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('peppol-vat-o.xml', async () => {
@@ -1507,6 +1609,13 @@ describe('UblReader', () => {
         }),
         taxes: [vat],
         type: DocumentType.create('380'),
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
     test('peppol-vat-s.xml', async () => {
@@ -1665,6 +1774,13 @@ describe('UblReader', () => {
         }),
         taxes: [tax1, tax2],
         type: DocumentType.create('380'),
+        xmlNamespaces: {
+          xmlns: 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+          'xmlns:cac':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+          'xmlns:cbc':
+            'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
+        },
       });
     });
   });

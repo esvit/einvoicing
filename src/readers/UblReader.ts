@@ -52,6 +52,13 @@ export default class UblReader extends AbstractReader {
     const documentNode =
       documentType === DocumentTypes.Invoice ? json.Invoice : json.CreditNote;
 
+    const xmlNamespaces = Object.keys(documentNode)
+      .filter((key) => key.startsWith('attr_xmlns'))
+      .reduce((acc, key) => {
+        acc[key.replace('attr_', '')] = documentNode[key];
+        return acc;
+      }, {});
+
     // BT-24: Specification identifier
     const customizationId = documentNode['cbc:CustomizationID'];
     const ruleset = getRuleset(customizationId);
@@ -252,6 +259,8 @@ export default class UblReader extends AbstractReader {
       charges: charges.length ? charges : undefined,
 
       taxes: taxes.length ? taxes : undefined,
+
+      xmlNamespaces,
     });
     return document;
   }

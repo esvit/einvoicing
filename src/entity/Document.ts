@@ -462,6 +462,20 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
     this.props.taxCurrency = value;
   }
 
+  /**
+   * Get the xml namespaces.
+   */
+  get xmlNamespaces() {
+    return this.props.xmlNamespaces;
+  }
+
+  /**
+   * Set the xml namespaces.
+   */
+  set xmlNamespaces(value: { [key: string]: string } | undefined) {
+    this.props.xmlNamespaces = value;
+  }
+
   toPrimitive() {
     return this.props;
   }

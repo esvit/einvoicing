@@ -64,4 +64,6 @@ export interface IDocument {
   taxes?: Tax[];
   taxAmount?: number;
   taxCurrency?: CurrencyCode;
+
+  xmlNamespaces?: { [key: string]: string };
 }
