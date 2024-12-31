@@ -47,7 +47,7 @@ export default class UblWriter extends AbstractWriter {
           'cbc:EndDate': document.periodEnd?.toPrimitive(),
         },
         'cac:OrderReference': {
-          'cbc:ID': document.purchaseOrderReference.toPrimitive(),
+          'cbc:ID': document.purchaseOrderReference?.toPrimitive(),
         },
         'cac:BillingReference': document.precedingInvoiceReference?.map(
           (reference) => ({
@@ -57,11 +57,11 @@ export default class UblWriter extends AbstractWriter {
             },
           }),
         ),
-        'cac:OriginatorDocumentReference': omitEmpty({
+        'cac:OriginatorDocumentReference': {
           'cbc:ID': document.originatorDocumentReference?.toPrimitive(),
-        }),
+        },
         'cac:ContractDocumentReference': {
-          'cbc:ID': document.contractReference.toPrimitive(),
+          'cbc:ID': document.contractReference?.toPrimitive(),
         },
         'cac:AdditionalDocumentReference': document.attachments?.map(
           (attachment) => ({
@@ -87,7 +87,7 @@ export default class UblWriter extends AbstractWriter {
         ),
         'cac:AccountingSupplierParty': {
           'cac:Party': {
-            'cbc:EndpointID': document.seller?.endpointId.toPrimitive(),
+            'cbc:EndpointID': document.seller?.endpointId?.toPrimitive(),
             'cac:PartyIdentification':
               document.seller?.additionalIdentifiers?.map((id) => ({
                 'cbc:ID': id.toPrimitive(),
@@ -113,13 +113,13 @@ export default class UblWriter extends AbstractWriter {
             },
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.seller?.legalName,
-              'cbc:CompanyID': document.seller?.companyId.toPrimitive(),
+              'cbc:CompanyID': document.seller?.companyId?.toPrimitive(),
             },
           },
         },
         'cac:AccountingCustomerParty': {
           'cac:Party': {
-            'cbc:EndpointID': document.buyer?.endpointId.toPrimitive(),
+            'cbc:EndpointID': document.buyer?.endpointId?.toPrimitive(),
             'cac:PartyIdentification':
               document.buyer?.additionalIdentifiers?.map((id) => ({
                 'cbc:ID': id.toPrimitive(),
@@ -145,7 +145,7 @@ export default class UblWriter extends AbstractWriter {
             },
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.buyer?.legalName,
-              'cbc:CompanyID': document.buyer?.companyId.toPrimitive(),
+              'cbc:CompanyID': document.buyer?.companyId?.toPrimitive(),
             },
             'cac:Contact': {
               'cbc:Name': document.buyer?.contactName,
@@ -170,11 +170,11 @@ export default class UblWriter extends AbstractWriter {
               },
             },
           },
-          'cac:DeliveryParty': omitEmpty({
-            'cac:PartyName': omitEmpty({
+          'cac:DeliveryParty': {
+            'cac:PartyName': {
               'cbc:Name': document.delivery?.name,
-            }),
-          }),
+            },
+          },
         },
         'cac:PaymentMeans': {
           'cbc:PaymentMeansCode': {
@@ -185,14 +185,14 @@ export default class UblWriter extends AbstractWriter {
           'cac:PayeeFinancialAccount': {
             'cbc:ID': document.payment?.transfer?.account,
             'cbc:Name': document.payment?.transfer?.name,
-            'cac:FinancialInstitutionBranch': omitEmpty({
+            'cac:FinancialInstitutionBranch': {
               'cbc:ID': document.payment?.transfer?.provider?.toPrimitive(),
-            }),
+            },
           },
         },
-        'cac:PaymentTerms': omitEmpty({
+        'cac:PaymentTerms': {
           'cbc:Note': document.payment?.terms,
-        }),
+        },
         'cac:AllowanceCharge': document.charges?.map((charge) => ({
           'cbc:ChargeIndicator': charge.isCharge,
           'cbc:AllowanceChargeReason': charge.reasonText,
@@ -283,12 +283,12 @@ export default class UblWriter extends AbstractWriter {
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
-            'cac:SellersItemIdentification': omitEmpty({
+            'cac:SellersItemIdentification': {
               'cbc:ID': line.sellerIdentifier?.toPrimitive(),
-            }),
-            'cac:StandardItemIdentification': omitEmpty({
+            },
+            'cac:StandardItemIdentification': {
               'cbc:ID': line.standardIdentifier?.toPrimitive(),
-            }),
+            },
             'cac:OriginCountry': {
               'cbc:IdentificationCode': line.originCountryCode,
             },
