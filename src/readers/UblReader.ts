@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import { XMLParser } from 'fast-xml-parser';
+import { X2jOptions, XMLParser } from 'fast-xml-parser';
 import AbstractReader from './AbstractReader';
 import Document from '../entity/Document';
 import { getRuleset } from '../index';
@@ -38,14 +38,11 @@ import { TaxId } from '../interface/ITax';
  */
 export default class UblReader extends AbstractReader {
   async read(content: string): Promise<Document> {
-    const options = {
+    const options: X2jOptions = {
       attributeNamePrefix: 'attr_',
       ignoreAttributes: false,
-      parseNodeValue: true,
       parseAttributeValue: true,
       trimValues: true,
-      parseTrueNumberOnly: true,
-      arrayMode: true,
     };
     const parser = new XMLParser(options);
     const json = parser.parse(content);
