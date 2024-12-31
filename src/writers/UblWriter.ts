@@ -183,6 +183,9 @@ export default class UblWriter extends AbstractWriter {
             },
           },
         },
+        'cac:PaymentTerms': {
+          'cbc:Note': document.payment?.terms,
+        },
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
             '#text': formatNumber(
