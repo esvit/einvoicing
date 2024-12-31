@@ -19,6 +19,7 @@ export default class UblWriter extends AbstractWriter {
     });
 
     const json = {
+      '?xml': { 'attr_version': '1.0', 'attr_encoding': 'UTF-8' },
       Invoice: {
         'cbc:CustomizationID':
           'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
