@@ -55,3 +55,12 @@ export function getArray(node: XmlNode, path = []) {
   }
   return Array.isArray(initNode) ? initNode : [initNode];
 }
+
+const formatter = new Intl.NumberFormat('en-US', {
+  maximumFractionDigits: 2,
+  useGrouping: false,
+});
+
+export function formatNumber(n: number): string {
+  return formatter.format(n);
+}

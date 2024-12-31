@@ -8,6 +8,7 @@
 import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
+import { formatNumber } from '../helpers';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -167,23 +168,26 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
-            '#text': document.taxes
-              ?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0)
-              .toFixed(2),
+            '#text': formatNumber(
+              document.taxes?.reduce(
+                (sum, tax) => sum + (tax.taxAmount || 0),
+                0,
+              ),
+            ),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cac:TaxSubtotal': document.taxes?.map((tax) => ({
             'cbc:TaxableAmount': {
-              '#text': tax.taxableAmount?.toFixed(2),
+              '#text': formatNumber(tax.taxableAmount),
               attr_currencyID: tax.currency?.toPrimitive(),
             },
             'cbc:TaxAmount': {
-              '#text': tax.taxAmount?.toFixed(2),
+              '#text': formatNumber(tax.taxAmount),
               attr_currencyID: tax.currency?.toPrimitive(),
             },
             'cac:TaxCategory': {
               'cbc:ID': tax.id.toPrimitive().split(':')[0],
-              'cbc:Percent': tax.percent?.toFixed(2),
+              'cbc:Percent': formatNumber(tax.percent),
               'cbc:TaxExemptionReason': tax.taxExemptionReason,
               'cbc:TaxExemptionReasonCode': tax.taxExemptionReasonCode,
               'cac:TaxScheme': {
@@ -194,52 +198,58 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
-            '#text': document.lines
-              ?.reduce((sum, line) => sum + (line.netAmount || 0), 0)
-              .toFixed(2),
+            '#text': formatNumber(
+              document.lines?.reduce(
+                (sum, line) => sum + (line.netAmount || 0),
+                0,
+              ),
+            ),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxExclusiveAmount': {
-            '#text': document.lines
-              ?.reduce((sum, line) => sum + (line.netAmount || 0), 0)
-              .toFixed(2),
+            '#text': formatNumber(
+              document.lines?.reduce(
+                (sum, line) => sum + (line.netAmount || 0),
+                0,
+              ),
+            ),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxInclusiveAmount': {
-            '#text': (
+            '#text': formatNumber(
               document.lines?.reduce(
                 (sum, line) => sum + (line.netAmount || 0),
                 0,
               ) +
-              document.taxes?.reduce(
-                (sum, tax) => sum + (tax.taxAmount || 0),
-                0,
-              )
-            ).toFixed(2),
+                document.taxes?.reduce(
+                  (sum, tax) => sum + (tax.taxAmount || 0),
+                  0,
+                ),
+            ),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:PayableAmount': {
-            '#text': (
+            '#text': formatNumber(
               document.lines?.reduce(
                 (sum, line) => sum + (line.netAmount || 0),
                 0,
               ) +
-              document.taxes?.reduce(
-                (sum, tax) => sum + (tax.taxAmount || 0),
-                0,
-              )
-            ).toFixed(2),
+                document.taxes?.reduce(
+                  (sum, tax) => sum + (tax.taxAmount || 0),
+                  0,
+                ),
+            ),
             attr_currencyID: document.currency?.toPrimitive(),
           },
         },
         'cac:InvoiceLine': document.lines?.map((line) => ({
           'cbc:ID': line.id.toPrimitive(),
           'cbc:InvoicedQuantity': {
-            '#text': line.quantity?.toFixed(2),
+            '#text': formatNumber(line.quantity),
             attr_unitCode: line.unitCode,
           },
           'cbc:LineExtensionAmount': {
-            '#text': line.netAmount?.toFixed(2),
+            '#text': formatNumber(line.netAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:AccountingCost': line.buyerAccountingReference,
@@ -258,7 +268,7 @@ export default class UblWriter extends AbstractWriter {
             },
             'cac:ClassifiedTaxCategory': {
               'cbc:ID': line.tax?.id.toPrimitive().split(':')[0],
-              'cbc:Percent': line.tax?.percent?.toFixed(2),
+              'cbc:Percent': formatNumber(line.tax?.percent),
               'cac:TaxScheme': {
                 'cbc:ID': 'VAT',
               },
@@ -266,7 +276,7 @@ export default class UblWriter extends AbstractWriter {
           },
           'cac:Price': {
             'cbc:PriceAmount': {
-              '#text': line.price?.toFixed(2),
+              '#text': formatNumber(line.price),
               attr_currencyID: document.currency?.toPrimitive(),
             },
           },
