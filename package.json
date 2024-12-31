@@ -52,6 +52,7 @@
     "test": "jest",
     "docs": "typedoc --out ./docs",
     "prettier": "prettier --config .prettierrc --write .",
+    "prettier:check": "prettier --config .prettierrc --check .",
     "test:watch": "jest --watch"
   },
   "dependencies": {
