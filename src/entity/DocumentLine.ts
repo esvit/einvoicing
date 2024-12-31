@@ -5,16 +5,19 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {Entity} from "../base/Entity";
-import {DocumentLineId, IDocumentLine} from "../interface/IDocumentLine";
-import Tax from "./Tax";
-import Identifier from "../valueObject/Identifier";
-import Attribute from "../valueObject/Attribute";
-import AllowanceCharge from "../valueObject/AllowanceCharge";
-import DateOnly from "../valueObject/DateOnly";
+import { Entity } from '../base/Entity';
+import { DocumentLineId, IDocumentLine } from '../interface/IDocumentLine';
+import Tax from './Tax';
+import Identifier from '../valueObject/Identifier';
+import Attribute from '../valueObject/Attribute';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import DateOnly from '../valueObject/DateOnly';
 
-export default
-class DocumentLine extends Entity<IDocumentLine, string, DocumentLineId> {
+export default class DocumentLine extends Entity<
+  IDocumentLine,
+  string,
+  DocumentLineId
+> {
   public static create(props: IDocumentLine): DocumentLine {
     return new DocumentLine(props, props.id);
   }

@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IPaymentMandate {
   // BT-89: Mandate reference
@@ -15,8 +15,7 @@ export interface IPaymentMandate {
   account?: string;
 }
 
-export default
-class PaymentMandate extends ValueObject<IPaymentMandate> {
+export default class PaymentMandate extends ValueObject<IPaymentMandate> {
   public static create(props: IPaymentMandate): PaymentMandate {
     return new PaymentMandate(props);
   }

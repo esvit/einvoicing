@@ -5,8 +5,8 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import BinaryObject from "./BinaryObject";
+import { ValueObject } from '../base/ValueObject';
+import BinaryObject from './BinaryObject';
 
 export interface IAttachment {
   id?: string;
@@ -15,8 +15,10 @@ export interface IAttachment {
   content?: BinaryObject;
 }
 
-export default
-class Attachment extends ValueObject<IAttachment> implements IAttachment {
+export default class Attachment
+  extends ValueObject<IAttachment>
+  implements IAttachment
+{
   public static create(ref: IAttachment): Attachment {
     return new Attachment(ref);
   }

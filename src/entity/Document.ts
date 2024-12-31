@@ -5,28 +5,31 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {Entity} from "../base/Entity";
-import {IDocument, DocumentId, DocumentTypes} from "../interface/IDocument";
-import DateOnly from "../valueObject/DateOnly";
-import DocumentType from "../valueObject/DocumentType";
-import CurrencyCode from "../valueObject/CurrencyCode";
-import InvoiceReference from "../valueObject/InvoiceReference";
-import Attachment from "../valueObject/Attachment";
-import Party from "../valueObject/Party";
-import Payee from "../valueObject/Payee";
-import Delivery from "../valueObject/Delivery";
-import DocumentLine from "./DocumentLine";
-import Payment from "../valueObject/Payment";
-import AllowanceCharge from "../valueObject/AllowanceCharge";
-import Tax from "./Tax";
-import AbstractRuleset from "../ruleset/AbstractRuleset";
+import { Entity } from '../base/Entity';
+import { IDocument, DocumentId, DocumentTypes } from '../interface/IDocument';
+import DateOnly from '../valueObject/DateOnly';
+import DocumentType from '../valueObject/DocumentType';
+import CurrencyCode from '../valueObject/CurrencyCode';
+import InvoiceReference from '../valueObject/InvoiceReference';
+import Attachment from '../valueObject/Attachment';
+import Party from '../valueObject/Party';
+import Payee from '../valueObject/Payee';
+import Delivery from '../valueObject/Delivery';
+import DocumentLine from './DocumentLine';
+import Payment from '../valueObject/Payment';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import Tax from './Tax';
+import AbstractRuleset from '../ruleset/AbstractRuleset';
 
-export default
-class Document extends Entity<IDocument, string, DocumentId> {
+export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _ruleset: AbstractRuleset;
   protected _documentType: DocumentTypes;
 
-  public static create(type: DocumentTypes, ruleset: AbstractRuleset, props: IDocument): Document {
+  public static create(
+    type: DocumentTypes,
+    ruleset: AbstractRuleset,
+    props: IDocument,
+  ): Document {
     const item = new Document(props, props.id);
     item._documentType = type;
     item._ruleset = ruleset;
@@ -34,7 +37,9 @@ class Document extends Entity<IDocument, string, DocumentId> {
   }
 
   validate() {
-    return this._ruleset ? this._ruleset.validate(this) : { errors: [], warning: [] };
+    return this._ruleset
+      ? this._ruleset.validate(this)
+      : { errors: [], warning: [] };
   }
 
   /**

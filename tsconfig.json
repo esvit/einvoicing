@@ -2,10 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": [
-      "es2017",
-      "es2018.asynciterable"
-    ],
+    "lib": ["es2017", "es2018.asynciterable"],
     "rootDir": "./src",
     "outDir": "build",
     "allowSyntheticDefaultImports": true,

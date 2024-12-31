@@ -1,11 +1,9 @@
 import { EntityId } from './EntityId';
-import {HashError} from "../error/HashError";
+import { HashError } from '../error/HashError';
 
-class TestId extends EntityId<number> {
-}
+class TestId extends EntityId<number> {}
 
-class Test2Id extends EntityId<string> {
-}
+class Test2Id extends EntityId<string> {}
 
 describe('ValueObject', () => {
   test('base', async () => {
@@ -16,16 +14,16 @@ describe('ValueObject', () => {
     expect(id).not.toEqual(id2);
 
     const id4 = new Test2Id('9KdMR', true);
-    expect(id4.toPrimitive()).toEqual('123')
+    expect(id4.toPrimitive()).toEqual('123');
   });
   test('fromHash', async () => {
     expect.assertions(4);
 
-    expect((new Test2Id(undefined, true)).toPrimitive()).toEqual(null);
-    expect((new Test2Id(null, true)).toPrimitive()).toEqual(null);
+    expect(new Test2Id(undefined, true).toPrimitive()).toEqual(null);
+    expect(new Test2Id(null, true).toPrimitive()).toEqual(null);
 
     try {
-      new Test2Id('123', true)
+      new Test2Id('123', true);
     } catch (err) {
       expect(err).toBeInstanceOf(HashError);
       expect(err.message).toEqual('Invalid hash 123');

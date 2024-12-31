@@ -14,8 +14,7 @@ export type XmlNode = any;
  *
  * @param node xml node
  */
-export
-function strOrUnd(node: XmlNode):string|undefined {
+export function strOrUnd(node: XmlNode): string | undefined {
   if (!node) {
     return undefined;
   }
@@ -33,8 +32,7 @@ function strOrUnd(node: XmlNode):string|undefined {
  *
  * @param node xml node
  */
-export
-function numOrUnd(node: XmlNode):number|undefined {
+export function numOrUnd(node: XmlNode): number | undefined {
   return strOrUnd(node) ? parseFloat(strOrUnd(node)) : undefined;
 }
 
@@ -44,8 +42,7 @@ function numOrUnd(node: XmlNode):number|undefined {
  * @param node xml node
  * @param path path of nodes to get the value from
  */
-export
-function getArray(node: XmlNode, path = []) {
+export function getArray(node: XmlNode, path = []) {
   let initNode = node;
   for (const key of path) {
     if (!initNode) {

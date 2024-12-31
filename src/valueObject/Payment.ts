@@ -5,10 +5,10 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import PaymentMandate from "./PaymentMandate";
-import PaymentTransfer from "./PaymentTransfer";
-import PaymentCard from "./PaymentCard";
+import { ValueObject } from '../base/ValueObject';
+import PaymentMandate from './PaymentMandate';
+import PaymentTransfer from './PaymentTransfer';
+import PaymentCard from './PaymentCard';
 
 export interface IPayment {
   // BT-20: Payment terms
@@ -33,8 +33,7 @@ export interface IPayment {
   mandate?: PaymentMandate;
 }
 
-export default
-class Payment extends ValueObject<IPayment> {
+export default class Payment extends ValueObject<IPayment> {
   public static create(props: IPayment): Payment {
     return new Payment(props);
   }

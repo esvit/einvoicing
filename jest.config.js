@@ -16,7 +16,5 @@ module.exports = {
     '!build/**',
     '!src/**/*.d.mts',
   ],
-  "transformIgnorePatterns": [
-    "node_modules/(?!variables/.*)"
-  ]
+  transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 };
