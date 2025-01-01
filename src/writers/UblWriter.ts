@@ -42,6 +42,7 @@ export default class UblWriter extends AbstractWriter {
         'cbc:DocumentCurrencyCode': document.currency?.toPrimitive(),
         'cbc:AccountingCost': document.buyerAccountingReference,
         'cbc:BuyerReference': document.buyerReference,
+        'cbc:TaxPointDate': document.taxPointDate?.toPrimitive(),
         'cac:InvoicePeriod': {
           'cbc:StartDate': document.periodStart?.toPrimitive(),
           'cbc:EndDate': document.periodEnd?.toPrimitive(),
