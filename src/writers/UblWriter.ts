@@ -11,6 +11,7 @@ import { XMLBuilder } from 'fast-xml-parser';
 import { computeTotals, formatNumber, omitEmpty } from '../helpers';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import CurrencyCode from '../valueObject/CurrencyCode';
+import Address from '../valueObject/Address';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -98,17 +99,9 @@ export default class UblWriter extends AbstractWriter {
             'cac:PartyName': {
               'cbc:Name': document.seller?.tradingName,
             },
-            'cac:PostalAddress': {
-              'cbc:StreetName': document.seller?.address?.streetName,
-              'cbc:AdditionalStreetName':
-                document.seller?.address?.addressLines?.[1],
-              'cbc:CityName': document.seller?.address?.cityName,
-              'cbc:PostalZone': document.seller?.address?.postalZone,
-              'cbc:CountrySubentity': document.seller?.address?.subdivision,
-              'cac:Country': {
-                'cbc:IdentificationCode': document.seller?.address?.countryCode,
-              },
-            },
+            'cac:PostalAddress': this.addressToXmlNode(
+              document.seller?.address,
+            ),
             'cac:PartyTaxScheme': document.seller?.taxRegistration?.map(
               (taxRegistration) => ({
                 'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
@@ -139,17 +132,7 @@ export default class UblWriter extends AbstractWriter {
             'cac:PartyName': {
               'cbc:Name': document.buyer?.tradingName,
             },
-            'cac:PostalAddress': {
-              'cbc:StreetName': document.buyer?.address?.streetName,
-              'cbc:AdditionalStreetName':
-                document.buyer?.address?.addressLines?.[1],
-              'cbc:CityName': document.buyer?.address?.cityName,
-              'cbc:PostalZone': document.buyer?.address?.postalZone,
-              'cbc:CountrySubentity': document.buyer?.address?.subdivision,
-              'cac:Country': {
-                'cbc:IdentificationCode': document.buyer?.address?.countryCode,
-              },
-            },
+            'cac:PostalAddress': this.addressToXmlNode(document.buyer?.address),
             'cac:PartyTaxScheme': document.buyer?.taxRegistration?.map(
               (taxRegistration) => ({
                 'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
@@ -174,17 +157,7 @@ export default class UblWriter extends AbstractWriter {
           'cbc:ActualDeliveryDate': document.delivery?.date?.toPrimitive(),
           'cac:DeliveryLocation': {
             'cbc:ID': document.delivery?.locationId?.toPrimitive(),
-            'cac:Address': {
-              'cbc:StreetName': document.delivery?.address?.streetName,
-              'cbc:AdditionalStreetName':
-                document.delivery?.address?.addressLines?.[1],
-              'cbc:CityName': document.delivery?.address?.cityName,
-              'cbc:PostalZone': document.delivery?.address?.postalZone,
-              'cac:Country': {
-                'cbc:IdentificationCode':
-                  document.delivery?.address?.countryCode,
-              },
-            },
+            'cac:Address': this.addressToXmlNode(document.delivery?.address),
           },
           'cac:DeliveryParty': {
             'cac:PartyName': {
@@ -322,6 +295,19 @@ export default class UblWriter extends AbstractWriter {
     };
 
     return builder.build(omitEmpty(json));
+  }
+
+  addressToXmlNode(address: Address) {
+    return {
+      'cbc:StreetName': address?.streetName,
+      'cbc:AdditionalStreetName': address?.addressLines?.[1],
+      'cbc:CityName': address?.cityName,
+      'cbc:PostalZone': address?.postalZone,
+      'cbc:CountrySubentity': address?.subdivision,
+      'cac:Country': {
+        'cbc:IdentificationCode': address?.countryCode,
+      },
+    };
   }
 
   allowanceChargeToXmlNode(charge: AllowanceCharge, currency: CurrencyCode) {
