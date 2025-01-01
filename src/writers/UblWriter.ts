@@ -9,6 +9,8 @@ import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
 import { computeTotals, formatNumber, omitEmpty } from '../helpers';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import CurrencyCode from '../valueObject/CurrencyCode';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -207,24 +209,9 @@ export default class UblWriter extends AbstractWriter {
         'cac:PaymentTerms': {
           'cbc:Note': document.payment?.terms,
         },
-        'cac:AllowanceCharge': document.charges?.map((charge) => ({
-          'cbc:ChargeIndicator': charge.isCharge,
-          'cbc:AllowanceChargeReason': charge.reasonText,
-          'cbc:AllowanceChargeReasonCode': charge.reasonCode,
-          'cbc:Amount': {
-            '#text': formatNumber(charge.amount),
-            attr_currencyID: document.currency?.toPrimitive(),
-          },
-          'cac:TaxCategory': {
-            'cbc:ID': charge.tax?.id?.toPrimitive().split(':')[0],
-            'cbc:Percent': formatNumber(charge.tax?.percent),
-            'cbc:TaxExemptionReason': charge.tax?.taxExemptionReason,
-            'cbc:TaxExemptionReasonCode': charge.tax?.taxExemptionReasonCode,
-            'cac:TaxScheme': {
-              'cbc:ID': 'VAT',
-            },
-          },
-        })),
+        'cac:AllowanceCharge': document.charges?.map((charge) =>
+          this.allowanceChargeToXmlNode(charge, document.currency),
+        ),
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
             '#text': formatNumber(
@@ -296,6 +283,9 @@ export default class UblWriter extends AbstractWriter {
             'cbc:LineID': line.orderLineReference?.toPrimitive(),
           },
           'cbc:Note': line.note,
+          'cac:AllowanceCharge': line.charges?.map((charge) =>
+            this.allowanceChargeToXmlNode(charge, document.currency),
+          ),
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
@@ -332,5 +322,26 @@ export default class UblWriter extends AbstractWriter {
     };
 
     return builder.build(omitEmpty(json));
+  }
+
+  allowanceChargeToXmlNode(charge: AllowanceCharge, currency: CurrencyCode) {
+    return {
+      'cbc:ChargeIndicator': charge.isCharge,
+      'cbc:AllowanceChargeReason': charge.reasonText,
+      'cbc:AllowanceChargeReasonCode': charge.reasonCode,
+      'cbc:Amount': {
+        '#text': formatNumber(charge.amount),
+        attr_currencyID: currency?.toPrimitive(),
+      },
+      'cac:TaxCategory': {
+        'cbc:ID': charge.tax?.id?.toPrimitive().split(':')[0],
+        'cbc:Percent': formatNumber(charge.tax?.percent),
+        'cbc:TaxExemptionReason': charge.tax?.taxExemptionReason,
+        'cbc:TaxExemptionReasonCode': charge.tax?.taxExemptionReasonCode,
+        'cac:TaxScheme': charge.tax && {
+          'cbc:ID': 'VAT',
+        },
+      },
+    };
   }
 }

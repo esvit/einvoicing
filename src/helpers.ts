@@ -36,7 +36,7 @@ export function nodeToId(node: XmlNode): Identifier {
  * @param node xml node
  */
 export function strOrUnd(node: XmlNode): string | undefined {
-  if (!node) {
+  if (!node && node !== 0) {
     return undefined;
   }
   if (typeof node === 'object') {
@@ -82,7 +82,9 @@ const formatter = new Intl.NumberFormat('en-US', {
   useGrouping: false,
 });
 
-export function formatNumber(n: number = 0): string {
+export function formatNumber(n: number): string {
+  if (typeof n === 'undefined') return n;
+
   return formatter.format(n);
 }
 
