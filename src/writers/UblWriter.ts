@@ -295,6 +295,7 @@ export default class UblWriter extends AbstractWriter {
           'cac:OrderLineReference': {
             'cbc:LineID': line.orderLineReference?.toPrimitive(),
           },
+          'cbc:Note': line.note,
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
