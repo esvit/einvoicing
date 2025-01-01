@@ -209,6 +209,7 @@ export default class UblWriter extends AbstractWriter {
         'cac:AllowanceCharge': document.charges?.map((charge) => ({
           'cbc:ChargeIndicator': charge.isCharge,
           'cbc:AllowanceChargeReason': charge.reasonText,
+          'cbc:AllowanceChargeReasonCode': charge.reasonCode,
           'cbc:Amount': {
             '#text': formatNumber(charge.amount),
             attr_currencyID: document.currency?.toPrimitive(),
