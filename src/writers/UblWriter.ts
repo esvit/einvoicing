@@ -333,6 +333,10 @@ export default class UblWriter extends AbstractWriter {
         '#text': formatNumber(charge.amount),
         attr_currencyID: currency?.toPrimitive(),
       },
+      'cbc:BaseAmount': charge.baseAmount && {
+        '#text': formatNumber(charge.baseAmount),
+        attr_currencyID: currency?.toPrimitive(),
+      },
       'cac:TaxCategory': {
         'cbc:ID': charge.tax?.id?.toPrimitive().split(':')[0],
         'cbc:Percent': formatNumber(charge.tax?.percent),

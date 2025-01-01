@@ -658,6 +658,7 @@ describe('UblReader', () => {
       const tax3 = Tax.create({
         id: new TaxId('E', 0),
         currency: CurrencyCode.create('NOK'),
+        percent: 0,
         taxAmount: 0,
         taxExemptionReason: 'Exempt New Means of Transport',
         taxableAmount: -25,
@@ -1173,6 +1174,7 @@ describe('UblReader', () => {
       const exemptTax = Tax.create({
         currency: CurrencyCode.create('EUR'),
         id: new TaxId('E', 0),
+        percent: 0,
         taxAmount: 0,
         taxExemptionReason: 'Reason for tax exempt',
         taxableAmount: 1000,
@@ -1282,6 +1284,7 @@ describe('UblReader', () => {
           }),
           AllowanceCharge.create({
             amount: 1189.8,
+            baseAmount: 5949,
             factorAmount: 20,
             isCharge: true,
             reasonCode: 'CG',
@@ -1315,6 +1318,7 @@ describe('UblReader', () => {
               }),
               AllowanceCharge.create({
                 amount: 41,
+                baseAmount: 4100,
                 factorAmount: 1,
                 isCharge: true,
                 reasonCode: 'CG',
@@ -1381,6 +1385,7 @@ describe('UblReader', () => {
               }),
               AllowanceCharge.create({
                 amount: 10,
+                baseAmount: 1000,
                 factorAmount: 1,
                 isCharge: true,
                 reasonCode: 'CG',

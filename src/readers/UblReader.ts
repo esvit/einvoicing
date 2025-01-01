@@ -499,6 +499,7 @@ export default class UblReader extends AbstractReader {
       reasonCode: strOrUnd(node['cbc:AllowanceChargeReasonCode']),
       reasonText: strOrUnd(node['cbc:AllowanceChargeReason']),
       factorAmount: numOrUnd(node['cbc:MultiplierFactorNumeric']),
+      baseAmount: numOrUnd(node['cbc:BaseAmount']),
       amount: numOrUnd(node['cbc:Amount']),
       tax,
     });
