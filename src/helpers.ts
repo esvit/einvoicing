@@ -82,7 +82,7 @@ const formatter = new Intl.NumberFormat('en-US', {
   useGrouping: false,
 });
 
-export function formatNumber(n: number): string {
+export function formatNumber(n: number = 0): string {
   return formatter.format(n);
 }
 

@@ -22,6 +22,7 @@ import InvoiceReference from '../valueObject/InvoiceReference';
 import Payee from '../valueObject/Payee';
 import DKRuleset from '../ruleset/DKRuleset';
 import Contact from '../valueObject/Contact';
+import TaxRegistration from '../valueObject/TaxRegistration';
 
 describe('UblWriter', () => {
   let ublWriter: UblWriter;
@@ -82,7 +83,11 @@ describe('UblWriter', () => {
           postalZone: '1057',
           countryCode: 'DK',
         }),
-        vatNumber: 'DK12345678',
+        taxRegistration: [
+          TaxRegistration.create({
+            id: Identifier.create({ id: 'DK12345678' }),
+          }),
+        ],
       }),
       buyer: Party.create({
         additionalIdentifiers: [
@@ -100,7 +105,11 @@ describe('UblWriter', () => {
           postalZone: 'NO-3470',
           countryCode: 'DK',
         }),
-        vatNumber: 'DK87654321',
+        taxRegistration: [
+          TaxRegistration.create({
+            id: Identifier.create({ id: 'DK87654321' }),
+          }),
+        ],
       }),
       payee: Payee.create({
         name: 'Payee Name',

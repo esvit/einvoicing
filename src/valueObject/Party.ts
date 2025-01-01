@@ -9,6 +9,7 @@ import { ValueObject } from '../base/ValueObject';
 import Address from './Address';
 import Contact from './Contact';
 import Identifier from './Identifier';
+import TaxRegistration from './TaxRegistration';
 
 export interface IParty {
   endpointId?: Identifier;
@@ -19,8 +20,7 @@ export interface IParty {
   companyLegalForm?: string;
   contact?: Contact;
   additionalIdentifiers?: Identifier[];
-  vatNumber?: string;
-  taxRegistrationId?: { companyId?: Identifier; taxScheme?: string };
+  taxRegistration?: TaxRegistration[];
 }
 
 export default class Party extends ValueObject<IParty> {
@@ -141,33 +141,17 @@ export default class Party extends ValueObject<IParty> {
   }
 
   /**
-   * Get the VAT number.
+   * Get the tax registration.
    */
-  get vatNumber() {
-    return this.props.vatNumber;
+  get taxRegistration() {
+    return this.props.taxRegistration;
   }
 
   /**
-   * Set the VAT number.
+   * Set the tax registration.
    */
-  set vatNumber(value: string | undefined) {
-    this.props.vatNumber = value;
-  }
-
-  /**
-   * Get the tax registration ID.
-   */
-  get taxRegistrationId() {
-    return this.props.taxRegistrationId;
-  }
-
-  /**
-   * Set the tax registration ID.
-   */
-  set taxRegistrationId(
-    value: { companyId?: Identifier; taxScheme?: string } | undefined,
-  ) {
-    this.props.taxRegistrationId = value;
+  set taxRegistration(value: TaxRegistration[] | undefined) {
+    this.props.taxRegistration = value;
   }
 
   toPrimitive() {

@@ -106,13 +106,14 @@ export default class UblWriter extends AbstractWriter {
                 'cbc:IdentificationCode': document.seller?.address?.countryCode,
               },
             },
-            'cac:PartyTaxScheme': {
-              'cbc:CompanyID':
-                document.seller?.taxRegistrationId?.companyId.toPrimitive(),
-              'cac:TaxScheme': {
-                'cbc:ID': document.seller?.taxRegistrationId?.taxScheme,
-              },
-            },
+            'cac:PartyTaxScheme': document.seller?.taxRegistration?.map(
+              (taxRegistration) => ({
+                'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
+                'cac:TaxScheme': {
+                  'cbc:ID': taxRegistration?.scheme,
+                },
+              }),
+            ),
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.seller?.legalName,
               'cbc:CompanyID': document.seller?.companyId?.toPrimitive(),
@@ -146,13 +147,14 @@ export default class UblWriter extends AbstractWriter {
                 'cbc:IdentificationCode': document.buyer?.address?.countryCode,
               },
             },
-            'cac:PartyTaxScheme': {
-              'cbc:CompanyID':
-                document.buyer?.taxRegistrationId?.companyId.toPrimitive(),
-              'cac:TaxScheme': {
-                'cbc:ID': document.buyer?.taxRegistrationId?.taxScheme,
-              },
-            },
+            'cac:PartyTaxScheme': document.buyer?.taxRegistration?.map(
+              (taxRegistration) => ({
+                'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
+                'cac:TaxScheme': {
+                  'cbc:ID': taxRegistration?.scheme,
+                },
+              }),
+            ),
             'cac:PartyLegalEntity': {
               'cbc:RegistrationName': document.buyer?.legalName,
               'cbc:CompanyID': document.buyer?.companyId?.toPrimitive(),

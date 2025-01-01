@@ -8,7 +8,7 @@
 import { X2jOptions, XMLParser } from 'fast-xml-parser';
 import AbstractReader from './AbstractReader';
 import Document from '../entity/Document';
-import { getRuleset, Identifier } from '../index';
+import { getRuleset } from '../index';
 import { DocumentId, DocumentTypes } from '../interface/IDocument';
 import DateOnly from '../valueObject/DateOnly';
 import DocumentType from '../valueObject/DocumentType';
@@ -33,6 +33,7 @@ import AllowanceCharge from '../valueObject/AllowanceCharge';
 import Tax from '../entity/Tax';
 import { TaxId } from '../interface/ITax';
 import Contact from '../valueObject/Contact';
+import TaxRegistration from '../valueObject/TaxRegistration';
 
 /**
  * @link https://docs.peppol.eu/poacc/billing/3.0/2024-Q2/syntax/ubl-invoice/tree/
@@ -309,21 +310,16 @@ export default class UblReader extends AbstractReader {
       (node: XmlNode) => nodeToId(node['cbc:ID']),
     );
 
-    let vatNumber: string | undefined = undefined;
-    let taxRegistrationId:
-      | { companyId: Identifier; taxScheme: string }
-      | undefined = undefined;
+    const taxRegistration: TaxRegistration[] | undefined = [];
+
     // VAT number and tax registration identifier
-    const vatNodes = getArray(node, ['cac:PartyTaxScheme']);
-    for (const vatNode of vatNodes) {
-      if (vatNode['cac:TaxScheme']?.['cbc:ID'] === 'VAT') {
-        vatNumber = strOrUnd(vatNode['cbc:CompanyID']);
-      } else {
-        taxRegistrationId = {
-          companyId: nodeToId(vatNode['cbc:CompanyID']),
-          taxScheme: strOrUnd(vatNode['cac:TaxScheme']?.['cbc:ID']),
-        };
-      }
+    for (const vatNode of getArray(node, ['cac:PartyTaxScheme'])) {
+      taxRegistration.push(
+        TaxRegistration.create({
+          id: nodeToId(vatNode['cbc:CompanyID']),
+          scheme: strOrUnd(vatNode['cac:TaxScheme']?.['cbc:ID']),
+        }),
+      );
     }
 
     return Party.create({
@@ -341,8 +337,7 @@ export default class UblReader extends AbstractReader {
       additionalIdentifiers: additionalIdentifiers.length
         ? additionalIdentifiers
         : undefined,
-      vatNumber,
-      taxRegistrationId,
+      taxRegistration: taxRegistration.length ? taxRegistration : undefined,
     });
   }
 

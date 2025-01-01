@@ -4,7 +4,7 @@ import path from 'node:path';
 import UblReader from './readers/UblReader';
 import UblWriter from './writers/UblWriter';
 
-const fixtureFiles = ['peppol-base.xml'];
+const fixtureFiles = ['peppol-base.xml', 'peppol-allowance.xml'];
 
 const readFixture = async (filename: string) => {
   const content = await fs.promises.readFile(
