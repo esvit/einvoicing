@@ -12,6 +12,7 @@ import { computeTotals, formatNumber, omitEmpty } from '../helpers';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import CurrencyCode from '../valueObject/CurrencyCode';
 import Address from '../valueObject/Address';
+import Party from '../valueObject/Party';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -90,68 +91,10 @@ export default class UblWriter extends AbstractWriter {
           }),
         ),
         'cac:AccountingSupplierParty': {
-          'cac:Party': {
-            'cbc:EndpointID': document.seller?.endpointId?.toPrimitive(),
-            'cac:PartyIdentification':
-              document.seller?.additionalIdentifiers?.map((id) => ({
-                'cbc:ID': id.toPrimitive(),
-              })),
-            'cac:PartyName': {
-              'cbc:Name': document.seller?.tradingName,
-            },
-            'cac:PostalAddress': this.addressToXmlNode(
-              document.seller?.address,
-            ),
-            'cac:PartyTaxScheme': document.seller?.taxRegistration?.map(
-              (taxRegistration) => ({
-                'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
-                'cac:TaxScheme': {
-                  'cbc:ID': taxRegistration?.scheme,
-                },
-              }),
-            ),
-            'cac:PartyLegalEntity': {
-              'cbc:RegistrationName': document.seller?.legalName,
-              'cbc:CompanyID': document.seller?.companyId?.toPrimitive(),
-              'cbc:CompanyLegalForm': document.seller?.companyLegalForm,
-            },
-            'cac:Contact': {
-              'cbc:Name': document.seller?.contact?.name,
-              'cbc:Telephone': document.seller?.contact?.phone,
-              'cbc:ElectronicMail': document.seller?.contact?.email,
-            },
-          },
+          'cac:Party': this.partyToXmlNode(document.seller),
         },
         'cac:AccountingCustomerParty': {
-          'cac:Party': {
-            'cbc:EndpointID': document.buyer?.endpointId?.toPrimitive(),
-            'cac:PartyIdentification':
-              document.buyer?.additionalIdentifiers?.map((id) => ({
-                'cbc:ID': id.toPrimitive(),
-              })),
-            'cac:PartyName': {
-              'cbc:Name': document.buyer?.tradingName,
-            },
-            'cac:PostalAddress': this.addressToXmlNode(document.buyer?.address),
-            'cac:PartyTaxScheme': document.buyer?.taxRegistration?.map(
-              (taxRegistration) => ({
-                'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
-                'cac:TaxScheme': {
-                  'cbc:ID': taxRegistration?.scheme,
-                },
-              }),
-            ),
-            'cac:PartyLegalEntity': {
-              'cbc:RegistrationName': document.buyer?.legalName,
-              'cbc:CompanyID': document.buyer?.companyId?.toPrimitive(),
-              'cbc:CompanyLegalForm': document.buyer?.companyLegalForm,
-            },
-            'cac:Contact': {
-              'cbc:Name': document.buyer?.contact?.name,
-              'cbc:Telephone': document.buyer?.contact?.phone,
-              'cbc:ElectronicMail': document.buyer?.contact?.email,
-            },
-          },
+          'cac:Party': this.partyToXmlNode(document.buyer),
         },
         'cac:Delivery': {
           'cbc:ActualDeliveryDate': document.delivery?.date?.toPrimitive(),
@@ -295,6 +238,35 @@ export default class UblWriter extends AbstractWriter {
     };
 
     return builder.build(omitEmpty(json));
+  }
+
+  partyToXmlNode(party: Party) {
+    return {
+      'cbc:EndpointID': party?.endpointId?.toPrimitive(),
+      'cac:PartyIdentification': party?.additionalIdentifiers?.map((id) => ({
+        'cbc:ID': id.toPrimitive(),
+      })),
+      'cac:PartyName': {
+        'cbc:Name': party?.tradingName,
+      },
+      'cac:PostalAddress': this.addressToXmlNode(party?.address),
+      'cac:PartyTaxScheme': party?.taxRegistration?.map((taxRegistration) => ({
+        'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
+        'cac:TaxScheme': {
+          'cbc:ID': taxRegistration?.scheme,
+        },
+      })),
+      'cac:PartyLegalEntity': {
+        'cbc:RegistrationName': party?.legalName,
+        'cbc:CompanyID': party?.companyId?.toPrimitive(),
+        'cbc:CompanyLegalForm': party?.companyLegalForm,
+      },
+      'cac:Contact': {
+        'cbc:Name': party?.contact?.name,
+        'cbc:Telephone': party?.contact?.phone,
+        'cbc:ElectronicMail': party?.contact?.email,
+      },
+    };
   }
 
   addressToXmlNode(address: Address) {
