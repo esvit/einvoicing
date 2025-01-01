@@ -226,6 +226,10 @@ export default class UblWriter extends AbstractWriter {
                 'cbc:ID': 'VAT',
               },
             },
+            'cac:AdditionalItemProperty': line.attributes?.map((attribute) => ({
+              'cbc:Name': attribute.name,
+              'cbc:Value': attribute.value,
+            })),
           },
           'cac:Price': {
             'cbc:PriceAmount': {
