@@ -5,9 +5,9 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import DateOnly from "./DateOnly";
-import Address from "./Address";
+import { ValueObject } from '../base/ValueObject';
+import DateOnly from './DateOnly';
+import Address from './Address';
 
 export interface IDelivery {
   // BT-70: Deliver name
@@ -23,8 +23,10 @@ export interface IDelivery {
   address?: Address;
 }
 
-export default
-class Delivery extends ValueObject<IDelivery> implements IDelivery {
+export default class Delivery
+  extends ValueObject<IDelivery>
+  implements IDelivery
+{
   public static create(props: IDelivery): Delivery {
     return new Delivery(props);
   }

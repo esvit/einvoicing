@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IPaymentCard {
   // BT-87: Card PAN
@@ -18,8 +18,10 @@ export interface IPaymentCard {
   holder?: string;
 }
 
-export default
-class PaymentCard extends ValueObject<IPaymentCard> implements IPaymentCard {
+export default class PaymentCard
+  extends ValueObject<IPaymentCard>
+  implements IPaymentCard
+{
   public static create(props: IPaymentCard): PaymentCard {
     return new PaymentCard(props);
   }

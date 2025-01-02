@@ -5,12 +5,12 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {EntityId} from "../base/EntityId";
-import DateOnly from "../valueObject/DateOnly";
-import Identifier from "../valueObject/Identifier";
-import Attribute from "../valueObject/Attribute";
-import AllowanceCharge from "../valueObject/AllowanceCharge";
-import Tax from "../entity/Tax";
+import { EntityId } from '../base/EntityId';
+import DateOnly from '../valueObject/DateOnly';
+import Identifier from '../valueObject/Identifier';
+import Attribute from '../valueObject/Attribute';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import Tax from '../entity/Tax';
 
 export class DocumentLineId extends EntityId<string> {
   readonly DocumentLineId = 'document_line_id';

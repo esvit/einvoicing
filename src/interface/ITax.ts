@@ -5,8 +5,8 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import CurrencyCode from "../valueObject/CurrencyCode";
-import {EntityId} from "../base/EntityId";
+import CurrencyCode from '../valueObject/CurrencyCode';
+import { EntityId } from '../base/EntityId';
 
 export class TaxId extends EntityId<string> {
   readonly TaxId = 'tax_id';

@@ -5,8 +5,8 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import Address from "./Address";
+import { ValueObject } from '../base/ValueObject';
+import Address from './Address';
 
 export interface IParty {
   endpointId?: string;
@@ -18,13 +18,12 @@ export interface IParty {
   contactName?: string;
   contactEmail?: string;
   contactPhone?: string;
-  additionalIdentifiers?: string[],
+  additionalIdentifiers?: string[];
   vatNumber?: string;
-  taxRegistrationId?: { companyId?: string, taxScheme?: string };
+  taxRegistrationId?: { companyId?: string; taxScheme?: string };
 }
 
-export default
-class Party extends ValueObject<IParty> {
+export default class Party extends ValueObject<IParty> {
   public static create(props: IParty): Party {
     return new Party(props);
   }
@@ -193,7 +192,9 @@ class Party extends ValueObject<IParty> {
   /**
    * Set the tax registration ID.
    */
-  set taxRegistrationId(value: { companyId?: string, taxScheme?: string } | undefined) {
+  set taxRegistrationId(
+    value: { companyId?: string; taxScheme?: string } | undefined,
+  ) {
     this.props.taxRegistrationId = value;
   }
 

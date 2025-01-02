@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import { shallowEqual } from "shallow-equal-object";
+import { shallowEqual } from 'shallow-equal-object';
 
 interface ValueObjectProps {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -15,11 +15,11 @@ interface ValueObjectProps {
 export abstract class ValueObject<T extends ValueObjectProps> {
   public readonly props: T;
 
-  protected constructor (props: T) {
+  protected constructor(props: T) {
     this.props = Object.freeze(props);
   }
 
-  public equals (vo?: ValueObject<T>) : boolean {
+  public equals(vo?: ValueObject<T>): boolean {
     const props = vo?.props || vo;
     if (vo === null || vo === undefined) {
       return false;
@@ -27,6 +27,6 @@ export abstract class ValueObject<T extends ValueObjectProps> {
     if (props === undefined) {
       return false;
     }
-    return shallowEqual(this.props, props)
+    return shallowEqual(this.props, props);
   }
 }

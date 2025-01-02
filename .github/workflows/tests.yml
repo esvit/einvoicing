@@ -5,7 +5,7 @@ on:
     branches:
       - main
   push:
-    branches: "main"
+    branches: 'main'
     paths:
       - src/**
       - tests/**

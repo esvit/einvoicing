@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IPaymentTransfer {
   // BT-84: Receiving account ID
@@ -18,8 +18,7 @@ export interface IPaymentTransfer {
   provider?: string;
 }
 
-export default
-class PaymentTransfer extends ValueObject<IPaymentTransfer> {
+export default class PaymentTransfer extends ValueObject<IPaymentTransfer> {
   public static create(props: IPaymentTransfer): PaymentTransfer {
     return new PaymentTransfer(props);
   }

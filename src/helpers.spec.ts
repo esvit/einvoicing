@@ -1,4 +1,4 @@
-import {getArray, numOrUnd, strOrUnd} from "./helpers";
+import { getArray, numOrUnd, strOrUnd } from './helpers';
 
 describe('helpers', () => {
   test('strOrUnd', () => {
@@ -16,30 +16,37 @@ describe('helpers', () => {
   });
 
   test('getArray', () => {
-    const node1 = { 'cac:TaxTotal': {
+    const node1 = {
+      'cac:TaxTotal': {
         'cac:TaxSubtotal': {
-          'cbc:TaxableAmount': 1
-        }
-      } };
-    const node2 = { 'cac:TaxTotal': {
-        'cac:TaxSubtotal': [{
-          'cbc:TaxableAmount': 1
-        },{
-          'cbc:TaxableAmount': 2
-        }]
-      } };
+          'cbc:TaxableAmount': 1,
+        },
+      },
+    };
+    const node2 = {
+      'cac:TaxTotal': {
+        'cac:TaxSubtotal': [
+          {
+            'cbc:TaxableAmount': 1,
+          },
+          {
+            'cbc:TaxableAmount': 2,
+          },
+        ],
+      },
+    };
     expect(getArray(node1, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([
       {
-        "cbc:TaxableAmount": 1
-      }
+        'cbc:TaxableAmount': 1,
+      },
     ]);
     expect(getArray(node2, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([
       {
-        "cbc:TaxableAmount": 1
+        'cbc:TaxableAmount': 1,
       },
       {
-        "cbc:TaxableAmount": 2
-      }
+        'cbc:TaxableAmount': 2,
+      },
     ]);
     expect(getArray({}, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([]);
   });

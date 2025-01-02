@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IPayee {
   name?: string;
@@ -13,8 +13,7 @@ export interface IPayee {
   additionalIdentifiers: string[];
 }
 
-export default
-class Payee extends ValueObject<IPayee> {
+export default class Payee extends ValueObject<IPayee> {
   public static create(props: IPayee): Payee {
     return new Payee(props);
   }

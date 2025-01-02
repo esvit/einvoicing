@@ -5,8 +5,8 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import Tax from "../entity/Tax";
+import { ValueObject } from '../base/ValueObject';
+import Tax from '../entity/Tax';
 
 export interface IAllowanceCharge {
   isCharge?: boolean;
@@ -17,8 +17,7 @@ export interface IAllowanceCharge {
   tax?: Tax;
 }
 
-export default
-class AllowanceCharge extends ValueObject<IAllowanceCharge> {
+export default class AllowanceCharge extends ValueObject<IAllowanceCharge> {
   public static create(ref: IAllowanceCharge): AllowanceCharge {
     if (!ref.amount && !ref.factorAmount) {
       throw new Error('Either amount or factorAmount must be provided');
