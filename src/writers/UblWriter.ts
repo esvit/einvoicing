@@ -8,7 +8,7 @@
 import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
-import { computeTotals, formatNumber, omitEmpty } from '../helpers';
+import { computeTotals, formatNumber, omitEmpty, omitIf } from '../helpers';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import CurrencyCode from '../valueObject/CurrencyCode';
 import Address from '../valueObject/Address';
@@ -28,8 +28,13 @@ export default class UblWriter extends AbstractWriter {
       {},
     );
 
-    const { linesTotal, taxInclusiveAmount, taxExclusiveAmount, chargesTotal } =
-      computeTotals(document);
+    const {
+      linesTotalAmount,
+      taxInclusiveAmount,
+      taxExclusiveAmount,
+      chargesTotalAmount,
+      allowanceTotalAmount,
+    } = computeTotals(document);
 
     const json = {
       '?xml': { attr_version: '1.0', attr_encoding: 'UTF-8' },
@@ -160,7 +165,7 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
-            '#text': formatNumber(linesTotal),
+            '#text': formatNumber(linesTotalAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxExclusiveAmount': {
@@ -172,13 +177,20 @@ export default class UblWriter extends AbstractWriter {
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:ChargeTotalAmount': {
-            '#text': formatNumber(chargesTotal),
+            '#text': formatNumber(chargesTotalAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:PayableAmount': {
             '#text': formatNumber(taxInclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
+          'cbc:AllowanceTotalAmount': omitIf(
+            {
+              '#text': formatNumber(allowanceTotalAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            typeof allowanceTotalAmount === 'undefined',
+          ),
         },
         'cac:InvoiceLine': document.lines?.map((line) => ({
           'cbc:ID': line.id.toPrimitive(),

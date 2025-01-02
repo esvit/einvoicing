@@ -135,28 +135,43 @@ export function omitEmpty(obj: object): object | undefined {
   return returnObj;
 }
 
+export function omitIf(obj: object, condition: boolean): object {
+  if (condition) {
+    return undefined;
+  }
+
+  return obj;
+}
+
 export function computeTotals(document: Document): {
-  linesTotal: number;
+  linesTotalAmount: number;
   taxInclusiveAmount: number;
   taxExclusiveAmount: number;
-  chargesTotal: number;
-  taxesTotal: number;
+  chargesTotalAmount: number;
+  taxesTotalAmount: number;
+  allowanceTotalAmount: number | undefined;
 } {
   const add = (acc: number, value: number) => acc + value;
 
   const lines = document.lines?.map((line) => line.netAmount || 0);
   const charges = document.charges?.map((charge) => charge.amount || 0);
   const taxes = document.taxes?.map((tax) => tax.taxAmount || 0);
+  const allowance = document.charges
+    .filter((charge) => !charge.isCharge)
+    .map((charge) => charge.amount);
 
-  const linesTotal = lines.reduce(add, 0);
-  const chargesTotal = charges.reduce(add, 0);
-  const taxesTotal = taxes.reduce(add, 0);
+  const linesTotalAmount = lines.reduce(add, 0);
+  const chargesTotalAmount = charges.reduce(add, 0);
+  const taxesTotalAmount = taxes.reduce(add, 0);
+  const allowanceTotalAmount = allowance.reduce(add, 0);
 
   return {
-    taxInclusiveAmount: linesTotal + chargesTotal + taxesTotal,
-    taxExclusiveAmount: linesTotal + chargesTotal,
-    linesTotal,
-    chargesTotal,
-    taxesTotal,
+    taxInclusiveAmount:
+      linesTotalAmount + chargesTotalAmount + taxesTotalAmount,
+    taxExclusiveAmount: linesTotalAmount + chargesTotalAmount,
+    linesTotalAmount,
+    chargesTotalAmount,
+    taxesTotalAmount,
+    allowanceTotalAmount: allowance.length ? allowanceTotalAmount : undefined,
   };
 }
