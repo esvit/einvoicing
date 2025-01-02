@@ -26,6 +26,10 @@ export default class AllowanceCharge extends ValueObject<IAllowanceCharge> {
     return new AllowanceCharge(ref);
   }
 
+  get isPercentage() {
+    return this.props.factorAmount !== undefined;
+  }
+
   /**
    * Get whether it is a charge.
    */

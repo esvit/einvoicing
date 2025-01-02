@@ -205,12 +205,14 @@ export default class UblReader extends AbstractReader {
 
       // BT-5: Invoice currency code
       currency: documentNode['cbc:DocumentCurrencyCode']
-        ? CurrencyCode.create(documentNode['cbc:DocumentCurrencyCode'])
+        ? CurrencyCode.create(
+            strOrUnd(documentNode['cbc:DocumentCurrencyCode']),
+          )
         : undefined,
 
       // BT-6: VAT accounting currency code
       taxCurrency: documentNode['cbc:TaxCurrencyCode']
-        ? CurrencyCode.create(documentNode['cbc:TaxCurrencyCode'])
+        ? CurrencyCode.create(strOrUnd(documentNode['cbc:TaxCurrencyCode']))
         : undefined,
 
       // BT-7: Tax point date

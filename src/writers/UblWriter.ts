@@ -8,11 +8,12 @@
 import AbstractWriter from './AbstractWriter';
 import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
-import { computeTotals, formatNumber, omitEmpty, omitIf } from '../helpers';
+import { formatNumber, omitEmpty, omitIfUndefined } from '../helpers';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import CurrencyCode from '../valueObject/CurrencyCode';
 import Address from '../valueObject/Address';
 import Party from '../valueObject/Party';
+import { getInvoiceTotals } from '../utils/totals';
 
 export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
@@ -28,13 +29,7 @@ export default class UblWriter extends AbstractWriter {
       {},
     );
 
-    const {
-      linesTotalAmount,
-      taxInclusiveAmount,
-      taxExclusiveAmount,
-      chargesTotalAmount,
-      allowanceTotalAmount,
-    } = computeTotals(document);
+    const totals = getInvoiceTotals(document);
 
     const json = {
       '?xml': { attr_version: '1.0', attr_encoding: 'UTF-8' },
@@ -165,34 +160,41 @@ export default class UblWriter extends AbstractWriter {
         },
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
-            '#text': formatNumber(linesTotalAmount),
+            '#text': formatNumber(totals.netAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxExclusiveAmount': {
-            '#text': formatNumber(taxExclusiveAmount),
+            '#text': formatNumber(totals.taxExclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxInclusiveAmount': {
-            '#text': formatNumber(taxInclusiveAmount),
+            '#text': formatNumber(totals.taxInclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
-          'cbc:ChargeTotalAmount': omitIf(
+          'cbc:ChargeTotalAmount': omitIfUndefined(
             {
-              '#text': formatNumber(chargesTotalAmount),
+              '#text': formatNumber(totals.chargesAmount),
               attr_currencyID: document.currency?.toPrimitive(),
             },
-            typeof chargesTotalAmount === 'undefined',
+            totals.chargesAmount,
           ),
           'cbc:PayableAmount': {
-            '#text': formatNumber(taxInclusiveAmount),
+            '#text': formatNumber(totals.payableAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
-          'cbc:AllowanceTotalAmount': omitIf(
+          'cbc:PrepaidAmount': omitIfUndefined(
             {
-              '#text': formatNumber(allowanceTotalAmount),
+              '#text': formatNumber(totals.paidAmount),
               attr_currencyID: document.currency?.toPrimitive(),
             },
-            typeof allowanceTotalAmount === 'undefined',
+            totals.paidAmount,
+          ),
+          'cbc:AllowanceTotalAmount': omitIfUndefined(
+            {
+              '#text': formatNumber(totals.allowancesAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            totals.allowancesAmount,
           ),
         },
         'cac:InvoiceLine': document.lines?.map((line) => ({

@@ -6,7 +6,6 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 
-import Document from './entity/Document';
 import Identifier from './valueObject/Identifier';
 import Quantity from './valueObject/Quantity';
 
@@ -135,47 +134,10 @@ export function omitEmpty(obj: object): object | undefined {
   return returnObj;
 }
 
-export function omitIf(obj: object, condition: boolean): object {
-  if (condition) {
+export function omitIfUndefined(obj: object, property: unknown): object {
+  if (typeof property === 'undefined') {
     return undefined;
   }
 
   return obj;
-}
-
-export function computeTotals(document: Document): {
-  linesTotalAmount: number;
-  taxInclusiveAmount: number;
-  taxExclusiveAmount: number;
-  chargesTotalAmount: number | undefined;
-  taxesTotalAmount: number;
-  allowanceTotalAmount: number | undefined;
-} {
-  const add = (acc: number, value: number) => acc + value;
-
-  const lines = document.lines?.map((line) => line.netAmount || 0);
-  const taxes = document.taxes?.map((tax) => tax.taxAmount || 0);
-
-  const charges = document.charges
-    ?.filter((charge) => charge.isCharge)
-    .map((charge) => charge.amount || 0);
-
-  const allowance = document.charges
-    .filter((charge) => !charge.isCharge)
-    .map((charge) => charge.amount || 0);
-
-  const linesTotalAmount = lines.reduce(add, 0);
-  const chargesTotalAmount = charges.reduce(add, 0);
-  const taxesTotalAmount = taxes.reduce(add, 0);
-  const allowanceTotalAmount = allowance.reduce(add, 0);
-
-  return {
-    taxInclusiveAmount:
-      linesTotalAmount + chargesTotalAmount + taxesTotalAmount,
-    taxExclusiveAmount: linesTotalAmount + chargesTotalAmount,
-    linesTotalAmount,
-    taxesTotalAmount,
-    chargesTotalAmount: charges.length ? chargesTotalAmount : undefined,
-    allowanceTotalAmount: allowance.length ? allowanceTotalAmount : undefined,
-  };
 }
