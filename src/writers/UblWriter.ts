@@ -176,10 +176,13 @@ export default class UblWriter extends AbstractWriter {
             '#text': formatNumber(taxInclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),
           },
-          'cbc:ChargeTotalAmount': {
-            '#text': formatNumber(chargesTotalAmount),
-            attr_currencyID: document.currency?.toPrimitive(),
-          },
+          'cbc:ChargeTotalAmount': omitIf(
+            {
+              '#text': formatNumber(chargesTotalAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            typeof chargesTotalAmount === 'undefined',
+          ),
           'cbc:PayableAmount': {
             '#text': formatNumber(taxInclusiveAmount),
             attr_currencyID: document.currency?.toPrimitive(),

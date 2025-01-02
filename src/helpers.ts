@@ -147,18 +147,22 @@ export function computeTotals(document: Document): {
   linesTotalAmount: number;
   taxInclusiveAmount: number;
   taxExclusiveAmount: number;
-  chargesTotalAmount: number;
+  chargesTotalAmount: number | undefined;
   taxesTotalAmount: number;
   allowanceTotalAmount: number | undefined;
 } {
   const add = (acc: number, value: number) => acc + value;
 
   const lines = document.lines?.map((line) => line.netAmount || 0);
-  const charges = document.charges?.map((charge) => charge.amount || 0);
   const taxes = document.taxes?.map((tax) => tax.taxAmount || 0);
+
+  const charges = document.charges
+    ?.filter((charge) => charge.isCharge)
+    .map((charge) => charge.amount || 0);
+
   const allowance = document.charges
     .filter((charge) => !charge.isCharge)
-    .map((charge) => charge.amount);
+    .map((charge) => charge.amount || 0);
 
   const linesTotalAmount = lines.reduce(add, 0);
   const chargesTotalAmount = charges.reduce(add, 0);
@@ -170,8 +174,8 @@ export function computeTotals(document: Document): {
       linesTotalAmount + chargesTotalAmount + taxesTotalAmount,
     taxExclusiveAmount: linesTotalAmount + chargesTotalAmount,
     linesTotalAmount,
-    chargesTotalAmount,
     taxesTotalAmount,
+    chargesTotalAmount: charges.length ? chargesTotalAmount : undefined,
     allowanceTotalAmount: allowance.length ? allowanceTotalAmount : undefined,
   };
 }
