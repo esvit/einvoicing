@@ -13,6 +13,7 @@ import Attribute from '../valueObject/Attribute';
 import AllowanceCharge from '../valueObject/AllowanceCharge';
 import DateOnly from '../valueObject/DateOnly';
 import ListIdentifier from '../valueObject/ListIdentifier';
+import Quantity from '../valueObject/Quantity';
 
 export default class DocumentLine extends Entity<
   IDocumentLine,
@@ -273,7 +274,7 @@ export default class DocumentLine extends Entity<
   /**
    * Set the base quantity.
    */
-  set baseQuantity(value: number | undefined) {
+  set baseQuantity(value: Quantity | undefined) {
     this.props.baseQuantity = value;
   }
 

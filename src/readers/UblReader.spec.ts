@@ -22,6 +22,7 @@ import Payee from '../valueObject/Payee';
 import ListIdentifier from '../valueObject/ListIdentifier';
 import Contact from '../valueObject/Contact';
 import TaxRegistration from '../valueObject/TaxRegistration';
+import Quantity from '../valueObject/Quantity';
 
 describe('UblReader', () => {
   let ublReader: UblReader;
@@ -791,7 +792,10 @@ describe('UblReader', () => {
           DocumentLine.create({
             id: new DocumentLineId('1'),
             attributes: [Attribute.create({ name: 'Color', value: 'Black' })],
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({
+              value: 1,
+              unitCode: 'EA',
+            }),
             buyerAccountingReference: 'BookingCode001',
             charges: [
               AllowanceCharge.create({
@@ -832,7 +836,7 @@ describe('UblReader', () => {
           }),
           DocumentLine.create({
             id: new DocumentLineId('2'),
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({ value: 1, unitCode: 'EA' }),
             buyerAccountingReference: 'BookingCode002',
             classificationIdentifiers: [
               ListIdentifier.create({
@@ -857,7 +861,7 @@ describe('UblReader', () => {
           DocumentLine.create({
             id: new DocumentLineId('3'),
             buyerAccountingReference: 'BookingCode003',
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({ value: 1, unitCode: 'EA' }),
             classificationIdentifiers: [
               ListIdentifier.create({
                 id: '65434567',
@@ -880,7 +884,7 @@ describe('UblReader', () => {
           DocumentLine.create({
             id: new DocumentLineId('4'),
             buyerAccountingReference: 'BookingCode004',
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({ value: 1, unitCode: 'EA' }),
             classificationIdentifiers: [
               ListIdentifier.create({
                 id: '65434565',
@@ -903,7 +907,7 @@ describe('UblReader', () => {
           DocumentLine.create({
             id: new DocumentLineId('5'),
             attributes: [Attribute.create({ name: 'Type', value: 'Cat5' })],
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({ value: 1, unitCode: 'MTR' }),
             classificationIdentifiers: [
               ListIdentifier.create({
                 id: '65434564',
@@ -1137,7 +1141,7 @@ describe('UblReader', () => {
         lines: [
           DocumentLine.create({
             id: new DocumentLineId('A'),
-            baseQuantity: 1,
+            baseQuantity: Quantity.create({ value: 1, unitCode: 'KGM' }),
             buyerIdentifier: '6578489',
             description: 'Acme beeswax',
             name: 'beeswax',
@@ -1329,7 +1333,7 @@ describe('UblReader', () => {
           DocumentLine.create({
             id: new DocumentLineId('2'),
             quantity: 10,
-            baseQuantity: 2,
+            baseQuantity: Quantity.create({ value: 2, unitCode: 'C62' }),
             unitCode: 'C62',
             buyerAccountingReference: 'Konteringsstreng',
             periodStart: DateOnly.create('2017-12-01'),

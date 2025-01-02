@@ -8,6 +8,7 @@
 
 import Document from './entity/Document';
 import Identifier from './valueObject/Identifier';
+import Quantity from './valueObject/Quantity';
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 export type XmlNode = any;
@@ -27,6 +28,22 @@ export function nodeToId(node: XmlNode): Identifier {
   return Identifier.create({
     scheme: node['attr_schemeID'],
     id: node['#text'],
+  });
+}
+
+/**
+ * Converts a node to a quantity object.
+ *
+ * @param node xml node
+ */
+export function nodeToQuantity(node: XmlNode): Quantity {
+  if (!node) {
+    return undefined;
+  }
+
+  return Quantity.create({
+    value: parseFloat(node['#text']),
+    unitCode: node['attr_unitCode'],
   });
 }
 

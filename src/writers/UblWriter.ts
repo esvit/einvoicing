@@ -232,6 +232,7 @@ export default class UblWriter extends AbstractWriter {
             })),
           },
           'cac:Price': {
+            'cbc:BaseQuantity': line.baseQuantity?.toPrimitive(),
             'cbc:PriceAmount': {
               '#text': formatNumber(line.price),
               attr_currencyID: document.currency?.toPrimitive(),

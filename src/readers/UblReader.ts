@@ -24,7 +24,14 @@ import ListIdentifier from '../valueObject/ListIdentifier';
 import Attribute from '../valueObject/Attribute';
 import Payee from '../valueObject/Payee';
 import Delivery from '../valueObject/Delivery';
-import { strOrUnd, numOrUnd, getArray, XmlNode, nodeToId } from '../helpers';
+import {
+  strOrUnd,
+  numOrUnd,
+  getArray,
+  XmlNode,
+  nodeToId,
+  nodeToQuantity,
+} from '../helpers';
 import Payment from '../valueObject/Payment';
 import PaymentCard from '../valueObject/PaymentCard';
 import PaymentTransfer from '../valueObject/PaymentTransfer';
@@ -622,7 +629,7 @@ export default class UblReader extends AbstractReader {
       // BT-131: Invoice line net amount
       netAmount: numOrUnd(node['cbc:LineExtensionAmount']),
 
-      baseQuantity: numOrUnd(node['cac:Price']?.['cbc:BaseQuantity']),
+      baseQuantity: nodeToQuantity(node['cac:Price']?.['cbc:BaseQuantity']),
 
       // BG-32: Item attributes
       attributes: attributes.length ? attributes : undefined,
