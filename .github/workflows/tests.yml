@@ -5,7 +5,7 @@ on:
     branches:
       - main
   push:
-    branches: "main"
+    branches: 'main'
     paths:
       - src/**
       - tests/**
@@ -32,6 +32,9 @@ jobs:
 
       - name: Run linter
         run: npm run lint
+
+      - name: Run prettier
+        run: npm run prettier:check
 
       - name: Run tests
         run: npm test

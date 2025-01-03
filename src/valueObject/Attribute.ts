@@ -5,15 +5,14 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IAttribute {
   name: string;
   value: string;
 }
 
-export default
-class Attribute extends ValueObject<IAttribute> {
+export default class Attribute extends ValueObject<IAttribute> {
   public static create(ref: IAttribute): Attribute {
     return new Attribute(ref);
   }

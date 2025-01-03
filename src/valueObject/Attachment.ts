@@ -5,18 +5,22 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import BinaryObject from "./BinaryObject";
+import { ValueObject } from '../base/ValueObject';
+import BinaryObject from './BinaryObject';
+import Identifier from './Identifier';
 
 export interface IAttachment {
-  id?: string;
+  id?: Identifier;
+  documentTypeCode?: number;
   description?: string;
   externalUri?: string;
   content?: BinaryObject;
 }
 
-export default
-class Attachment extends ValueObject<IAttachment> implements IAttachment {
+export default class Attachment
+  extends ValueObject<IAttachment>
+  implements IAttachment
+{
   public static create(ref: IAttachment): Attachment {
     return new Attachment(ref);
   }
@@ -31,8 +35,22 @@ class Attachment extends ValueObject<IAttachment> implements IAttachment {
   /**
    * Set the attachment ID.
    */
-  set id(value: string | undefined) {
+  set id(value: Identifier | undefined) {
     this.props.id = value;
+  }
+
+  /**
+   * Get the document type code.
+   */
+  get documentTypeCode() {
+    return this.props.documentTypeCode;
+  }
+
+  /**
+   * Set the document type code.
+   */
+  set documentTypeCode(value: number | undefined) {
+    this.props.documentTypeCode = value;
   }
 
   /**

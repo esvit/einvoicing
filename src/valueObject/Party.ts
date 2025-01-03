@@ -5,26 +5,25 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
-import Address from "./Address";
+import { ValueObject } from '../base/ValueObject';
+import Address from './Address';
+import Contact from './Contact';
+import Identifier from './Identifier';
+import TaxRegistration from './TaxRegistration';
 
 export interface IParty {
-  endpointId?: string;
+  endpointId?: Identifier;
   address?: Address;
   legalName?: string;
-  companyId?: string;
+  companyId?: Identifier;
   tradingName?: string;
   companyLegalForm?: string;
-  contactName?: string;
-  contactEmail?: string;
-  contactPhone?: string;
-  additionalIdentifiers?: string[],
-  vatNumber?: string;
-  taxRegistrationId?: { companyId?: string, taxScheme?: string };
+  contact?: Contact;
+  additionalIdentifiers?: Identifier[];
+  taxRegistration?: TaxRegistration[];
 }
 
-export default
-class Party extends ValueObject<IParty> {
+export default class Party extends ValueObject<IParty> {
   public static create(props: IParty): Party {
     return new Party(props);
   }
@@ -39,7 +38,7 @@ class Party extends ValueObject<IParty> {
   /**
    * Set the endpoint ID.
    */
-  set endpointId(value: string | undefined) {
+  set endpointId(value: Identifier | undefined) {
     this.props.endpointId = value;
   }
 
@@ -81,7 +80,7 @@ class Party extends ValueObject<IParty> {
   /**
    * Set the company ID.
    */
-  set companyId(value: string | undefined) {
+  set companyId(value: Identifier | undefined) {
     this.props.companyId = value;
   }
 
@@ -114,45 +113,17 @@ class Party extends ValueObject<IParty> {
   }
 
   /**
-   * Get the contact name.
+   * Get the contact.
    */
-  get contactName() {
-    return this.props.contactName;
+  get contact() {
+    return this.props.contact;
   }
 
   /**
    * Set the contact name.
    */
-  set contactName(value: string | undefined) {
-    this.props.contactName = value;
-  }
-
-  /**
-   * Get the contact email.
-   */
-  get contactEmail() {
-    return this.props.contactEmail;
-  }
-
-  /**
-   * Set the contact email.
-   */
-  set contactEmail(value: string | undefined) {
-    this.props.contactEmail = value;
-  }
-
-  /**
-   * Get the contact phone.
-   */
-  get contactPhone() {
-    return this.props.contactPhone;
-  }
-
-  /**
-   * Set the contact phone.
-   */
-  set contactPhone(value: string | undefined) {
-    this.props.contactPhone = value;
+  set contact(value: Contact | undefined) {
+    this.props.contact = value;
   }
 
   /**
@@ -165,36 +136,22 @@ class Party extends ValueObject<IParty> {
   /**
    * Set the additional identifiers.
    */
-  set additionalIdentifiers(value: string[] | undefined) {
+  set additionalIdentifiers(value: Identifier[] | undefined) {
     this.props.additionalIdentifiers = value;
   }
 
   /**
-   * Get the VAT number.
+   * Get the tax registration.
    */
-  get vatNumber() {
-    return this.props.vatNumber;
+  get taxRegistration() {
+    return this.props.taxRegistration;
   }
 
   /**
-   * Set the VAT number.
+   * Set the tax registration.
    */
-  set vatNumber(value: string | undefined) {
-    this.props.vatNumber = value;
-  }
-
-  /**
-   * Get the tax registration ID.
-   */
-  get taxRegistrationId() {
-    return this.props.taxRegistrationId;
-  }
-
-  /**
-   * Set the tax registration ID.
-   */
-  set taxRegistrationId(value: { companyId?: string, taxScheme?: string } | undefined) {
-    this.props.taxRegistrationId = value;
+  set taxRegistration(value: TaxRegistration[] | undefined) {
+    this.props.taxRegistration = value;
   }
 
   toPrimitive() {

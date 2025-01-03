@@ -5,7 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IBinaryObject {
   mimeCode?: string; // example: text/csv
@@ -13,17 +13,18 @@ export interface IBinaryObject {
   content?: string; // raw content
 }
 
-export default
-class BinaryObject extends ValueObject<IBinaryObject> {
+export default class BinaryObject extends ValueObject<IBinaryObject> {
   public static create(ref: IBinaryObject): BinaryObject {
     return new BinaryObject(ref);
   }
 
-  public static createFromBase64(ref: Omit<IBinaryObject, 'content'> & { base64?: string }): BinaryObject {
+  public static createFromBase64(
+    ref: Omit<IBinaryObject, 'content'> & { base64?: string },
+  ): BinaryObject {
     return new BinaryObject({
       filename: ref.filename,
       mimeCode: ref.mimeCode,
-      content: ref.base64 ? atob(ref.base64) : undefined
+      content: ref.base64 ? atob(ref.base64) : undefined,
     });
   }
 

@@ -5,15 +5,14 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IIdentifier {
   id: string;
-  scheme: string;
+  scheme?: string;
 }
 
-export default
-class Identifier extends ValueObject<IIdentifier> {
+export default class Identifier extends ValueObject<IIdentifier> {
   public static create(props: IIdentifier): Identifier {
     return new Identifier(props);
   }
@@ -47,6 +46,14 @@ class Identifier extends ValueObject<IIdentifier> {
   }
 
   toPrimitive() {
-    return this.props;
+    const value = {
+      '#text': this.id,
+    };
+
+    if (this.scheme) {
+      value['attr_schemeID'] = this.scheme;
+    }
+
+    return value;
   }
 }

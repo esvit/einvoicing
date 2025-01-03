@@ -5,23 +5,38 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import AbstractWriter from "./AbstractWriter";
-import Document from "../entity/Document";
+import AbstractWriter from './AbstractWriter';
+import Document from '../entity/Document';
 import { XMLBuilder } from 'fast-xml-parser';
+import { formatNumber, omitEmpty, omitIfUndefined } from '../helpers';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import CurrencyCode from '../valueObject/CurrencyCode';
+import Address from '../valueObject/Address';
+import Party from '../valueObject/Party';
+import { getInvoiceTotals } from '../utils/totals';
 
-export default
-class UblWriter extends AbstractWriter {
+export default class UblWriter extends AbstractWriter {
   write(document: Document): string {
     const builder = new XMLBuilder({
       attributeNamePrefix: 'attr_',
       ignoreAttributes: false,
       format: false,
-      suppressEmptyNode: true
+      suppressEmptyNode: true,
     });
 
+    const xmlNamespaces = Object.keys(document.xmlNamespaces || {}).reduce(
+      (acc, ns) => ({ ...acc, [`attr_${ns}`]: document.xmlNamespaces[ns] }),
+      {},
+    );
+
+    const totals = getInvoiceTotals(document);
+
     const json = {
+      '?xml': { attr_version: '1.0', attr_encoding: 'UTF-8' },
       Invoice: {
-        'cbc:CustomizationID': 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
+        ...xmlNamespaces,
+        'cbc:CustomizationID':
+          'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0',
         'cbc:ProfileID': 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
         'cbc:ID': document.id.toPrimitive(),
         'cbc:IssueDate': document.issueDate?.toPrimitive(),
@@ -31,204 +46,287 @@ class UblWriter extends AbstractWriter {
         'cbc:DocumentCurrencyCode': document.currency?.toPrimitive(),
         'cbc:AccountingCost': document.buyerAccountingReference,
         'cbc:BuyerReference': document.buyerReference,
+        'cbc:TaxPointDate': document.taxPointDate?.toPrimitive(),
+        'cac:InvoicePeriod': {
+          'cbc:StartDate': document.periodStart?.toPrimitive(),
+          'cbc:EndDate': document.periodEnd?.toPrimitive(),
+        },
         'cac:OrderReference': {
-          'cbc:ID': document.purchaseOrderReference
+          'cbc:ID': document.purchaseOrderReference?.toPrimitive(),
         },
-        'cac:BillingReference': document.precedingInvoiceReference?.map(reference => ({
-          'cac:InvoiceDocumentReference': {
-            'cbc:ID': reference.id,
-            'cbc:IssueDate': reference.issueDate?.toPrimitive()
-          }
-        })),
+        'cac:BillingReference': document.precedingInvoiceReference?.map(
+          (reference) => ({
+            'cac:InvoiceDocumentReference': {
+              'cbc:ID': reference.id,
+              'cbc:IssueDate': reference.issueDate?.toPrimitive(),
+            },
+          }),
+        ),
+        'cac:OriginatorDocumentReference': {
+          'cbc:ID': document.originatorDocumentReference?.toPrimitive(),
+        },
         'cac:ContractDocumentReference': {
-          'cbc:ID': document.contractReference
+          'cbc:ID': document.contractReference?.toPrimitive(),
         },
-        'cac:AdditionalDocumentReference': document.attachments?.map(attachment => ({
-          'cbc:ID': attachment.id,
-          'cbc:DocumentDescription': attachment.description,
-          'cac:Attachment': attachment.content ? {
-            'cbc:EmbeddedDocumentBinaryObject': {
-              '#text': btoa(attachment.content.content),
-              'attr_mimeCode': attachment.content.mimeCode,
-              'attr_filename': attachment.content.filename
-            }
-          } : (attachment.externalUri ? {
-            'cac:ExternalReference': {
-              'cbc:URI': attachment.externalUri
-            }
-          } : undefined)
-        })),
+        'cac:AdditionalDocumentReference': document.attachments?.map(
+          (attachment) => ({
+            'cbc:ID': attachment.id.toPrimitive(),
+            'cbc:DocumentTypeCode': attachment.documentTypeCode,
+            'cbc:DocumentDescription': attachment.description,
+            'cac:Attachment': attachment.content
+              ? {
+                  'cbc:EmbeddedDocumentBinaryObject': {
+                    '#text': btoa(attachment.content.content),
+                    attr_mimeCode: attachment.content.mimeCode,
+                    attr_filename: attachment.content.filename,
+                  },
+                }
+              : attachment.externalUri
+                ? {
+                    'cac:ExternalReference': {
+                      'cbc:URI': attachment.externalUri,
+                    },
+                  }
+                : undefined,
+          }),
+        ),
         'cac:AccountingSupplierParty': {
-          'cac:Party': {
-            'cbc:EndpointID': document.seller?.endpointId,
-            'cac:PartyIdentification': document.seller?.additionalIdentifiers?.map(id => ({
-              'cbc:ID': id
-            })),
-            'cac:PartyName': {
-              'cbc:Name': document.seller?.tradingName
-            },
-            'cac:PostalAddress': {
-              'cbc:StreetName': document.seller?.address?.streetName,
-              'cbc:AdditionalStreetName': document.seller?.address?.addressLines?.[1],
-              'cbc:CityName': document.seller?.address?.cityName,
-              'cbc:PostalZone': document.seller?.address?.postalZone,
-              'cac:Country': {
-                'cbc:IdentificationCode': document.seller?.address?.countryCode
-              }
-            },
-            'cac:PartyTaxScheme': {
-              'cbc:CompanyID': document.seller?.vatNumber,
-              'cac:TaxScheme': {
-                'cbc:ID': 'VAT'
-              }
-            },
-            'cac:PartyLegalEntity': {
-              'cbc:RegistrationName': document.seller?.legalName,
-              'cbc:CompanyID': document.seller?.companyId
-            }
-          }
+          'cac:Party': this.partyToXmlNode(document.seller),
         },
         'cac:AccountingCustomerParty': {
-          'cac:Party': {
-            'cbc:EndpointID': document.buyer?.endpointId,
-            'cac:PartyIdentification': document.buyer?.additionalIdentifiers?.map(id => ({
-              'cbc:ID': id
-            })),
-            'cac:PartyName': {
-              'cbc:Name': document.buyer?.tradingName
-            },
-            'cac:PostalAddress': {
-              'cbc:StreetName': document.buyer?.address?.streetName,
-              'cbc:AdditionalStreetName': document.buyer?.address?.addressLines?.[1],
-              'cbc:CityName': document.buyer?.address?.cityName,
-              'cbc:PostalZone': document.buyer?.address?.postalZone,
-              'cac:Country': {
-                'cbc:IdentificationCode': document.buyer?.address?.countryCode
-              }
-            },
-            'cac:PartyTaxScheme': {
-              'cbc:CompanyID': document.buyer?.vatNumber,
-              'cac:TaxScheme': {
-                'cbc:ID': 'VAT'
-              }
-            },
-            'cac:PartyLegalEntity': {
-              'cbc:RegistrationName': document.buyer?.legalName,
-              'cbc:CompanyID': document.buyer?.companyId
-            },
-            'cac:Contact': {
-              'cbc:Name': document.buyer?.contactName,
-              'cbc:Telephone': document.buyer?.contactPhone,
-              'cbc:ElectronicMail': document.buyer?.contactEmail
-            }
-          }
+          'cac:Party': this.partyToXmlNode(document.buyer),
         },
         'cac:Delivery': {
           'cbc:ActualDeliveryDate': document.delivery?.date?.toPrimitive(),
           'cac:DeliveryLocation': {
-            'cac:Address': {
-              'cbc:StreetName': document.delivery?.address?.streetName,
-              'cbc:AdditionalStreetName': document.delivery?.address?.addressLines?.[1],
-              'cbc:CityName': document.delivery?.address?.cityName,
-              'cbc:PostalZone': document.delivery?.address?.postalZone,
-              'cac:Country': {
-                'cbc:IdentificationCode': document.delivery?.address?.countryCode
-              }
-            }
-          }
+            'cbc:ID': document.delivery?.locationId?.toPrimitive(),
+            'cac:Address': this.addressToXmlNode(document.delivery?.address),
+          },
+          'cac:DeliveryParty': {
+            'cac:PartyName': {
+              'cbc:Name': document.delivery?.name,
+            },
+          },
         },
         'cac:PaymentMeans': {
-          'cbc:PaymentMeansCode': document.payment?.meansCode,
+          'cbc:PaymentMeansCode': {
+            attr_name: document.payment?.meansName,
+            '#text': document.payment?.meansCode,
+          },
           'cbc:PaymentID': document.payment?.id,
           'cac:PayeeFinancialAccount': {
-            'cbc:ID': document.payment?.transfer?.account
-          }
+            'cbc:ID': document.payment?.transfer?.account,
+            'cbc:Name': document.payment?.transfer?.name,
+            'cac:FinancialInstitutionBranch': {
+              'cbc:ID': document.payment?.transfer?.provider?.toPrimitive(),
+            },
+          },
         },
+        'cac:PaymentTerms': {
+          'cbc:Note': document.payment?.terms,
+        },
+        'cac:AllowanceCharge': document.charges?.map((charge) =>
+          this.allowanceChargeToXmlNode(charge, document.currency),
+        ),
         'cac:TaxTotal': {
           'cbc:TaxAmount': {
-            '#text': document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
+            '#text': formatNumber(
+              document.taxes?.reduce(
+                (sum, tax) => sum + (tax.taxAmount || 0),
+                0,
+              ),
+            ),
+            attr_currencyID: document.currency?.toPrimitive(),
           },
-          'cac:TaxSubtotal': document.taxes?.map(tax => ({
+          'cac:TaxSubtotal': document.taxes?.map((tax) => ({
             'cbc:TaxableAmount': {
-              '#text': tax.taxableAmount?.toFixed(2),
-              'attr_currencyID': tax.currency?.toPrimitive()
+              '#text': formatNumber(tax.taxableAmount),
+              attr_currencyID: tax.currency?.toPrimitive(),
             },
             'cbc:TaxAmount': {
-              '#text': tax.taxAmount?.toFixed(2),
-              'attr_currencyID': tax.currency?.toPrimitive()
+              '#text': formatNumber(tax.taxAmount),
+              attr_currencyID: tax.currency?.toPrimitive(),
             },
             'cac:TaxCategory': {
               'cbc:ID': tax.id.toPrimitive().split(':')[0],
-              'cbc:Percent': tax.percent?.toFixed(2),
+              'cbc:Percent': formatNumber(tax.percent),
               'cbc:TaxExemptionReason': tax.taxExemptionReason,
               'cbc:TaxExemptionReasonCode': tax.taxExemptionReasonCode,
               'cac:TaxScheme': {
-                'cbc:ID': 'VAT'
-              }
-            }
-          }))
+                'cbc:ID': 'VAT',
+              },
+            },
+          })),
         },
         'cac:LegalMonetaryTotal': {
           'cbc:LineExtensionAmount': {
-            '#text': document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
+            '#text': formatNumber(totals.netAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxExclusiveAmount': {
-            '#text': document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0).toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
+            '#text': formatNumber(totals.taxExclusiveAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:TaxInclusiveAmount': {
-            '#text': (document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0) + document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0)).toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
+            '#text': formatNumber(totals.taxInclusiveAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
           },
+          'cbc:ChargeTotalAmount': omitIfUndefined(
+            {
+              '#text': formatNumber(totals.chargesAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            totals.chargesAmount,
+          ),
           'cbc:PayableAmount': {
-            '#text': (document.lines?.reduce((sum, line) => sum + (line.netAmount || 0), 0) + document.taxes?.reduce((sum, tax) => sum + (tax.taxAmount || 0), 0)).toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
-          }
+            '#text': formatNumber(totals.payableAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
+          },
+          'cbc:PrepaidAmount': omitIfUndefined(
+            {
+              '#text': formatNumber(totals.paidAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            totals.paidAmount,
+          ),
+          'cbc:AllowanceTotalAmount': omitIfUndefined(
+            {
+              '#text': formatNumber(totals.allowancesAmount),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+            totals.allowancesAmount,
+          ),
         },
-        'cac:InvoiceLine': document.lines?.map(line => ({
+        'cac:InvoiceLine': document.lines?.map((line) => ({
           'cbc:ID': line.id.toPrimitive(),
           'cbc:InvoicedQuantity': {
-            '#text': line.quantity?.toFixed(2),
-            'attr_unitCode': line.unitCode
+            '#text': formatNumber(line.quantity),
+            attr_unitCode: line.unitCode,
           },
           'cbc:LineExtensionAmount': {
-            '#text': line.netAmount?.toFixed(2),
-            'attr_currencyID': document.currency?.toPrimitive()
+            '#text': formatNumber(line.netAmount),
+            attr_currencyID: document.currency?.toPrimitive(),
           },
           'cbc:AccountingCost': line.buyerAccountingReference,
           'cac:InvoicePeriod': {
             'cbc:StartDate': line.periodStart?.toPrimitive(),
-            'cbc:EndDate': line.periodEnd?.toPrimitive()
+            'cbc:EndDate': line.periodEnd?.toPrimitive(),
           },
+          'cac:OrderLineReference': {
+            'cbc:LineID': line.orderLineReference?.toPrimitive(),
+          },
+          'cbc:Note': line.note,
+          'cac:AllowanceCharge': line.charges?.map((charge) =>
+            this.allowanceChargeToXmlNode(charge, document.currency),
+          ),
           'cac:Item': {
             'cbc:Description': line.description,
             'cbc:Name': line.name,
             'cac:SellersItemIdentification': {
-              'cbc:ID': line.sellerIdentifier
+              'cbc:ID': line.sellerIdentifier?.toPrimitive(),
+            },
+            'cac:StandardItemIdentification': {
+              'cbc:ID': line.standardIdentifier?.toPrimitive(),
             },
             'cac:OriginCountry': {
-              'cbc:IdentificationCode': line.originCountryCode
+              'cbc:IdentificationCode': line.originCountryCode,
             },
+            'cac:CommodityClassification': line.classificationIdentifiers?.map(
+              (identifier) => ({
+                'cbc:ItemClassificationCode': identifier.toPrimitive(),
+              }),
+            ),
             'cac:ClassifiedTaxCategory': {
               'cbc:ID': line.tax?.id.toPrimitive().split(':')[0],
-              'cbc:Percent': line.tax?.percent?.toFixed(2),
+              'cbc:Percent': formatNumber(line.tax?.percent),
               'cac:TaxScheme': {
-                'cbc:ID': 'VAT'
-              }
-            }
+                'cbc:ID': 'VAT',
+              },
+            },
+            'cac:AdditionalItemProperty': line.attributes?.map((attribute) => ({
+              'cbc:Name': attribute.name,
+              'cbc:Value': attribute.value,
+            })),
           },
           'cac:Price': {
+            'cbc:BaseQuantity': line.baseQuantity?.toPrimitive(),
             'cbc:PriceAmount': {
-              '#text': line.price?.toFixed(2),
-              'attr_currencyID': document.currency?.toPrimitive()
-            }
-          }
-        }))
-      }
+              '#text': formatNumber(line.price),
+              attr_currencyID: document.currency?.toPrimitive(),
+            },
+          },
+        })),
+      },
     };
 
-    return builder.build(json);
+    return builder.build(omitEmpty(json));
+  }
+
+  partyToXmlNode(party: Party) {
+    return {
+      'cbc:EndpointID': party?.endpointId?.toPrimitive(),
+      'cac:PartyIdentification': party?.additionalIdentifiers?.map((id) => ({
+        'cbc:ID': id.toPrimitive(),
+      })),
+      'cac:PartyName': {
+        'cbc:Name': party?.tradingName,
+      },
+      'cac:PostalAddress': this.addressToXmlNode(party?.address),
+      'cac:PartyTaxScheme': party?.taxRegistration?.map((taxRegistration) => ({
+        'cbc:CompanyID': taxRegistration?.id.toPrimitive(),
+        'cac:TaxScheme': {
+          'cbc:ID': taxRegistration?.scheme,
+        },
+      })),
+      'cac:PartyLegalEntity': {
+        'cbc:RegistrationName': party?.legalName,
+        'cbc:CompanyID': party?.companyId?.toPrimitive(),
+        'cbc:CompanyLegalForm': party?.companyLegalForm,
+      },
+      'cac:Contact': {
+        'cbc:Name': party?.contact?.name,
+        'cbc:Telephone': party?.contact?.phone,
+        'cbc:ElectronicMail': party?.contact?.email,
+      },
+    };
+  }
+
+  addressToXmlNode(address: Address) {
+    return {
+      'cbc:StreetName': address?.streetName,
+      'cbc:AdditionalStreetName': address?.addressLines?.[1],
+      'cbc:CityName': address?.cityName,
+      'cbc:PostalZone': address?.postalZone,
+      'cbc:CountrySubentity': address?.subdivision,
+      'cac:Country': {
+        'cbc:IdentificationCode': address?.countryCode,
+      },
+    };
+  }
+
+  allowanceChargeToXmlNode(charge: AllowanceCharge, currency: CurrencyCode) {
+    return {
+      'cbc:ChargeIndicator': charge.isCharge,
+      'cbc:AllowanceChargeReason': charge.reasonText,
+      'cbc:AllowanceChargeReasonCode': charge.reasonCode,
+      'cbc:Amount': {
+        '#text': formatNumber(charge.amount),
+        attr_currencyID: currency?.toPrimitive(),
+      },
+      'cbc:BaseAmount': charge.baseAmount && {
+        '#text': formatNumber(charge.baseAmount),
+        attr_currencyID: currency?.toPrimitive(),
+      },
+      'cbc:MultiplierFactorNumeric': formatNumber(charge.factorAmount),
+      'cac:TaxCategory': {
+        'cbc:ID': charge.tax?.id?.toPrimitive().split(':')[0],
+        'cbc:Percent': formatNumber(charge.tax?.percent),
+        'cbc:TaxExemptionReason': charge.tax?.taxExemptionReason,
+        'cbc:TaxExemptionReasonCode': charge.tax?.taxExemptionReasonCode,
+        'cac:TaxScheme': charge.tax && {
+          'cbc:ID': 'VAT',
+        },
+      },
+    };
   }
 }

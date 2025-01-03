@@ -5,19 +5,20 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {EntityId} from "../base/EntityId";
-import DateOnly from "../valueObject/DateOnly";
-import DocumentType from "../valueObject/DocumentType";
-import CurrencyCode from "../valueObject/CurrencyCode";
-import InvoiceReference from "../valueObject/InvoiceReference";
-import Attachment from "../valueObject/Attachment";
-import Party from "../valueObject/Party";
-import DocumentLine from "../entity/DocumentLine";
-import Delivery from "../valueObject/Delivery";
-import Payee from "../valueObject/Payee";
-import Payment from "../valueObject/Payment";
-import AllowanceCharge from "../valueObject/AllowanceCharge";
-import Tax from "../entity/Tax";
+import { EntityId } from '../base/EntityId';
+import DateOnly from '../valueObject/DateOnly';
+import DocumentType from '../valueObject/DocumentType';
+import CurrencyCode from '../valueObject/CurrencyCode';
+import InvoiceReference from '../valueObject/InvoiceReference';
+import Attachment from '../valueObject/Attachment';
+import Party from '../valueObject/Party';
+import DocumentLine from '../entity/DocumentLine';
+import Delivery from '../valueObject/Delivery';
+import Payee from '../valueObject/Payee';
+import Payment from '../valueObject/Payment';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import Tax from '../entity/Tax';
+import Identifier from '../valueObject/Identifier';
 
 export class DocumentId extends EntityId<string> {
   readonly DocumentId = 'document_id';
@@ -37,10 +38,11 @@ export interface IDocument {
   currency?: CurrencyCode;
   buyerReference?: string;
   buyerAccountingReference?: string;
-  purchaseOrderReference?: string;
+  purchaseOrderReference?: Identifier;
+  originatorDocumentReference?: Identifier;
   salesOrderReference?: string;
   tenderOrLotReference?: string;
-  contractReference?: string;
+  contractReference?: Identifier;
   precedingInvoiceReference?: InvoiceReference[];
   attachments?: Attachment[];
 
@@ -64,4 +66,6 @@ export interface IDocument {
   taxes?: Tax[];
   taxAmount?: number;
   taxCurrency?: CurrencyCode;
+
+  xmlNamespaces?: { [key: string]: string };
 }

@@ -16,7 +16,6 @@ module.exports = {
     '!build/**',
     '!src/**/*.d.mts',
   ],
-  "transformIgnorePatterns": [
-    "node_modules/(?!variables/.*)"
-  ]
+  transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
+  setupFilesAfterEnv: ['<rootDir>/tests/matchers/to-match-xml.ts'],
 };

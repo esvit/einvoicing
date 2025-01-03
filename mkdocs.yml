@@ -2,7 +2,7 @@ site_name: European Invoicing (eInvoicing)
 site_url: https://esvit.github.io/einvoicing/
 repo_name: esvit/einvoicing
 repo_url: https://github.com/esvit/einvoicing
-edit_uri: ""
+edit_uri: ''
 
 plugins:
   - search

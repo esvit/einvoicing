@@ -5,13 +5,13 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import createUUID from 'uuid-by-string'
-import { createId } from '@paralleldrive/cuid2'
+import createUUID from 'uuid-by-string';
+import { createId } from '@paralleldrive/cuid2';
 import Hashids from 'hashids';
-import {HashError} from "../error/HashError";
+import { HashError } from '../error/HashError';
 
 export class EntityId<T> {
-  protected _recordId: T|null = null;
+  protected _recordId: T | null = null;
   protected _uuid: string = null;
 
   constructor(recordId: T = null, isHash = false, uuid: string = null) {
@@ -24,11 +24,14 @@ export class EntityId<T> {
     }
   }
 
-  private createUUID():void {
-    this._uuid = createUUID(this._recordId ? this._recordId.toString() : createId(), createUUID(this.constructor.name));
+  private createUUID(): void {
+    this._uuid = createUUID(
+      this._recordId ? this._recordId.toString() : createId(),
+      createUUID(this.constructor.name),
+    );
   }
 
-  get hashOptions() : [string, number] {
+  get hashOptions(): [string, number] {
     return [this.constructor.name, 5];
   }
 
@@ -40,7 +43,7 @@ export class EntityId<T> {
     return hashids.encode(this.toPrimitive().toString());
   }
 
-  fromHash(hash: string) : EntityId<T> {
+  fromHash(hash: string): EntityId<T> {
     if (!hash) {
       return this;
     }
@@ -49,7 +52,9 @@ export class EntityId<T> {
     if (!num) {
       throw new HashError(`Invalid hash ${hash}`);
     }
-    this._recordId = <T>(typeof this._recordId === 'string' ? num.toString() : num);
+    this._recordId = <T>(
+      (typeof this._recordId === 'string' ? num.toString() : num)
+    );
     this.createUUID();
     return this;
   }

@@ -6,7 +6,7 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 
-import {ValueObject} from "../base/ValueObject";
+import { ValueObject } from '../base/ValueObject';
 
 export interface IAddress {
   countryCode?: string;
@@ -17,8 +17,7 @@ export interface IAddress {
   addressLines?: string[];
 }
 
-export default
-class Address extends ValueObject<IAddress> {
+export default class Address extends ValueObject<IAddress> {
   public static create(props: IAddress): Address {
     return new Address(props);
   }

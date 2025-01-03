@@ -5,8 +5,7 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-export
-class HashError extends Error {
+export class HashError extends Error {
   constructor(message: string) {
     super(message);
     Object.setPrototypeOf(this, HashError.prototype);

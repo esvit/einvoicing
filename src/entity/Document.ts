@@ -5,28 +5,32 @@
  * @package einvoicing
  * @licence MIT https://opensource.org/licenses/MIT
  */
-import {Entity} from "../base/Entity";
-import {IDocument, DocumentId, DocumentTypes} from "../interface/IDocument";
-import DateOnly from "../valueObject/DateOnly";
-import DocumentType from "../valueObject/DocumentType";
-import CurrencyCode from "../valueObject/CurrencyCode";
-import InvoiceReference from "../valueObject/InvoiceReference";
-import Attachment from "../valueObject/Attachment";
-import Party from "../valueObject/Party";
-import Payee from "../valueObject/Payee";
-import Delivery from "../valueObject/Delivery";
-import DocumentLine from "./DocumentLine";
-import Payment from "../valueObject/Payment";
-import AllowanceCharge from "../valueObject/AllowanceCharge";
-import Tax from "./Tax";
-import AbstractRuleset from "../ruleset/AbstractRuleset";
+import { Entity } from '../base/Entity';
+import { IDocument, DocumentId, DocumentTypes } from '../interface/IDocument';
+import DateOnly from '../valueObject/DateOnly';
+import DocumentType from '../valueObject/DocumentType';
+import CurrencyCode from '../valueObject/CurrencyCode';
+import InvoiceReference from '../valueObject/InvoiceReference';
+import Attachment from '../valueObject/Attachment';
+import Party from '../valueObject/Party';
+import Payee from '../valueObject/Payee';
+import Delivery from '../valueObject/Delivery';
+import DocumentLine from './DocumentLine';
+import Payment from '../valueObject/Payment';
+import AllowanceCharge from '../valueObject/AllowanceCharge';
+import Tax from './Tax';
+import AbstractRuleset from '../ruleset/AbstractRuleset';
+import Identifier from '../valueObject/Identifier';
 
-export default
-class Document extends Entity<IDocument, string, DocumentId> {
+export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _ruleset: AbstractRuleset;
   protected _documentType: DocumentTypes;
 
-  public static create(type: DocumentTypes, ruleset: AbstractRuleset, props: IDocument): Document {
+  public static create(
+    type: DocumentTypes,
+    ruleset: AbstractRuleset,
+    props: IDocument,
+  ): Document {
     const item = new Document(props, props.id);
     item._documentType = type;
     item._ruleset = ruleset;
@@ -34,7 +38,9 @@ class Document extends Entity<IDocument, string, DocumentId> {
   }
 
   validate() {
-    return this._ruleset ? this._ruleset.validate(this) : { errors: [], warning: [] };
+    return this._ruleset
+      ? this._ruleset.validate(this)
+      : { errors: [], warning: [] };
   }
 
   /**
@@ -173,8 +179,22 @@ class Document extends Entity<IDocument, string, DocumentId> {
   /**
    * Set the purchase order reference.
    */
-  set purchaseOrderReference(value: string | undefined) {
+  set purchaseOrderReference(value: Identifier | undefined) {
     this.props.purchaseOrderReference = value;
+  }
+
+  /**
+   * Get the originator document reference.
+   */
+  get originatorDocumentReference() {
+    return this.props.originatorDocumentReference;
+  }
+
+  /**
+   * Set the originator document reference.
+   */
+  set originatorDocumentReference(value: Identifier | undefined) {
+    this.props.originatorDocumentReference = value;
   }
 
   /**
@@ -215,7 +235,7 @@ class Document extends Entity<IDocument, string, DocumentId> {
   /**
    * Set the contract reference.
    */
-  set contractReference(value: string | undefined) {
+  set contractReference(value: Identifier | undefined) {
     this.props.contractReference = value;
   }
 
@@ -455,6 +475,20 @@ class Document extends Entity<IDocument, string, DocumentId> {
    */
   set taxCurrency(value: CurrencyCode | undefined) {
     this.props.taxCurrency = value;
+  }
+
+  /**
+   * Get the xml namespaces.
+   */
+  get xmlNamespaces() {
+    return this.props.xmlNamespaces;
+  }
+
+  /**
+   * Set the xml namespaces.
+   */
+  set xmlNamespaces(value: { [key: string]: string } | undefined) {
+    this.props.xmlNamespaces = value;
   }
 
   toPrimitive() {

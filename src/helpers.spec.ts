@@ -1,4 +1,10 @@
-import {getArray, numOrUnd, strOrUnd} from "./helpers";
+import {
+  formatNumber,
+  getArray,
+  numOrUnd,
+  omitEmpty,
+  strOrUnd,
+} from './helpers';
 
 describe('helpers', () => {
   test('strOrUnd', () => {
@@ -16,31 +22,68 @@ describe('helpers', () => {
   });
 
   test('getArray', () => {
-    const node1 = { 'cac:TaxTotal': {
+    const node1 = {
+      'cac:TaxTotal': {
         'cac:TaxSubtotal': {
-          'cbc:TaxableAmount': 1
-        }
-      } };
-    const node2 = { 'cac:TaxTotal': {
-        'cac:TaxSubtotal': [{
-          'cbc:TaxableAmount': 1
-        },{
-          'cbc:TaxableAmount': 2
-        }]
-      } };
+          'cbc:TaxableAmount': 1,
+        },
+      },
+    };
+    const node2 = {
+      'cac:TaxTotal': {
+        'cac:TaxSubtotal': [
+          {
+            'cbc:TaxableAmount': 1,
+          },
+          {
+            'cbc:TaxableAmount': 2,
+          },
+        ],
+      },
+    };
     expect(getArray(node1, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([
       {
-        "cbc:TaxableAmount": 1
-      }
+        'cbc:TaxableAmount': 1,
+      },
     ]);
     expect(getArray(node2, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([
       {
-        "cbc:TaxableAmount": 1
+        'cbc:TaxableAmount': 1,
       },
       {
-        "cbc:TaxableAmount": 2
-      }
+        'cbc:TaxableAmount': 2,
+      },
     ]);
     expect(getArray({}, ['cac:TaxTotal', 'cac:TaxSubtotal'])).toEqual([]);
+  });
+
+  describe('formatNumber', () => {
+    it('does not add decimals to integers', () => {
+      expect(formatNumber(-100)).toBe('-100');
+      expect(formatNumber(1)).toBe('1');
+      expect(formatNumber(0)).toBe('0');
+      expect(formatNumber(500)).toBe('500');
+      expect(formatNumber(5000)).toBe('5000');
+    });
+
+    it('returns a number with decimals when necessary', () => {
+      expect(formatNumber(5000.5)).toBe('5000.5');
+      expect(formatNumber(5000.556)).toBe('5000.56');
+    });
+  });
+
+  describe('omitEmpty', () => {
+    it('removes deeply nested empty objects', () => {
+      expect(
+        omitEmpty({
+          a: { b: { c: undefined } },
+          d: { e: { f: { h: 2, i: undefined } } },
+          j: [undefined, { k: 2 }, { l: undefined }],
+        }),
+      ).toEqual({
+        d: { e: { f: { h: 2 } } },
+        j: [{ k: 2 }],
+      });
+    });
   });
 });
