@@ -6,8 +6,8 @@ Thank you for contributing to einvoicing :tada: Any contributions to einvoicing 
 
 1. [Code of Conduct](#code-of-conduct)
 2. [How to contribute](#how-to-contribute)
-    1. [Creating issues](#creating-issues)
-    2. [Opening pull requests](#opening-pull-requests)
+   1. [Creating issues](#creating-issues)
+   2. [Opening pull requests](#opening-pull-requests)
 3. [How to run locally](#how-to-run-locally)
 
 ## Code of Conduct
