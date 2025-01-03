@@ -38,11 +38,10 @@ const document = await ublReader.readFromFile('invoice.xml');
 </tr>
 </table>
 
-_👋 You use einvoicing and you want to be listed there? [Contact me](mailto:esvit666@gmail.com).
+\_👋 You use einvoicing and you want to be listed there? [Contact me](mailto:esvit666@gmail.com).
 
 ## Contributing
 
 Contributions are more than welcome, the code base is still new and needs more love.
 
 For more information, please checkout the [contributing document](https://github.com/esvit/einvoicing/blob/main/CONTRIBUTING.md).
-
