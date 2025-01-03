@@ -47,5 +47,6 @@ Contributions are more than welcome, the code base is still new and needs more l
 For more information, please checkout the [contributing document](https://github.com/esvit/einvoicing/blob/main/CONTRIBUTING.md).
 
 # Contributors
+
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
