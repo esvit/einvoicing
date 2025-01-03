@@ -45,3 +45,8 @@ const document = await ublReader.readFromFile('invoice.xml');
 Contributions are more than welcome, the code base is still new and needs more love.
 
 For more information, please checkout the [contributing document](https://github.com/esvit/einvoicing/blob/main/CONTRIBUTING.md).
+
+# Contributors
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->

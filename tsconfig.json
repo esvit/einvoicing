@@ -21,5 +21,6 @@
     "skipLibCheck": true,
     "declaration": true
   },
-  "include": ["**/*", "__tests__/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts"]
 }
