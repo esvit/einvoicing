@@ -49,4 +49,24 @@ For more information, please checkout the [contributing document](https://github
 # Contributors
 
 <!-- readme: contributors -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/esvit">
+                    <img src="https://avatars.githubusercontent.com/u/1222467?v=4" width="100;" alt="esvit"/>
+                    <br />
+                    <sub><b>Vitalii Savchuk</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/albertfdp">
+                    <img src="https://avatars.githubusercontent.com/u/649667?v=4" width="100;" alt="albertfdp"/>
+                    <br />
+                    <sub><b>Albert Fernández</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: contributors -end -->
