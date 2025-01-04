@@ -9,7 +9,7 @@ import Document from '../entity/Document';
 
 export interface IValidationResult {
   errors: { key: string; message: string }[];
-  warning: { key: string; message: string }[];
+  warnings: { key: string; message: string }[];
 }
 
 export interface IRule {
@@ -23,10 +23,10 @@ export default abstract class AbstractRuleset {
 
   abstract get rules(): { [key: string]: IRule };
 
-  validate(document: Document): IValidationResult {
+  async validate(document: Document): Promise<IValidationResult> {
     const res: IValidationResult = {
       errors: [],
-      warning: [],
+      warnings: [],
     };
     for (const key in this.rules) {
       if (!this.rules[key].test(document)) {

@@ -26,6 +26,18 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _ruleset: AbstractRuleset;
   protected _documentType: DocumentTypes;
 
+  constructor(props, id) {
+    if (!props.xmlNamespaces) {
+      props.xmlNamespaces = {
+        'xmlns': 'urn:oasis:names:specification:ubl:schema:xsd:Invoice-2',
+        'xmlns:cac': 'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2',
+        'xmlns:cbc': 'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2'
+      }
+    }
+    super(props, id);
+  }
+
+
   public static create(
     type: DocumentTypes,
     ruleset: AbstractRuleset,
@@ -37,10 +49,10 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
     return item;
   }
 
-  validate() {
+  async validate() {
     return this._ruleset
       ? this._ruleset.validate(this)
-      : { errors: [], warning: [] };
+      : { errors: [], warnings: [] };
   }
 
   /**
