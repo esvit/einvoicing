@@ -32,9 +32,12 @@ export enum DocumentTypes {
 export const DEFAULT_CUSTOMIZATION_ID =
   'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0';
 
+export const DEFAULT_PROFILE_ID = 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0';
+
 export interface IDocument {
   id: DocumentId;
   customizationId?: string;
+  businessProcess?: string;
   issueDate?: DateOnly;
   dueDate?: DateOnly;
   type?: DocumentType;

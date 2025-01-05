@@ -36,7 +36,7 @@ export default class UblWriter extends AbstractWriter {
       Invoice: {
         ...xmlNamespaces,
         'cbc:CustomizationID': document.customizationId,
-        'cbc:ProfileID': 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0',
+        'cbc:ProfileID': document.businessProcess,
         'cbc:ID': document.id.toPrimitive(),
         'cbc:IssueDate': document.issueDate?.toPrimitive(),
         'cbc:DueDate': document.dueDate?.toPrimitive(),

@@ -11,6 +11,7 @@ import {
   DocumentId,
   DocumentTypes,
   DEFAULT_CUSTOMIZATION_ID,
+  DEFAULT_PROFILE_ID,
 } from '../interface/IDocument';
 import DateOnly from '../valueObject/DateOnly';
 import DocumentType from '../valueObject/DocumentType';
@@ -32,7 +33,14 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _documentType: DocumentTypes;
 
   constructor(props: IDocument, id?: DocumentId) {
-    super({ customizationId: DEFAULT_CUSTOMIZATION_ID, ...props }, id);
+    super(
+      {
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
+        businessProcess: DEFAULT_PROFILE_ID,
+        ...props,
+      },
+      id,
+    );
   }
 
   public static create(
@@ -92,6 +100,20 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
    */
   set customizationId(value: string) {
     this.props.customizationId = value;
+  }
+
+  /**
+   * Get the business process.
+   */
+  get businessProcess() {
+    return this.props.businessProcess;
+  }
+
+  /**
+   * Set the business process.
+   */
+  set businessProcess(value: string | undefined) {
+    this.props.businessProcess = value;
   }
 
   /**
