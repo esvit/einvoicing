@@ -7,6 +7,9 @@ import UblWriter from './writers/UblWriter';
 const fixtureFiles = [
   'bis3_invoice_negativ.xml',
   'bis3_invoice_positive.xml',
+  'guide-example1.xml',
+  'guide-example2.xml',
+  'guide-example3.xml',
   'peppol-allowance.xml',
   'peppol-base.xml',
   'peppol-vat-o.xml',
@@ -14,9 +17,6 @@ const fixtureFiles = [
 
   // TODO: Fix these tests
   // 'ft_g2g_td01_con_allegato_bonifico_e_split_payment.xml',
-  // 'guide-example1.xml',
-  // 'guide-example2.xml',
-  // 'guide-example3.xml',
   // 'peppol-credit-note.xml',
   // 'peppol-rounding.xml',
   // 'ubl-invoice-2.0-example.xml',
