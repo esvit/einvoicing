@@ -1,5 +1,5 @@
 import UblReader from './UblReader';
-import { DocumentId } from '../interface/IDocument';
+import { DEFAULT_CUSTOMIZATION_ID, DocumentId } from '../interface/IDocument';
 import DateOnly from '../valueObject/DateOnly';
 import DocumentType from '../valueObject/DocumentType';
 import CurrencyCode from '../valueObject/CurrencyCode';
@@ -50,6 +50,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('12345'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         dueDate: DateOnly.create('2019-02-24'),
         issueDate: DateOnly.create('2019-01-25'),
         periodStart: DateOnly.create('2018-09-01'),
@@ -162,6 +163,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('12345'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         dueDate: DateOnly.create('2019-02-24'),
         issueDate: DateOnly.create('2019-01-25'),
         periodStart: DateOnly.create('2018-09-01'),
@@ -282,6 +284,7 @@ describe('UblReader', () => {
       expect(result.toPrimitive()).toEqual({
         attachments: [expect.any(Attachment)],
         id: new DocumentId('1316/85'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         issueDate: DateOnly.create('2020-02-13'),
         type: DocumentType.create('380'),
         payment: Payment.create({
@@ -386,6 +389,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('12115118'),
+        customizationId: 'urn:cen.eu:en16931:2017',
         issueDate: DateOnly.create('2015-01-09'),
         dueDate: DateOnly.create('2015-01-09'),
         type: DocumentType.create('380'),
@@ -678,6 +682,7 @@ describe('UblReader', () => {
           }),
         ],
         id: new DocumentId('TOSL108'),
+        customizationId: 'urn:cen.eu:en16931:2017',
         issueDate: DateOnly.create('2013-06-30'),
         dueDate: DateOnly.create('2013-07-20'),
         taxPointDate: DateOnly.create('2013-06-30'),
@@ -956,6 +961,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('TOSL108'),
+        customizationId: 'urn:cen.eu:en16931:2017',
         issueDate: DateOnly.create('2013-04-10'),
         dueDate: DateOnly.create('2013-05-10'),
         periodStart: DateOnly.create('2013-01-01'),
@@ -1060,6 +1066,8 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('A00095678'),
+        customizationId:
+          'urn:oasis:names:specification:ubl:xpath:Invoice-2.0:sbs-1.0-draft',
         issueDate: DateOnly.create('2005-06-21'),
         dueDate: DateOnly.create('2005-07-21'),
         taxPointDate: DateOnly.create('2005-06-21'),
@@ -1186,6 +1194,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('Snippet1'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         dueDate: DateOnly.create('2017-12-01'),
         issueDate: DateOnly.create('2017-11-13'),
         taxPointDate: DateOnly.create('2017-12-01'),
@@ -1422,6 +1431,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('Snippet1'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         dueDate: DateOnly.create('2017-12-01'),
         issueDate: DateOnly.create('2017-11-13'),
         precedingInvoiceReference: [
@@ -1608,6 +1618,7 @@ describe('UblReader', () => {
       expect(result.validate()).toEqual({ errors: [], warning: [] });
       expect(result.toPrimitive()).toEqual({
         id: new DocumentId('Snippet1'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         dueDate: DateOnly.create('2017-12-02'),
         issueDate: DateOnly.create('2017-11-13'),
         precedingInvoiceReference: [
@@ -1782,6 +1793,7 @@ describe('UblReader', () => {
         currency: CurrencyCode.create('EUR'),
         dueDate: DateOnly.create('2022-11-11'),
         id: new DocumentId('SampleForDecimals'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         issueDate: DateOnly.create('2022-11-03'),
         lines: [
           DocumentLine.create({
@@ -1856,6 +1868,7 @@ describe('UblReader', () => {
         buyerReference: 'test reference',
         currency: CurrencyCode.create('SEK'),
         id: new DocumentId('Vat-O'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         issueDate: DateOnly.create('2018-08-30'),
         lines: [
           DocumentLine.create({
@@ -1981,6 +1994,7 @@ describe('UblReader', () => {
         }),
         dueDate: DateOnly.create('2017-12-01'),
         id: new DocumentId('Snippet1'),
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
         issueDate: DateOnly.create('2017-11-13'),
         lines: [
           DocumentLine.create({

@@ -255,6 +255,9 @@ export default class UblReader extends AbstractReader {
       // BT-22: Notes
       notes: strOrUnd(documentNode['cbc:Note']),
 
+      // BT-24
+      customizationId: strOrUnd(customizationId),
+
       // BG-3: Preceding invoice references
       precedingInvoiceReference: precedingInvoiceReference.length
         ? precedingInvoiceReference
