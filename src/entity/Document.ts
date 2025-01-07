@@ -6,7 +6,13 @@
  * @licence MIT https://opensource.org/licenses/MIT
  */
 import { Entity } from '../base/Entity';
-import { IDocument, DocumentId, DocumentTypes } from '../interface/IDocument';
+import {
+  IDocument,
+  DocumentId,
+  DocumentTypes,
+  DEFAULT_CUSTOMIZATION_ID,
+  DEFAULT_PROFILE_ID,
+} from '../interface/IDocument';
 import DateOnly from '../valueObject/DateOnly';
 import DocumentType from '../valueObject/DocumentType';
 import CurrencyCode from '../valueObject/CurrencyCode';
@@ -25,6 +31,17 @@ import Identifier from '../valueObject/Identifier';
 export default class Document extends Entity<IDocument, string, DocumentId> {
   protected _ruleset: AbstractRuleset;
   protected _documentType: DocumentTypes;
+
+  constructor(props: IDocument, id?: DocumentId) {
+    super(
+      {
+        customizationId: DEFAULT_CUSTOMIZATION_ID,
+        businessProcess: DEFAULT_PROFILE_ID,
+        ...props,
+      },
+      id,
+    );
+  }
 
   public static create(
     type: DocumentTypes,
@@ -69,6 +86,34 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
    */
   set id(value: DocumentId) {
     this.props.id = value;
+  }
+
+  /**
+   * Get the customization ID.
+   */
+  get customizationId() {
+    return this.props.customizationId;
+  }
+
+  /**
+   * Set the customization ID.
+   */
+  set customizationId(value: string) {
+    this.props.customizationId = value;
+  }
+
+  /**
+   * Get the business process.
+   */
+  get businessProcess() {
+    return this.props.businessProcess;
+  }
+
+  /**
+   * Set the business process.
+   */
+  set businessProcess(value: string | undefined) {
+    this.props.businessProcess = value;
   }
 
   /**

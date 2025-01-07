@@ -122,12 +122,6 @@ export default class UblReader extends AbstractReader {
       }),
     );
 
-    // BT-23: Business process type
-    const businessProcess = documentNode['cbc:ProfileID'];
-    if (businessProcess) {
-      // console.info(businessProcess);
-    }
-
     // BT-9: Due date
     const dueDate =
       documentNode['cbc:DueDate'] ??
@@ -254,6 +248,12 @@ export default class UblReader extends AbstractReader {
 
       // BT-22: Notes
       notes: strOrUnd(documentNode['cbc:Note']),
+
+      // BT-23: Business process type
+      businessProcess: strOrUnd(documentNode['cbc:ProfileID']),
+
+      // BT-24
+      customizationId: strOrUnd(customizationId),
 
       // BG-3: Preceding invoice references
       precedingInvoiceReference: precedingInvoiceReference.length
