@@ -32,9 +32,11 @@ const document = await ublReader.readFromFile('invoice.xml');
 <table>
 <tr>
 <td align="center"><a href="https://itfin.us/"><img src="/.github/images/itfin_logo.svg" width="64" /></a></td>
+<td align="center"><a href="https://plinto.ai/"><img src="/.github/images/plinto_logo.svg" width="64" /></a></td>
 </tr>
 <tr>
 <td align="center"><a href="https://itfin.us/">ITFin</a></td>
+<td align="center"><a href="https://plinto.ai/">Plinto</a></td>
 </tr>
 </table>
 
