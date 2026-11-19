@@ -536,6 +536,13 @@ export default class Document extends Entity<IDocument, string, DocumentId> {
     this.props.xmlNamespaces = value;
   }
 
+  /**
+   * Get the non-fatal issues encountered while reading the document.
+   */
+  get issues() {
+    return this.props.issues;
+  }
+
   toPrimitive() {
     return this.props;
   }

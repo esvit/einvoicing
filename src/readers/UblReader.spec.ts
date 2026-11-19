@@ -1,4 +1,5 @@
 import UblReader from './UblReader';
+import UnsupportedDocumentError from '../error/UnsupportedDocumentError';
 import {
   DEFAULT_CUSTOMIZATION_ID,
   DEFAULT_PROFILE_ID,
@@ -1123,6 +1124,7 @@ describe('UblReader', () => {
         }),
         notes: 'sample',
         purchaseOrderReference: Identifier.create({ id: 'AEG012345' }),
+        salesOrderReference: 'CON0095678',
         seller: Party.create({
           contact: Contact.create({
             name: 'Mrs Bouquet',
@@ -2141,6 +2143,211 @@ describe('UblReader', () => {
             'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2',
         },
       });
+    });
+
+    test('oioubl-prefixed-root.xml', async () => {
+      // OIOUBL documents may carry a namespace prefix on the root element
+      // (<urn:Invoice>); the reader should match the root by local name.
+      const result = await ublReader.readFromFile(
+        'tests/files/oioubl-prefixed-root.xml',
+      );
+      expect(result.toPrimitive()).toMatchObject({
+        id: new DocumentId('TEST-PR-001'),
+        issueDate: DateOnly.create('2026-06-30'),
+        dueDate: DateOnly.create('2026-07-30'),
+        currency: CurrencyCode.create('DKK'),
+      });
+      expect(result.seller?.tradingName).toBe('Nordic Key Systems A/S');
+      expect(result.buyer?.tradingName).toBe('Owners Association Test Park');
+      expect(result.lines).toHaveLength(1);
+    });
+
+    test('throws a descriptive error for non-UBL root elements', async () => {
+      await expect(
+        ublReader.read('<ApplicationResponse></ApplicationResponse>'),
+      ).rejects.toThrow(
+        new UnsupportedDocumentError(
+          'Unsupported document type: root element is not a UBL Invoice or CreditNote',
+        ),
+      );
+    });
+
+    // Danish OIOXML (UBL 0.7) also roots at <Invoice>; only the namespace
+    // separates it from a document this reader maps.
+    test('throws for an <Invoice> root outside the UBL 2.x namespace', async () => {
+      await expect(
+        ublReader.read(
+          '<Invoice xmlns="http://rep.oio.dk/ubl/xml/schemas/0p71/pie/"><com:ID xmlns:com="http://rep.oio.dk/ubl/xml/schemas/0p71/common/">1338</com:ID></Invoice>',
+        ),
+      ).rejects.toThrow(UnsupportedDocumentError);
+    });
+
+    // The namespace comes from the parsed root attributes, so a declaration-
+    // shaped string inside another attribute's value cannot stand in for it.
+    test('ignores a namespace declaration spoofed inside an attribute value', async () => {
+      await expect(
+        ublReader.read(
+          '<Invoice marker=\' xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"\' xmlns="http://rep.oio.dk/ubl/xml/schemas/0p71/pie/"/>',
+        ),
+      ).rejects.toThrow(UnsupportedDocumentError);
+    });
+
+    test('throws for a root that declares no namespace', async () => {
+      await expect(
+        ublReader.read('<Invoice><ID>1</ID></Invoice>'),
+      ).rejects.toThrow(UnsupportedDocumentError);
+    });
+  });
+
+  describe('order references', () => {
+    const CAC =
+      'urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2';
+    const CBC =
+      'urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2';
+    const ublDocument = (root: 'Invoice' | 'CreditNote', body: string) =>
+      `<${root} xmlns="urn:oasis:names:specification:ubl:schema:xsd:${root}-2" xmlns:cac="${CAC}" xmlns:cbc="${CBC}"><cbc:ID>TEST-OR-001</cbc:ID>${body}</${root}>`;
+
+    describe.each(['Invoice', 'CreditNote'] as const)('%s', (root) => {
+      test('reads BT-13 and BT-14 under the cac: and cbc: prefixes', async () => {
+        const result = await ublReader.read(
+          ublDocument(
+            root,
+            '<cac:OrderReference><cbc:ID>PO-1001</cbc:ID><cbc:SalesOrderID>SO-2002</cbc:SalesOrderID></cac:OrderReference>',
+          ),
+        );
+
+        expect(result.purchaseOrderReference).toEqual(
+          Identifier.create({ id: 'PO-1001', scheme: undefined }),
+        );
+        expect(result.salesOrderReference).toBe('SO-2002');
+      });
+
+      // OIOUBL senders declare the basic-components namespace on the element
+      // itself, under a prefix of their own.
+      test('reads BT-13 and BT-14 under other prefixes', async () => {
+        const result = await ublReader.read(
+          ublDocument(
+            root,
+            `<agg:OrderReference xmlns:agg="${CAC}"><ns2:ID xmlns:ns2="${CBC}">PO-1001</ns2:ID><ns2:SalesOrderID xmlns:ns2="${CBC}">SO-2002</ns2:SalesOrderID></agg:OrderReference>`,
+          ),
+        );
+
+        expect(result.purchaseOrderReference?.id).toBe('PO-1001');
+        expect(result.salesOrderReference).toBe('SO-2002');
+      });
+
+      test('reads BT-13 and BT-14 under a default namespace', async () => {
+        const result = await ublReader.read(
+          ublDocument(
+            root,
+            `<OrderReference xmlns="${CAC}"><ID xmlns="${CBC}">PO-1001</ID><SalesOrderID xmlns="${CBC}">SO-2002</SalesOrderID></OrderReference>`,
+          ),
+        );
+
+        expect(result.purchaseOrderReference?.id).toBe('PO-1001');
+        expect(result.salesOrderReference).toBe('SO-2002');
+      });
+
+      test('keeps all-digit order numbers as written', async () => {
+        const result = await ublReader.read(
+          ublDocument(
+            root,
+            `<cac:OrderReference><ns2:ID xmlns:ns2="${CBC}">0042</ns2:ID><cbc:SalesOrderID>007</cbc:SalesOrderID></cac:OrderReference>`,
+          ),
+        );
+
+        expect(result.purchaseOrderReference?.id).toBe('0042');
+        expect(result.salesOrderReference).toBe('007');
+      });
+
+      test('reads blank values as absent', async () => {
+        const result = await ublReader.read(
+          ublDocument(
+            root,
+            '<cac:OrderReference><cbc:ID>   </cbc:ID><cbc:SalesOrderID></cbc:SalesOrderID></cac:OrderReference>',
+          ),
+        );
+
+        expect(result.purchaseOrderReference).toBeUndefined();
+        expect(result.salesOrderReference).toBeUndefined();
+      });
+
+      test('reads nothing when the document states no order reference', async () => {
+        const result = await ublReader.read(ublDocument(root, ''));
+
+        expect(result.purchaseOrderReference).toBeUndefined();
+        expect(result.salesOrderReference).toBeUndefined();
+      });
+    });
+
+    test('oioubl-day-first-dates.xml', async () => {
+      const result = await ublReader.readFromFile(
+        'tests/files/oioubl-day-first-dates.xml',
+      );
+
+      expect(result.purchaseOrderReference?.id).toBe('W5F1-340');
+      expect(result.salesOrderReference).toBe('4');
+    });
+  });
+
+  describe('parse issues', () => {
+    // Real-world OIOUBL emitters produce day-first dates (30-07-2026), which
+    // are invalid xsd:date values. The reader must not guess the day/month
+    // order: the field is omitted and the problem recorded on the document,
+    // while everything else still parses.
+    test('records invalid dates as issues and parses the rest', async () => {
+      const result = await ublReader.readFromFile(
+        'tests/files/oioubl-day-first-dates.xml',
+      );
+
+      expect(result.id).toEqual(new DocumentId('TEST-DF-001'));
+      expect(result.currency).toEqual(CurrencyCode.create('DKK'));
+      expect(result.lines).toHaveLength(1);
+      expect(result.periodStart).toEqual(DateOnly.create('2026-06-01'));
+      expect(result.periodEnd).toEqual(DateOnly.create('2026-06-30'));
+
+      expect(result.issueDate).toBeUndefined();
+      expect(result.dueDate).toBeUndefined();
+      expect(result.delivery?.date).toBeUndefined();
+
+      expect(result.issues).toHaveLength(3);
+      expect(result.issues).toEqual(
+        expect.arrayContaining([
+          {
+            code: 'invalid-date',
+            field: 'cbc:IssueDate',
+            raw: '17-06-2026',
+            message: expect.stringContaining('17-06-2026'),
+          },
+          {
+            code: 'invalid-date',
+            field: 'cac:PaymentMeans/cbc:PaymentDueDate',
+            raw: '17-06-2026',
+            message: expect.stringContaining('17-06-2026'),
+          },
+          {
+            code: 'invalid-date',
+            field: 'cac:Delivery/cbc:ActualDeliveryDate',
+            raw: '17-06-2026',
+            message: expect.stringContaining('17-06-2026'),
+          },
+        ]),
+      );
+    });
+
+    test('a fully valid document has no issues', async () => {
+      const result = await ublReader.readFromFile(
+        'tests/files/peppol-base.xml',
+      );
+
+      expect(result.issues).toBeUndefined();
+    });
+
+    test('issues reset between reads on the same reader', async () => {
+      await ublReader.readFromFile('tests/files/oioubl-day-first-dates.xml');
+      const clean = await ublReader.readFromFile('tests/files/peppol-base.xml');
+
+      expect(clean.issues).toBeUndefined();
     });
   });
 

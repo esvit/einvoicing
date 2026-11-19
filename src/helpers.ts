@@ -55,9 +55,16 @@ export function strOrUnd(node: XmlNode): string | undefined {
   if (!node && node !== 0) {
     return undefined;
   }
+  // Repeated elements parse to an array; take the first occurrence.
+  if (Array.isArray(node)) {
+    return strOrUnd(node[0]);
+  }
   if (typeof node === 'object') {
+    // An element with attributes but no content (e.g.
+    // <cbc:Note languageID="da"/>) parses to an object without '#text';
+    // treat it as absent instead of failing the whole document.
     if (typeof node['#text'] === 'undefined') {
-      throw new Error('Invalid node');
+      return undefined;
     }
     return node['#text'].toString();
   }
@@ -71,6 +78,26 @@ export function strOrUnd(node: XmlNode): string | undefined {
  */
 export function numOrUnd(node: XmlNode): number | undefined {
   return strOrUnd(node) ? parseFloat(strOrUnd(node)) : undefined;
+}
+
+/**
+ * Returns the child element with the given local name, whatever prefix the
+ * document binds its namespace to: `cbc:ID`, `ns2:ID`, or an unprefixed `ID`
+ * under a default namespace.
+ *
+ * @param node xml node
+ * @param localName element name without its namespace prefix
+ */
+export function childByLocalName(node: XmlNode, localName: string): XmlNode {
+  if (!node || typeof node !== 'object') {
+    return undefined;
+  }
+  const key = Object.keys(node).find(
+    (key) =>
+      !key.startsWith('attr_') &&
+      (key === localName || key.endsWith(`:${localName}`)),
+  );
+  return key === undefined ? undefined : node[key];
 }
 
 /**

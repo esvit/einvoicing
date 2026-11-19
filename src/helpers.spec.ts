@@ -1,4 +1,5 @@
 import {
+  childByLocalName,
   formatNumber,
   getArray,
   numOrUnd,
@@ -11,14 +12,35 @@ describe('helpers', () => {
     expect(strOrUnd(null)).toBe(undefined);
     expect(strOrUnd(undefined)).toBe(undefined);
     expect(strOrUnd({ '#text': 'test' })).toBe('test');
-    expect(() => strOrUnd({})).toThrow('Invalid node');
+    // An element with attributes but no content parses to an object
+    // without '#text'; it should read as absent.
+    expect(strOrUnd({})).toBe(undefined);
+    expect(strOrUnd({ attr_languageID: 'da' })).toBe(undefined);
+    // Repeated elements parse to an array; the first occurrence wins.
+    expect(strOrUnd([{ '#text': 'first' }, { '#text': 'second' }])).toBe(
+      'first',
+    );
+    expect(strOrUnd(['first', 'second'])).toBe('first');
+    expect(strOrUnd([])).toBe(undefined);
   });
 
   test('numOrUnd', () => {
     expect(numOrUnd(null)).toBe(undefined);
     expect(numOrUnd(undefined)).toBe(undefined);
     expect(numOrUnd({ '#text': '1' })).toBe(1);
-    expect(() => strOrUnd({})).toThrow('Invalid node');
+    expect(numOrUnd({})).toBe(undefined);
+  });
+
+  test('childByLocalName', () => {
+    expect(childByLocalName(undefined, 'ID')).toBe(undefined);
+    expect(childByLocalName('text', 'ID')).toBe(undefined);
+    expect(childByLocalName({ 'cbc:ID': '1' }, 'ID')).toBe('1');
+    expect(childByLocalName({ 'ns2:ID': '1' }, 'ID')).toBe('1');
+    expect(childByLocalName({ ID: '1' }, 'ID')).toBe('1');
+    expect(childByLocalName({ 'cbc:UUID': '1' }, 'ID')).toBe(undefined);
+    expect(childByLocalName({ 'attr_xmlns:ID': 'urn:x' }, 'ID')).toBe(
+      undefined,
+    );
   });
 
   test('getArray', () => {

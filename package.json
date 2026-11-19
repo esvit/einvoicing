@@ -42,6 +42,7 @@
     "typescript-eslint": "^8.17.0"
   },
   "scripts": {
+    "prepare": "tsc -p tsconfig.json",
     "prepublishOnly": "npm run build && npm test && npm version patch",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",

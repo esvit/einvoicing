@@ -8,6 +8,7 @@
 import PeppolRuleset from './ruleset/PeppolRuleset';
 import AbstractRuleset from './ruleset/AbstractRuleset';
 import AbstractReader from './readers/AbstractReader';
+import UnsupportedDocumentError from './error/UnsupportedDocumentError';
 import UblReader from './readers/UblReader';
 import { getRuleset } from './rulesets';
 import Document from './entity/Document';
@@ -50,6 +51,7 @@ export {
   PeppolRuleset,
   AbstractReader,
   UblReader,
+  UnsupportedDocumentError,
 
   // functions
   getRuleset,

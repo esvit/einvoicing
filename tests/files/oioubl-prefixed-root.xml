@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<urn:Invoice xmlns:urn="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">urn:www.nesubl.eu:profiles:profile5:ver2.0</cbc:ProfileID>
+	<cbc:ID>TEST-PR-001</cbc:ID>
+	<cbc:IssueDate>2026-06-30</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listAgencyID="320" listID="urn:oioubl:codelist:invoicetypecode-1.1">380</cbc:InvoiceTypeCode>
+	<cbc:Note>Ordering of key fobs - Contact: Test Person, phone 12345678</cbc:Note>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK11223344</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK11223344</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Nordic Key Systems A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Delta Park 46, 2.</cbc:StreetName>
+				<cbc:CityName>Vallensbaek Strand</cbc:CityName>
+				<cbc:PostalZone>2665</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Nordic Key Systems A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK11223344</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="GLN" schemeAgencyID="9">5790000000000</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="GLN" schemeAgencyID="9">5790000000000</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Owners Association Test Park</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredLax</cbc:AddressFormatCode>
+				<cbc:StreetName>Old Country Road 57, 3.</cbc:StreetName>
+				<cbc:CityName>Valby</cbc:CityName>
+				<cbc:PostalZone>2500</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PaymentMeans>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansCode>42</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>2026-07-30</cbc:PaymentDueDate>
+		<cbc:PaymentChannelCode listID="urn:oioubl:codelist:paymentchannelcode-1.1" listAgencyID="320">DK:BANK</cbc:PaymentChannelCode>
+	</cac:PaymentMeans>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="DKK">217.50</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="DKK">870.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="DKK">217.50</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeID="urn:oioubl:id:taxcategoryid-1.1" schemeAgencyID="320">StandardRated</cbc:ID>
+				<cbc:Percent>25.00</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeID="urn:oioubl:id:taxschemeid-1.1" schemeAgencyID="320">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="DKK">870.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="DKK">217.50</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="DKK">1087.50</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID="DKK">1087.50</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">10</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">870.00</cbc:LineExtensionAmount>
+		<cac:Item>
+			<cbc:Description>Key fob - Blue Mifare</cbc:Description>
+			<cbc:Name>Key fob - Blue Mifare</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>VD0055</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">87.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+		</cac:Price>
+	</cac:InvoiceLine>
+</urn:Invoice>

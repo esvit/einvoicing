@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd">
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">urn:www.nesubl.eu:profiles:profile5:ver2.0</cbc:ProfileID>
+	<cbc:ID>TEST-DF-001</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:IssueDate>17-06-2026</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listAgencyID="320" listID="urn:oioubl:codelist:invoicetypecode-1.1">380</cbc:InvoiceTypeCode>
+	<cbc:Note>Account no 1234 - Reimbursement of board work in the test association.</cbc:Note>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cac:InvoicePeriod>
+		<cbc:StartDate>2026-06-01</cbc:StartDate>
+		<cbc:EndDate>2026-06-30</cbc:EndDate>
+	</cac:InvoicePeriod>
+	<cac:OrderReference>
+		<xx2:ID xmlns:xx2="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">W5F1-340</xx2:ID>
+		<cbc:SalesOrderID>4</cbc:SalesOrderID>
+		<cbc:IssueDate>0001-01-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cac:PartyName>
+				<cbc:Name>Reimbursement - Test Person</cbc:Name>
+			</cac:PartyName>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5790000000000</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5790000000000</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Courtyard Association Test Block</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredLax</cbc:AddressFormatCode>
+				<cbc:StreetName>Old Country Road 57, 3rd floor</cbc:StreetName>
+				<cbc:CityName>Valby 2500</cbc:CityName>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:Delivery>
+		<cbc:ActualDeliveryDate>17-06-2026</cbc:ActualDeliveryDate>
+	</cac:Delivery>
+	<cac:PaymentMeans>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansCode>42</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>17-06-2026</cbc:PaymentDueDate>
+		<cbc:PaymentChannelCode listAgencyID="320" listID="urn:oioubl:codelist:paymentchannelcode-1.1">DK:BANK</cbc:PaymentChannelCode>
+	</cac:PaymentMeans>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="DKK">1200</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="DKK">4800</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="DKK">1200</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="DKK">4800</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="DKK">1200</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="DKK">6000</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID="DKK">6000</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">4800</cbc:LineExtensionAmount>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>17-06-2026</cbc:ActualDeliveryDate>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">1200</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">4800</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">1200</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Account no 1234 - Reimbursement of board work in the test association.</cbc:Description>
+			<cbc:Name>Reimbursement of board work</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>*</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">4800</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

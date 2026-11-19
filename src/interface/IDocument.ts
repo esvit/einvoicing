@@ -34,6 +34,19 @@ export const DEFAULT_CUSTOMIZATION_ID =
 
 export const DEFAULT_PROFILE_ID = 'urn:fdc:peppol.eu:2017:poacc:billing:01:1.0';
 
+/**
+ * A non-fatal problem encountered while reading a document. The offending
+ * field is omitted from the parsed result (never guessed or coerced) and the
+ * issue is recorded here so callers can distinguish "absent in the source"
+ * from "present but invalid".
+ */
+export interface ParseIssue {
+  code: 'invalid-date';
+  field: string;
+  raw: string;
+  message: string;
+}
+
 export interface IDocument {
   id: DocumentId;
   customizationId?: string;
@@ -75,4 +88,6 @@ export interface IDocument {
   taxCurrency?: CurrencyCode;
 
   xmlNamespaces?: { [key: string]: string };
+
+  issues?: ParseIssue[];
 }
